@@ -27,35 +27,17 @@
   "scripts": {
     "build": "rollup --config --environment BUILD_ENV:production",
     "dev": "rollup --config --environment BUILD_ENV:development --watch",
-    "lint": "run-p lint:*",
-    "lint:eslint": "eslint .",
-    "lint:prettier": "prettier --check .",
-    "send": "pnpm -r exec npm version patch | pnpm publish | git push origin master",
     "prepublishOnly": "pnpm build"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "proseWrap": "always",
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
-  "eslintConfig": {
-    "parserOptions": {
-      "project": "tsconfig.json"
-    },
-    "extends": "@ark120202/eslint-config/node",
-    "rules": {
-      "no-restricted-syntax": "off",
-      "prefer-arrow/prefer-arrow-functions": "off",
-      "node/no-unsupported-features/node-builtins": "off"
-    },
-    "ignorePatterns": "/dist"
   },
   "dependencies": {
     "panorama-polyfill": "^0.1.1"
   },
   "devDependencies": {
-    "@mobilc/tsconfig": "workspace:*"
+    "@mobilc/tsconfig": "workspace:*",
+    "@types/react": "^18.0.0",
+    "@types/react-reconciler": "^0.18.0",
+    "react": "^18.0.0",
+    "react-reconciler": "^0.25.1"
   },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
