@@ -60,6 +60,14 @@ importers:
     dependencies:
       panorama-polyfill: 0.1.1
 
+  packages/panorama-type:
+    specifiers:
+      '@moddota/panorama-types': ^1.21.0
+      tslib: ^2.0.3
+    dependencies:
+      '@moddota/panorama-types': 1.21.0_typescript@4.8.4
+      tslib: 2.4.0
+
 packages:
 
   /@ampproject/remapping/2.2.0:
@@ -1138,7 +1146,6 @@ packages:
     dependencies:
       tslib: 2.4.0
       typescript: 4.8.4
-    dev: true
 
   /@nicolo-ribaudo/eslint-scope-5-internals/5.1.1-v1:
     resolution: {integrity: sha512-54/JRvkLIzzDWshCWfuhadfrfZVPiElY8Fcgmg1HroEly/EDSszzhBAsarCux+D/kOslTRquNzuyGSmUSTTHGg==}
@@ -6000,7 +6007,6 @@ packages:
 
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
-    dev: true
 
   /tsutils/3.21.0_typescript@4.8.4:
     resolution: {integrity: sha512-mHKK3iUXL+3UF6xL5k0PEhKRUBKPBCv/+RkEOpjRWxxx27KKRBmmA60A9pgOUvMi8GKhRMPEmjBRPzs2W7O1OA==}
