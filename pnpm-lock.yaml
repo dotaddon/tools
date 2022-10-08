@@ -4,25 +4,9 @@ importers:
 
   .:
     specifiers:
-      '@moddota/dota-lua-types': ^4.21.1
-      lerna: ^5.6.1
-      lua-types: ^2.13.0
-      typescript: ^4.8.4
-      typescript-to-lua: ^1.10.1
-    devDependencies:
-      '@moddota/dota-lua-types': 4.21.1_typescript@4.8.4
-      lerna: 5.6.1
-      lua-types: 2.13.0
-      typescript: 4.8.4
-      typescript-to-lua: 1.10.1_typescript@4.8.4
-
-  packages/abc:
-    specifiers: {}
-
-  packages/panorama-cli:
-    specifiers:
       '@ark120202/eslint-config': ^2.4.2
       '@ark120202/typescript-config': ^2.2.0
+      '@moddota/dota-lua-types': ^4.21.1
       '@moddota/panorama-types': ^1.20.0
       '@rollup/plugin-commonjs': ^15.0.0
       '@rollup/plugin-node-resolve': ^9.0.0
@@ -32,8 +16,9 @@ importers:
       '@types/react': ^18.0.0
       '@types/react-reconciler': ^0.18.0
       eslint: ^7.8.1
+      lerna: ^5.6.1
+      lua-types: ^2.13.0
       npm-run-all: ^4.1.5
-      panorama-polyfill: ^0.1.1
       prettier: ^2.1.1
       react: ^18.0.0
       react-reconciler: ^0.25.1
@@ -41,12 +26,12 @@ importers:
       rollup-plugin-dts: 1.4.13
       rollup-plugin-prettier: 2.1.0
       rollup-plugin-terser: ^7.0.2
-      typescript: ^4.0.2
-    dependencies:
-      panorama-polyfill: 0.1.1
+      typescript: ^4.8.4
+      typescript-to-lua: ^1.10.1
     devDependencies:
       '@ark120202/eslint-config': 2.5.0_eslint@7.32.0+typescript@4.8.4
       '@ark120202/typescript-config': 2.2.0
+      '@moddota/dota-lua-types': 4.21.1_typescript@4.8.4
       '@moddota/panorama-types': 1.21.0_typescript@4.8.4
       '@rollup/plugin-commonjs': 15.1.0_rollup@2.79.1
       '@rollup/plugin-node-resolve': 9.0.0_rollup@2.79.1
@@ -56,6 +41,8 @@ importers:
       '@types/react': 18.0.21
       '@types/react-reconciler': 0.18.0
       eslint: 7.32.0
+      lerna: 5.6.1
+      lua-types: 2.13.0
       npm-run-all: 4.1.5
       prettier: 2.7.1
       react: 18.2.0
@@ -65,6 +52,13 @@ importers:
       rollup-plugin-prettier: 2.1.0_prettier@2.7.1+rollup@2.79.1
       rollup-plugin-terser: 7.0.2_rollup@2.79.1
       typescript: 4.8.4
+      typescript-to-lua: 1.10.1_typescript@4.8.4
+
+  packages/panorama-cli:
+    specifiers:
+      panorama-polyfill: ^0.1.1
+    dependencies:
+      panorama-polyfill: 0.1.1
 
 packages:
 
@@ -3431,7 +3425,7 @@ packages:
       fs.realpath: 1.0.0
       inflight: 1.0.6
       inherits: 2.0.4
-      minimatch: 3.0.5
+      minimatch: 3.1.2
       once: 1.4.0
       path-is-absolute: 1.0.1
     dev: true
