@@ -1,25 +1,25 @@
 {
-    "name": "@mobilc/vlua-tool",
-    "version": "0.0.1",
-    "description": "usual tool for war3 rpg development",
-    "author": "西索酱 <7831040+takegine@user.noreply.gitee.com>",
-    "homepage": "https://github.com/takegine/testdodo/issues",
-    "license": "MIT",
-    "publishConfig": {
-        "access": "public"
-    },
-    "directories": {
-        "lib": "lib"
-    },
-    "files": [
-        "dist/*.{d.ts,lua}"
-    ],
-    "main": "dist/index",
-    "types": "dist/index",
-    "scripts": {
-        "build": "tstl"
-    },
-    "devDependencies": {
-        "@mobilc/tsconfig":"workspace:*"
-    }
+  "name": "@mobilc/vlua-tool",
+  "version": "0.0.2",
+  "description": "usual tool for war3 rpg development",
+  "author": "西索酱 <7831040+takegine@user.noreply.gitee.com>",
+  "homepage": "https://github.com/takegine/testdodo/issues",
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "dist/*.{d.ts,lua}"
+  ],
+  "main": "dist/index",
+  "types": "dist/index",
+  "scripts": {
+    "build": "tstl"
+  },
+  "devDependencies": {
+    "@mobilc/tsconfig": "workspace:*"
+  }
 }
