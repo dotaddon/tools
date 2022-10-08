@@ -2,8 +2,11 @@
   "name": "@mobilc/tsconfig",
   "version": "0.0.1",
   "description": "> TODO: description",
-  "author": "西索酱 <takegine@vip.qq.com>",
-  "homepage": "",
+  "author": "西索酱",
+  "homepage": "https://github.com/takegine/testdodo#readme",
+  "bugs": "https://github.com/takegine/testdodo/issues",
   "license": "ISC",
-  "main": "lib/tsconfig.js"
+  "publishConfig": {
+    "access": "public"
+  }
 }
