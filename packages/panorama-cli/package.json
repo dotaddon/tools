@@ -54,6 +54,9 @@
   "dependencies": {
     "panorama-polyfill": "^0.1.1"
   },
+  "devDependencies": {
+    "@mobilc/tsconfig": "workspace:*"
+  },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
   },

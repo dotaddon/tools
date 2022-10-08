@@ -1,0 +1,9 @@
+{
+  "name": "@mobilc/tsconfig",
+  "version": "0.0.0",
+  "description": "> TODO: description",
+  "author": "西索酱 <takegine@vip.qq.com>",
+  "homepage": "",
+  "license": "ISC",
+  "main": "lib/tsconfig.js"
+}

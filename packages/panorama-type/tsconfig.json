@@ -1,14 +1,4 @@
 {
-  "extends": "@ark120202/typescript-config/base.json",
-  "include": ["."],
-  "compilerOptions": {
-    "target": "es2017",
-    "lib": ["es2017"],
-    "types": [
-      "@moddota/panorama-types",
-    ],
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
-    "composite": true, // 增量编译
-  }
+  "extends": "@mobilc/tsconfig/panorama.json",
+  "include": ["."]
 }

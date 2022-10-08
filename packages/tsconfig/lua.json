@@ -1,0 +1,17 @@
+{
+    "desc": "该目录下放置游戏运行逻辑和触发脚本",
+    "extends": "./base.json",
+    "compilerOptions": {
+        "types": ["@moddota/dota-lua-types"],
+        "suppressImplicitAnyIndexErrors": true, // 抑制任何索引错误
+        "strictNullChecks": false,
+        "strictPropertyInitialization": false,
+        "preserveSymlinks": true, // 支持硬链接
+        "removeComments": true //编译 js 的时候，删除掉注释
+    },
+    "tstl": {
+        "luaTarget": "JIT",
+        "sourceMapTraceback": true,
+        "noHeader": true
+    }
+}

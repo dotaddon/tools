@@ -1,31 +1,10 @@
 {
-    "desc": "该目录下放置游戏运行逻辑和触发脚本",
-    "include": [
-        "src/*.ts"
-    ],
+    "extends": "@mobilc/tsconfig/lua.json",
+    "include": [ "src/*.ts" ],
     "compilerOptions": {
         "outDir": "dist",
-        "types": [
-            "@moddota/dota-lua-types"
-        ],
-        "target": "es2017",
-        "lib": [
-            "es2017"
-        ],
-        "moduleResolution": "node",
-        "removeComments": true, //编译 js 的时候，删除掉注释
-        "strict": true,
-        "strictNullChecks": false,
-        "strictPropertyInitialization": false,
-        "preserveSymlinks": true, // 支持硬链接
-        "experimentalDecorators": true, //启用实验性的ES装饰器。
-        "suppressImplicitAnyIndexErrors": true, // 抑制任何索引错误
-        "allowSyntheticDefaultImports": true
     },
     "tstl": {
-        "luaTarget": "JIT",
-        "sourceMapTraceback": false,
-        "noHeader": true,
         "buildMode": "library",
     }
 }
