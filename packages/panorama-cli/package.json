@@ -34,6 +34,7 @@
   },
   "devDependencies": {
     "@mobilc/tsconfig": "workspace:*",
+    "@mobilc/panorama-type": "workspace:*",
     "@types/react": "^18.0.0",
     "@types/react-reconciler": "^0.18.0",
     "react": "^18.0.0",

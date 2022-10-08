@@ -1,4 +1,8 @@
 {
-  "extends": "@mobilc/tsconfig/panorama.json",
-  "include": ["."]
+  "files": ["index.d.ts"],
+  "compilerOptions": {
+    "types": [
+      "@moddota/panorama-types"
+    ],
+  }
 }

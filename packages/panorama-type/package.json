@@ -13,11 +13,11 @@
   "license": "MIT",
   "author": "西索酱",
   "files": [
-    "index.d.ts"
+    "index.d.ts",
+    "types/**/*.d.ts"
   ],
   "dependencies": {
-    "@moddota/panorama-types": "^1.21.0",
-    "tslib": "^2.0.3"
+    "@moddota/panorama-types": "^1.21.0"
   },
   "peerDependencies": {
     "typescript": "^3.0.0 || ^4.0.0"

@@ -2,7 +2,7 @@
     "desc": "该目录下放置静态页面与玩家交互逻辑",
     "extends": "./base.json",
     "compilerOptions": {
-        "types": [ "@moddota/panorama-types" ],
+        "types": [ "@moddota/panorama-types","@mobilc/panorama-type" ],
         "jsx": "react-jsx",
         "jsxImportSource": "react",
         "resolveJsonModule": true,
