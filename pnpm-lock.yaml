@@ -45,7 +45,7 @@ importers:
 
   packages/panorama-cli:
     specifiers:
-      "@mobilc/panorama-type": workspace:^0.0.3
+      "@mobilc/panorama-type": workspace:^0.0.4
       "@mobilc/tsconfig": workspace:^0.x
       "@types/react": ^18.0.0
       "@types/react-reconciler": ^0.18.0
