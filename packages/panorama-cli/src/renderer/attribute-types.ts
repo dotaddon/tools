@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-empty-interface */
 import { ClassAttributes, ReactNode } from 'react';
-
+type hisoCombination<T, S> = {
+  [P in keyof S]?: P extends keyof T ? T[P] : S[P]
+};
 type EventHandler<T extends PanelBase> = (panel: T) => void;
 export interface PanelAttributes<T extends PanelBase = Panel> extends ClassAttributes<T> {
   children?: ReactNode;
@@ -9,7 +11,7 @@ export interface PanelAttributes<T extends PanelBase = Panel> extends ClassAttri
 
   id?: string;
   className?: string;
-  style?: Partial<VCSSStyleDeclaration2> | Partial<VCSSStyleDeclaration>;
+  style?: hisoCombination<VCSSStyleDeclaration2, VCSSStyleDeclaration>;
   hittest?: boolean;
   hittestchildren?: boolean;
   acceptsfocus?: boolean;
