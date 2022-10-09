@@ -6,9 +6,13 @@ declare type VCSSDirection = 'up' | 'down' | 'left' | 'right'
 declare type VCSSVerticalAlign = 'top' | 'center' | 'bottom' | 'middle'
 /** 垂直居中 */
 declare type VCSSHorizontalAlign = 'left' | 'center' | 'right'
+/** 百分比字符串 */
+declare type VCSSPercentString = `${number}%`
+/** 像素字符串 */
+declare type VCSSPixelsString = `${number}px`
 
 
-interface VCSSStyleDeclaration {
+interface VCSSStyleDeclaration2 {
     /** 水平居中 */
     verticalAlign: VCSSVerticalAlign | null;
 
@@ -35,7 +39,7 @@ interface VCSSStyleDeclaration {
     flowChildren: VCSSDirection | `${VCSSDirection}-wrap` | null;
 
     /** 板子的宽度 */
-    width: `${number}px` | `${number}%` | `height-percentage(${number}%)`
+    width: 'fit-children' | VCSSPixelsString | VCSSPercentString | `height-percentage(${VCSSPercentString})` | `fill-parent-flow( ${number} )`
     /** 板子的高度 */
-    height: `${number}px` | `${number}%` | `width-percentage(${number}%)`
+    height: 'fit-children' | VCSSPixelsString | VCSSPercentString | `width-percentage(${VCSSPercentString})` | `fill-parent-flow( ${number} )`
 }

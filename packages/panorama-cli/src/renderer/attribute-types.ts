@@ -9,7 +9,7 @@ export interface PanelAttributes<T extends PanelBase = Panel> extends ClassAttri
 
   id?: string;
   className?: string;
-  style?: Partial<VCSSStyleDeclaration>;
+  style?: Partial<VCSSStyleDeclaration2> | Partial<VCSSStyleDeclaration>;
   hittest?: boolean;
   hittestchildren?: boolean;
   acceptsfocus?: boolean;
