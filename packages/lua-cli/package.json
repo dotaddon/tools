@@ -20,6 +20,6 @@
     "build": "tstl"
   },
   "devDependencies": {
-    "@mobilc/tsconfig": "workspace:^0.0.4"
+    "@mobilc/tsconfig": "workspace:^0.*"
   }
 }
