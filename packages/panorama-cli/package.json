@@ -1,0 +1,44 @@
+{
+  "name": "@mobilc/panorama-cli",
+  "version": "0.0.0",
+  "description": "React for Valve's Panorama UI (for Dota 2 Custom Games).",
+  "keywords": [
+    "dota",
+    "panorama",
+    "react",
+    "jsx"
+  ],
+  "repository": "https://github.com/takegine/testdodo/issues",
+  "license": "MIT",
+  "authors": "西索酱",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "@mobilc/panorama-type": "workspace:*"
+  },
+  "devDependencies": {
+    "@mobilc/tsconfig": "workspace:*"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "minify": true,
+    "splitting": false,
+    "clean": true,
+    "dts": true
+  }
+}
