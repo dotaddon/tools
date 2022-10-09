@@ -33,4 +33,9 @@ interface VCSSStyleDeclaration {
      * 子成员自动排列
      */
     flowChildren: VCSSDirection | `${VCSSDirection}-wrap` | null;
+
+    /** 板子的宽度 */
+    width: `${number}px` | `${number}%` | `height-percentage(${number}%)`
+    /** 板子的高度 */
+    height: `${number}px` | `${number}%` | `width-percentage(${number}%)`
 }
