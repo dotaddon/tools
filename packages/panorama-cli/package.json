@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/panorama-react-dom",
-  "version": "0.2.12-c.1",
+  "version": "0.2.12",
   "description": "React for Valve's Panorama UI (for Dota 2 Custom Games).",
   "keywords": [
     "dota",
@@ -33,7 +33,7 @@
     "panorama-polyfill": "^0.1.1"
   },
   "devDependencies": {
-    "@mobilc/panorama-type": "workspace:^0.*",
+    "@mobilc/panorama-type": "workspace:^0.0.6",
     "@mobilc/tsconfig": "workspace:^0.*",
     "@types/react": "^18.0.0",
     "@types/react-reconciler": "^0.18.0",
