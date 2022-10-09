@@ -39,14 +39,14 @@ importers:
 
   packages/lua-cli:
     specifiers:
-      "@mobilc/tsconfig": workspace:^0.x
+      "@mobilc/tsconfig": workspace:^0.0.4
     devDependencies:
       "@mobilc/tsconfig": link:../tsconfig
 
   packages/panorama-cli:
     specifiers:
-      "@mobilc/panorama-type": workspace:^0.0.4
-      "@mobilc/tsconfig": workspace:^0.x
+      "@mobilc/panorama-type": workspace:^0.0.5
+      "@mobilc/tsconfig": workspace:^0.0.4
       "@types/react": ^18.0.0
       "@types/react-reconciler": ^0.18.0
       panorama-polyfill: ^0.1.1
