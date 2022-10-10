@@ -1,6 +1,8 @@
 const reloadKey = new Date().getTime()
 /**按键绑定 */
-export default <T extends 按键列表>(key: T, up?: (name: string) => void, down?: (name: string) => void) => {
+export function KeyBind<T extends 按键列表>
+    (key: T, up?: (name: string) => void, down?: (name: string) => void)
+{
     let name = 'Key' + key + reloadKey
     Game.CreateCustomKeyBind(key, "+" + name);
     up && Game.AddCommand("+" + name, up, "", 0 << 32);
