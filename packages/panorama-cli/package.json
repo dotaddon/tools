@@ -17,8 +17,8 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "tsup",
-    "dev": "tsup --watch",
+    "build":"rollup --config --environment BUILD_ENV:production",
+    "dev": "tsup src/index.ts --dts --clean --minify --watch",
     "prepublishOnly": "pnpm build"
   },
   "devDependencies": {
@@ -30,14 +30,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "tsup": {
-    "entry": [
-      "src/index.ts"
-    ],
-    "minify": true,
-    "splitting": false,
-    "clean": true,
-    "dts": true
   }
 }

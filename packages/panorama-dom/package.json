@@ -15,20 +15,14 @@
     "Demon673",
     "西索酱"
   ],
-  "exports": {
-    "development": "./dist/esm/panorama-react-dom.development.js",
-    "production": "./dist/esm/panorama-react-dom.production.js",
-    "default": "./dist/esm/panorama-react-dom.development.js"
-  },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist/**/*.{js,ts}"
+    "dist/**"
   ],
   "scripts": {
     "build": "rollup --config --environment BUILD_ENV:production",
-    "dev": "rollup --config --environment BUILD_ENV:development --watch",
-    "tsup": "tsup src/index.ts --dts --clean --minify",
+    "dev": "tsup --watch",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
@@ -47,5 +41,18 @@
   },
   "publishConfig": {
     "access": "public"
+  },
+  "tsup": {
+    "entry": [
+      "src/index.ts"
+    ],
+    "minify": false,
+    "splitting": false,
+    "clean": true,
+    "dts": true,
+    "external":[
+      "React",
+      "panorama-polyfill"
+    ]
   }
 }

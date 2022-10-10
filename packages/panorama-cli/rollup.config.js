@@ -8,7 +8,7 @@ import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 const BANNER = `/**
- * React Panorama (${pkg.repository})
+ * Panorama Cli (${pkg.repository})
  * @version ${pkg.version}
  * @license ${pkg.license}
  */`;
@@ -16,7 +16,7 @@ const BANNER = `/**
 /** @returns {import('rollup').RollupOptions} */
 const createConfig = (env, format) => ({
   input: 'src/index.ts',
-  external: ['react', /^panorama-polyfill/],
+  external: ['react'],
   plugins: [
     // https://github.com/rollup/plugins/issues/272
     typescript({ noEmitOnError: false }),
@@ -37,7 +37,7 @@ const createConfig = (env, format) => ({
   output: {
     file: `dist/index.js`,
     format,
-    name: 'ReactDom',
+    name: 'PanoramaCli',
     globals: { react: 'React' },
     banner: BANNER,
   },
@@ -64,7 +64,7 @@ const dtsConfig = {
   ],
   output: {
     file: 'dist/index.d.ts',
-    outro: 'export as namespace ReactDom;',
+    outro: 'export as namespace PanoramaCli;',
   },
 };
 
