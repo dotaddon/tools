@@ -20,10 +20,8 @@
     "dev": "tsup --watch",
     "prepublishOnly": "pnpm build"
   },
-  "dependencies": {
-    "@mobilc/panorama-type": "workspace:*"
-  },
   "devDependencies": {
+    "@mobilc/panorama-type": "workspace:*",
     "@mobilc/tsconfig": "workspace:*"
   },
   "peerDependencies": {
