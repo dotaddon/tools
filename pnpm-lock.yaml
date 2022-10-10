@@ -47,9 +47,8 @@ importers:
     specifiers:
       "@mobilc/panorama-type": workspace:*
       "@mobilc/tsconfig": workspace:*
-    dependencies:
-      "@mobilc/panorama-type": link:../panorama-type
     devDependencies:
+      "@mobilc/panorama-type": link:../panorama-type
       "@mobilc/tsconfig": link:../tsconfig
 
   packages/panorama-dom:
