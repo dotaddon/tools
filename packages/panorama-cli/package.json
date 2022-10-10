@@ -12,6 +12,7 @@
   "license": "MIT",
   "authors": "西索酱",
   "types": "dist/index.d.ts",
+  "main": "dist/index.js",
   "files": [
     "dist/**"
   ],
