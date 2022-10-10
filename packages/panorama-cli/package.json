@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/panorama-cli",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React for Valve's Panorama UI (for Dota 2 Custom Games).",
   "keywords": [
     "dota",
@@ -17,7 +17,7 @@
     "dist/**"
   ],
   "scripts": {
-    "build":"rollup --config --environment BUILD_ENV:production",
+    "build": "rollup --config --environment BUILD_ENV:production",
     "dev": "tsup src/index.ts --dts --clean --minify --watch",
     "prepublishOnly": "pnpm build"
   },
