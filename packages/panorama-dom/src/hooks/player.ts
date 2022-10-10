@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGameEvent } from ".";
+import { useGameEvent } from "./event/game";
 
 /** 输出当前玩家ID数组，玩家重连时更新
  *  get all playerID in game now，refresh on anyone connect
