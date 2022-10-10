@@ -20,6 +20,7 @@
     "production": "./dist/esm/panorama-react-dom.production.js",
     "default": "./dist/esm/panorama-react-dom.development.js"
   },
+  "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*.{js,ts}"
@@ -27,14 +28,15 @@
   "scripts": {
     "build": "rollup --config --environment BUILD_ENV:production",
     "dev": "rollup --config --environment BUILD_ENV:development --watch",
+    "tsup": "tsup src/index.ts --dts --clean --minify",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
     "panorama-polyfill": "^0.1.1"
   },
   "devDependencies": {
-    "@mobilc/panorama-type": "workspace:^0.0.6",
-    "@mobilc/tsconfig": "workspace:^0.*",
+    "@mobilc/panorama-type": "workspace:*",
+    "@mobilc/tsconfig": "workspace:*",
     "@types/react": "^18.0.0",
     "@types/react-reconciler": "^0.18.0",
     "react": "^18.0.0",
