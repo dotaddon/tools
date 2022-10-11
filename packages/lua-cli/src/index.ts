@@ -8,3 +8,4 @@ export {
 }
 
 export * from './dota_ts_adapter'
+export * from './custom_game_event'
