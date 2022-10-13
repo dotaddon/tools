@@ -1,0 +1,14 @@
+{
+    "version": "2.0.0",
+    "type": "shell",
+    "tasks": [
+        {
+            "label": "编译",
+            "command": "lerna run build",
+        },
+        {
+            "label": "发布",
+            "command": "lerna publish",
+        },
+    ]
+}
