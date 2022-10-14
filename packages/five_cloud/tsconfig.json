@@ -1,0 +1,6 @@
+{
+    "extends": "@mobilc/tsconfig/lua.json",
+    "include": [
+        "."
+    ],
+}

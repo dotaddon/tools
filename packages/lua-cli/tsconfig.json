@@ -1,6 +1,6 @@
 {
     "extends": "@mobilc/tsconfig/lua.json",
-    "include": [ "src/*.ts" ],
+    "include": [ "." ],
     "compilerOptions": {
         "outDir": "dist",
         "declaration": true
