@@ -26,8 +26,10 @@ export class BaseCustomGameEventManager {
      * @param context 包含回调事件的对象
      */
     protected listen<T extends keyof CustomGameEventDeclarations>
-        (eventName: T, functionName: CGEventDeclarationsCallbacks[T], context: undefined): void
-    protected listen<T extends keyof CustomGameEventDeclarations, E extends keyof S,S>
+        (eventName: keyof Intersection<this, CustomGameEventDeclarations>): void
+    protected listen<T extends keyof CustomGameEventDeclarations>
+        (eventName: T, functionName: CGEventDeclarationsCallbacks[T]): void
+    protected listen<T extends keyof CustomGameEventDeclarations, E extends keyof S, S>
         (eventName: T, functionName: S[E] extends CGEventDeclarationsCallbacks[T]?E:never, context: S): void
     protected listen<T extends keyof CustomGameEventDeclarations, E extends keyof S, S extends any = this>
         (eventName: keyof Intersection<S, CustomGameEventDeclarations>, funcName?: S[E] extends CGEventDeclarationsCallbacks[T] ? E : CGEventDeclarationsCallbacks[T], context?: S) {
