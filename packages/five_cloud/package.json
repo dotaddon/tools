@@ -8,7 +8,7 @@
   "main": "index",
   "directories": {},
   "files": [
-    "**.{lua,d.ts}"
+    "**/*.{lua,d.ts}"
   ],
   "scripts": {
     "build": ""
