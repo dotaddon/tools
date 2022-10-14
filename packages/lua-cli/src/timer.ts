@@ -1,6 +1,8 @@
-declare type TimerNameStr = string & {
-    readonly __tag__: 'TimerNameStr';
-};
+declare global {
+    type TimerNameStr = string & {
+        readonly __tag__: 'TimerNameStr';
+    };
+}
 
 
 class TsTimerTool {
