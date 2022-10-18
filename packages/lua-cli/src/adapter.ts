@@ -1,3 +1,13 @@
+
+
+
+
+declare type BUffCreateInfos<BuffType> = BuffType extends { OnCreated: (p: any) => void } 
+    ? BuffType['OnCreated'] extends (p: infer S) => any 
+        ? S 
+        : never 
+    : undefined
+
 export interface BaseAbility extends CDOTA_Ability_Lua { }
 export class BaseAbility { }
 
@@ -6,23 +16,35 @@ export class BaseItem { }
 
 export interface BaseModifier extends CDOTA_Modifier_Lua { }
 export class BaseModifier {
+    /** 给目标上buff */
     public static apply<T extends typeof BaseModifier>(
         this: T,
         target: CDOTA_BaseNPC,
-        caster?: CDOTA_BaseNPC,
+        caster: CDOTA_BaseNPC = target,
         ability?: CDOTABaseAbility,
-        modifierTable?: object,
+        CreateInfos?: BUffCreateInfos<InstanceType<T>>,
     ): InstanceType<T> {
-        if (caster == null) caster = target;
-        return target.AddNewModifier(caster, ability, this.name, modifierTable) as any;
+        return target.AddNewModifier(caster, ability, this.name, CreateInfos) as any;
     }
 
+    /** 判断是否拥有此buff */
     public static on<T extends typeof BaseModifier>(this: T, target: CDOTA_BaseNPC): boolean {
         return target.HasModifier(this.name);
     }
 
+    /** 移除目标身上所有该buff */
     public static remove<T extends typeof BaseModifier>(this: T, target: CDOTA_BaseNPC): void {
         target.RemoveModifierByName(this.name);
+    }
+    /** 在目标地点创建法术场 */
+    public static dummy<T extends typeof BaseModifier>(
+        this: T,
+        caster: CDOTA_BaseNPC,
+        ability?: CDOTABaseAbility,
+        target: Vector = caster.GetOrigin(),
+        CreateInfos?: BUffCreateInfos<InstanceType<T>>,
+    ): CDOTA_BaseNPC {
+        return CreateModifierThinker(caster,ability,this.name,CreateInfos,target,caster.GetTeam(),false)
     }
 }
 
