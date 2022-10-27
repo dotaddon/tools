@@ -11,6 +11,22 @@ declare type VCSSPercentString = `${number}%`
 /** 像素字符串 */
 declare type VCSSPixelsString = `${number}px`
 
+declare type DefaultFont = 
+  | "Radiance"
+  | "FZLanTingHei-R-GBK"
+  | "TH Sarabun New"
+  | "YDYGO 540"
+  | "Gulim"
+  | "MingLiU"
+  | "RadianceM"
+  | "Reaver"
+  | "Goudy Trajan Medium"
+  | "FZKai-Z03"
+  | "Courier New"
+  | "Courier"
+  | "Creepster"
+  | "Valve Radus"
+
 
 interface VCSSStyleDeclaration2 {
     /** 水平居中 */
@@ -39,7 +55,10 @@ interface VCSSStyleDeclaration2 {
     flowChildren: VCSSDirection | `${VCSSDirection}-wrap` | null;
 
     /** 板子的宽度 */
-    width: 'fit-children' | VCSSPixelsString | VCSSPercentString | `height-percentage(${VCSSPercentString})` | `fill-parent-flow( ${number} )`
+    width: 'fit-children' | VCSSPixelsString | VCSSPercentString | `height-percentage(${VCSSPercentString})` | `fill-parent-flow(${number})`
     /** 板子的高度 */
-    height: 'fit-children' | VCSSPixelsString | VCSSPercentString | `width-percentage(${VCSSPercentString})` | `fill-parent-flow( ${number} )`
+    height: 'fit-children' | VCSSPixelsString | VCSSPercentString | `width-percentage(${VCSSPercentString})` | `fill-parent-flow(${number})`
+
+    /** 字体文件 */
+    fontFamily: DefaultFont | string
 }
