@@ -4,6 +4,11 @@
   "workspaces": [
     "packages/*"
   ],
+  "scripts": {
+    "lint": "run-p lint:*",
+    "lint:eslint": "eslint packages/*/src",
+    "lint:prettier": "prettier --check packages/*/src"
+  },
   "devDependencies": {
     "@ark120202/eslint-config": "^2.4.2",
     "@mobilc/panorama-type": "workspace:*",
@@ -27,6 +32,8 @@
     "rollup-plugin-prettier": "2.1.0",
     "rollup-plugin-terser": "^7.0.2",
     "typescript": "^4.8.4",
+    "core-js": "^3.6.5",
+    "eslint": "^7.8.1",
     "typescript-to-lua": "^1.10.1"
   }
 }

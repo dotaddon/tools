@@ -1,15 +1,9 @@
 {
-  "extends": "@ark120202/typescript-config/base.json",
+  "extends": "@mobilc/tsconfig/panorama.json",
   "compilerOptions": {
     "rootDir": "src",
-    "outDir": "lib",
-    "types": ["panorama-types"],
-
-    "lib": ["es2017"],
-    "target": "es2017",
+    "outDir": "dist",
     "module": "esnext",
-
-    "importHelpers": false,
     "declaration": true
   }
 }
