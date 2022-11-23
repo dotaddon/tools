@@ -1,5 +1,5 @@
 /** 创建一个http请求 */
-export function http(url:string) {
+export function asyncHttp(url:string) {
     return new THttpAsnycPipe(url)
 }
 
@@ -12,6 +12,19 @@ class THttpAsnycPipe {
     }
 
     constructor(private _url: string) {
+    }
+    private _headers: Record<string, string> = {}
+    /** 设置请求的标头值。 */
+    header(name: string, value: string) {
+        this._headers[name] = value
+        return this
+    }
+    /** 校验文字
+     * @param serverKey 经过 DedicatedServerKeyV2 函数包装后，放到req.header中
+     */
+    key(serverKey: string) {
+        this._headers['serverKey'] = GetDedicatedServerKeyV2(serverKey)
+        return this
     }
 
     private _timeout:number
@@ -27,31 +40,17 @@ class THttpAsnycPipe {
 
     private _params:Record<string,string> = {}
     /** 在请求上设置POST或GET参数。 */
-    parameter(name:string,value:string){
+    parameter( name:string, value:string ){
         this._params[name] = value
-        return this
-    }
-    private _headers: Record<string, string> = {}
-    /** 设置请求的标头值。 */
-    header(name: string, value: string) {
-        this._headers[name] = value
-        return this
-    }
-
-    /** 校验文字
-     * @param serverKey 经过 DedicatedServerKeyV2 函数包装后，放到req.header中
-     */
-    key(serverKey:string) {
-        this._headers['serverKey'] = GetDedicatedServerKeyV2(serverKey)
         return this
     }
 
     private _bodyName:string
     private _bodyValue:string
     /** 设置post的文字体-设置 parameter 后无效。 */
-    body<T extends string = string>(contentType: T, body: T extends 'application/json'? object:string){
+    postBody( contentType: string, body: object|string ){
         this._bodyName = contentType
-        if (contentType == 'application/json')
+        if (typeof(body) == 'object')
             this._bodyValue = json.encode(body)
         else
             this._bodyValue = body
@@ -62,6 +61,11 @@ class THttpAsnycPipe {
      */
     send<T extends object>(check?: (req: CScriptHTTPRequest) => void) {
         const q = CreateHTTPRequest(this._method, this._url)
+        Object
+            .entries(this._headers)
+            .map(
+                ([name, value]) => q.SetHTTPRequestHeaderValue(name, value)
+            )
         if (this._timeoutAbsolute)
             q.SetHTTPRequestAbsoluteTimeoutMS(this._timeoutAbsolute)
         if (this._timeout)
@@ -72,11 +76,6 @@ class THttpAsnycPipe {
             .entries(this._params)
             .map(
                 ([name, value]) => q.SetHTTPRequestGetOrPostParameter(name, value)
-            )
-        Object
-            .entries(this._headers)
-            .map(
-                ([name, value]) => q.SetHTTPRequestHeaderValue(name, value)
             )
         return new Promise<T>((resolve,reject)=>{
             q.Send(res => {
