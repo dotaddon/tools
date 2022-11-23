@@ -5,7 +5,6 @@ importers:
   .:
     specifiers:
       '@ark120202/eslint-config': ^2.4.2
-      '@mobilc/panorama-polyfill': workspace:^0.*
       '@mobilc/panorama-type': workspace:*
       '@mobilc/tsconfig': workspace:^0.*
       '@moddota/dota-lua-types': ^4.21.1
@@ -32,7 +31,6 @@ importers:
       typescript-to-lua: ^1.10.1
     devDependencies:
       '@ark120202/eslint-config': 2.5.0_eslint@7.32.0+typescript@4.8.4
-      '@mobilc/panorama-polyfill': link:packages/panorama-polyfill
       '@mobilc/panorama-type': link:packages/panorama-type
       '@mobilc/tsconfig': link:packages/tsconfig
       '@moddota/dota-lua-types': 4.21.1_typescript@4.8.4
@@ -72,9 +70,9 @@ importers:
 
   packages/panorama-dom:
     specifiers:
-      panorama-polyfill: ^0.1.1
+      '@mobilc/panorama-polyfill': workspace:^0.*
     dependencies:
-      panorama-polyfill: 0.1.1_core-js@3.26.1
+      '@mobilc/panorama-polyfill': link:../panorama-polyfill
 
   packages/panorama-polyfill:
     specifiers:
@@ -87,12 +85,12 @@ importers:
 
   packages/panorama-type:
     specifiers:
+      '@mobilc/panorama-polyfill': workspace:^0.*
       '@moddota/panorama-types': ^1.21.0
-      panorama-polyfill: ^0.1.1
     dependencies:
       '@moddota/panorama-types': 1.21.0_typescript@4.8.4
     devDependencies:
-      panorama-polyfill: 0.1.1_core-js@3.26.1
+      '@mobilc/panorama-polyfill': link:../panorama-polyfill
 
   packages/tsconfig:
     specifiers: {}
@@ -5036,17 +5034,6 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
-
-  /panorama-polyfill/0.1.1_core-js@3.26.1:
-    resolution: {integrity: sha512-LXROlGC0j8wWtLc6jm7HMhWH0c6Ft5SM/58zZGn05oo2a7g7UNTeQuCPzNGvDy+mqX271rPHUrDoY4BmyGMzjQ==}
-    peerDependencies:
-      core-js: ^3.6.5
-    peerDependenciesMeta:
-      core-js:
-        optional: true
-    dependencies:
-      core-js: 3.26.1
-      object-inspect: 1.12.2
 
   /parent-module/1.0.1:
     resolution: {integrity: sha512-GQ2EWRpQV8/o+Aw8YqtfZZPfNRWZYkbidE9k5rpl/hC3vtHHBfGm2Ifi6qWV+coDGkrUKZAxE3Lot5kcsRlh+g==}

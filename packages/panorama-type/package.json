@@ -20,9 +20,10 @@
     "@moddota/panorama-types": "^1.21.0"
   },
   "devDependencies": {
-    "panorama-polyfill": "^0.1.1"
+    "@mobilc/panorama-polyfill": "workspace:^0.*"
   },
   "peerDependencies": {
+    "@mobilc/panorama-polyfill": "workspace:^0.*",
     "typescript": "^3.0.0 || ^4.0.0"
   },
   "publishConfig": {
