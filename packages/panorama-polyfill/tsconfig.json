@@ -1,5 +1,6 @@
 {
   "extends": "@mobilc/tsconfig/panorama.json",
+  "include": ["."],
   "compilerOptions": {
     "types": [ "@moddota/panorama-types" ],
     "rootDir": "src",
