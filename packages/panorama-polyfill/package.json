@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/panorama-polyfill",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Polyfills for common JavaScript features for Valve's Panorama UI (for Dota 2 Custom Games).",
   "keywords": [
     "dota",

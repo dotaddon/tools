@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/panorama-type",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "TypeScript definitions for Dota 2 Panorama API",
   "keywords": [
     "dota",
@@ -20,7 +20,7 @@
     "@moddota/panorama-types": "^1.21.0"
   },
   "devDependencies": {
-    "@mobilc/panorama-polyfill": "workspace:^0.*"
+    "@mobilc/panorama-polyfill": "workspace:^0.0.1"
   },
   "peerDependencies": {
     "@mobilc/panorama-polyfill": "workspace:^0.*",
