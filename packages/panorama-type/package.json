@@ -17,7 +17,9 @@
     "types/**/*.d.ts"
   ],
   "dependencies": {
-    "@moddota/panorama-types": "^1.21.0",
+    "@moddota/panorama-types": "^1.21.0"
+  },
+  "devDependencies": {
     "panorama-polyfill": "^0.1.1"
   },
   "peerDependencies": {

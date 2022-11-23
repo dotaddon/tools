@@ -18,8 +18,5 @@
   "types": "dist/index",
   "scripts": {
     "build": "tstl"
-  },
-  "devDependencies": {
-    "@mobilc/tsconfig": "workspace:^0.*"
   }
 }

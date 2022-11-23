@@ -21,10 +21,6 @@
     "dev": "tsup src/index.ts --dts --clean --minify --watch",
     "prepublishOnly": "pnpm build"
   },
-  "devDependencies": {
-    "@mobilc/panorama-type": "workspace:*",
-    "@mobilc/tsconfig": "workspace:*"
-  },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
   },
