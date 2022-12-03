@@ -89,9 +89,12 @@ importers:
 
   packages/panorama-type:
     specifiers:
+      '@mobilc/panorama-polyfill': workspace:*
       '@moddota/panorama-types': ^1.21.0
     dependencies:
       '@moddota/panorama-types': 1.21.0_typescript@4.9.3
+    devDependencies:
+      '@mobilc/panorama-polyfill': link:../panorama-polyfill
 
   packages/tsconfig:
     specifiers: {}

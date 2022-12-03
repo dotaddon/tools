@@ -19,6 +19,9 @@
   "dependencies": {
     "@moddota/panorama-types": "^1.21.0"
   },
+  "devDependencies": {
+    "@mobilc/panorama-polyfill": "workspace:*"
+  },
   "publishConfig": {
     "access": "public"
   }
