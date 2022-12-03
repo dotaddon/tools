@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/five_cloud",
-  "version": "0.0.2-alpha.1",
+  "version": "0.0.2",
   "description": "a tool for collect error messages from dota2 RPG development",
   "author": "超级鸡蛋人",
   "homepage": "https://github.com/takegine/testdodo/issues",
@@ -17,6 +17,6 @@
     "access": "public"
   },
   "devDependencies": {
-    "@mobilc/tsconfig": "workspace:^0.*"
+    "@mobilc/tsconfig": "workspace:^0.1.0"
   }
 }
