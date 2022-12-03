@@ -1,11 +1,11 @@
 {
   "extends": "@mobilc/tsconfig/panorama.json",
-  "include": ["."],
   "compilerOptions": {
     "types": [ "@moddota/panorama-types" ],
     "rootDir": "src",
     "outDir": "dist",
     "module": "esnext",
+    "skipLibCheck": true,
     "declaration": true
   }
 }

@@ -17,6 +17,7 @@
     "dist/**/*.{js,ts}"
   ],
   "scripts": {
+    "build": "tsc",
     "dev": "tsc --watch"
   },
   "dependencies": {
