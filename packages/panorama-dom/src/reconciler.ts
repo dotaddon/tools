@@ -1,7 +1,7 @@
 import '@mobilc/panorama-polyfill/dist/console'; // console:React calls console.error on errors during render
 import '@mobilc/panorama-polyfill/dist/timers'; // timers:React is using setTimeout directly, ignoring host config
 import ReactReconciler from 'react-reconciler';
-import { InternalPanel, noop, temporaryPanelHost, temporaryScenePanelHost } from '../utils';
+import { InternalPanel, noop, temporaryPanelHost, temporaryScenePanelHost } from './utils';
 import { splitInitialProps, updateProperty, getPropertyInfo } from './attributes';
 import { fixPanelBase, panelBaseNames } from './panel-base';
 import { PanelType } from './panels';

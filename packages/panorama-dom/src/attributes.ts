@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
-import { InternalPanel, noop, queueMicrotask } from '../utils';
+import { InternalPanel, noop, queueMicrotask } from './utils';
 import { PanelAttributes } from './attribute-types';
 import { panelBaseNames } from './panel-base';
 import { AttributesByPanel, PanelType, PanelTypeByName } from './panels';

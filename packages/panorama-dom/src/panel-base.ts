@@ -1,4 +1,4 @@
-import { temporaryPanelHost } from '../utils';
+import { temporaryPanelHost } from './utils';
 
 export const panelBaseNames: ReadonlySet<string> = new Set([
   'CircularProgressBar',
