@@ -17,9 +17,7 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "rollup --config --environment BUILD_ENV:production",
-    "dev": "tsup src/index.ts --dts --clean --minify --watch",
-    "prepublishOnly": "pnpm build"
+    "build": "tsup"
   },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0"

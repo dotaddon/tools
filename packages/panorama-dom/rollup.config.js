@@ -4,7 +4,7 @@ import replace from '@rollup/plugin-replace';
 import typescript from '@rollup/plugin-typescript';
 import dts from 'rollup-plugin-dts';
 import prettier from 'rollup-plugin-prettier';
-import { terser } from 'rollup-plugin-terser';
+import terser from '@rollup/plugin-terser';
 import pkg from './package.json';
 
 const BANNER = `/**
