@@ -8,39 +8,38 @@ import { terser } from 'rollup-plugin-terser';
 import pkg from './package.json';
 
 const BANNER = `/**
- * React Panorama (${pkg.repository})
+ * React Dom (${pkg.repository})
  * @version ${pkg.version}
  * @license ${pkg.license}
  */`;
 
 /** @returns {import('rollup').RollupOptions} */
-const createConfig = (env, format) => ({
+const createConfig = (env) => ({
   input: 'src/index.ts',
-  external: ['react', /^panorama-polyfill/],
+  output: {
+    file: `dist/index.js`,
+    format: 'esm',
+    name: 'ReactDom',
+    globals: { react: 'React' },
+    banner: BANNER,
+  },
+  external: ['react', /^@mobilc\/panorama-polyfill/],
   plugins: [
     // https://github.com/rollup/plugins/issues/272
     typescript({ noEmitOnError: false }),
     replace({
-      'process.env.BUILD_ENV': JSON.stringify(process.env.BUILD_ENV),
+      'process.env.BUILD_ENV': JSON.stringify(env),
       // React is using it to choose between development/production builds
       // TODO: Remove once react would use conditional exports
       'process.env.NODE_ENV': JSON.stringify(env),
       // https://github.com/rollup/rollup/issues/3230
       "require('util').inspect": '{}',
       preventAssignment: true
-}),
+    }),
     commonjs(),
     nodeResolve(),
-
     env === 'production' && terser(),
   ],
-  output: {
-    file: `dist/index.js`,
-    format,
-    name: 'ReactDom',
-    globals: { react: 'React' },
-    banner: BANNER,
-  },
 });
 
 /** @type {import('rollup').RollupOptions} */
@@ -52,7 +51,9 @@ const dtsConfig = {
     // rollup-plugin-dts injects panorama-types reference
     replace({
       delimiters: ['', ''],
-      preventAssignment:true
+      '/// <reference types="@moddota/panorama-types" />\n': '',
+      '/// <reference types="@mobilc/panorama-type" />\n': '',
+      preventAssignment: true
     }),
 
     prettier({
@@ -69,6 +70,6 @@ const dtsConfig = {
 };
 
 export default [
-  createConfig('development', 'esm'),
+  createConfig(process.env.BUILD_ENV),
   dtsConfig,
-].filter(Boolean);
+];

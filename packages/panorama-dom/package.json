@@ -21,8 +21,9 @@
     "dist/**"
   ],
   "scripts": {
-    "build": "rollup --config --environment BUILD_ENV:production",
-    "dev": "tsup --watch",
+    "build": "tsup",
+    "build-rollup": "rollup --config --environment BUILD_ENV:production",
+    "dev": "rollup --config --environment BUILD_ENV:development",
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
@@ -33,18 +34,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "tsup": {
-    "entry": [
-      "src/index.ts"
-    ],
-    "minify": false,
-    "splitting": false,
-    "clean": true,
-    "dts": true,
-    "external": [
-      "React",
-      "@mobilc/panorama-polyfill"
-    ]
   }
 }

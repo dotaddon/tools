@@ -1,0 +1,13 @@
+{
+    "entry": [
+        "src/index.ts"
+    ],
+    "minify": false,
+    "splitting": false,
+    "clean": true,
+    "dts": true,
+    "external": [
+        "React",
+        "@mobilc/panorama-polyfill"
+    ]
+}
