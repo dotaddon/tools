@@ -31,4 +31,6 @@ declare interface PanoramaPanelNameMap {
     DOTAHudTalentDisplay: Panel,
     /** 天赋树弹出 */
     DOTAStatBranch: Panel,
+    /** 延迟载入 */
+    DelayLoadPanel: Panel,
 }

@@ -58,7 +58,7 @@ export interface panoramaEventDeclarations {
     /** Show a buff tooltip for the specified entityIndex + buff serial. */
     DOTAShowBuffTooltip( arg0: EntityIndex, arg1: number, arg2: boolean ): void
     /** 根据指定物品、样式、英雄，显示经济物品栏。0表示默认样式，-1表示默认英雄。 */
-    DOTAShowEconItemTooltip( arg0: string,arg1: 0 | 1, arg2: number ): void
+    DOTAShowEconItemTooltip(econid: number, arg0: number, hero: 0 | -1 ): void
     /** Show the battle cup portion of the user's profile card, if it exists */
     DOTAShowProfileCardBattleCupTooltip( arg0: number ): void
     /** Show a user's profile card. Use pro name determines whether to use their professional team name if applicable. */
