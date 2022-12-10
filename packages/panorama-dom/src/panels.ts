@@ -4,55 +4,12 @@ import { panoramaDivMember } from '../types/attributes';
 import { PanelType, PanelTypeByName, PNC } from '../types/tpanel';
 import { reactRequ } from '../types/utils';
 
-type WWWW<T extends PanelType = 'Panel'> = reactRequ<PanelTypeByName<T>>
-    & Partial<panoramaDivAcitve<T>
-        & panoramaDivMember[T]
+export type AttributesByPanel = {
+    [P in PanelType]: reactRequ<PanelTypeByName<P>>
+    & Partial<panoramaDivAcitve<P>
+        & panoramaDivMember[P]
         & panoramaDivMember['Panel']
     >
-
-export interface AttributesByPanel extends PNC {
-    Panel: WWWW<'Panel'>
-    Label: WWWW<'Label'>
-    Image: WWWW<'Image'>
-    DOTAAbilityImage: WWWW<'DOTAAbilityImage'>
-    DOTAItemImage: WWWW<'DOTAItemImage'>
-    DOTAHeroImage: WWWW<'DOTAHeroImage'>
-    DOTACountryFlagImage: WWWW<'DOTACountryFlagImage'>
-    DOTALeagueImage: WWWW<'DOTALeagueImage'>
-    EconItemImage: WWWW<'EconItemImage'>
-    AnimatedImageStrip: WWWW<'AnimatedImageStrip'>
-    DOTAEmoticon: WWWW<'DOTAEmoticon'>
-    Movie: WWWW<'Movie'>
-    DOTAHeroMovie: WWWW<'DOTAHeroMovie'>
-    DOTAScenePanel: WWWW<'DOTAScenePanel'>
-    DOTAParticleScenePanel: WWWW<'DOTAParticleScenePanel'>
-    DOTAEconItem: WWWW<'DOTAEconItem'>
-    ProgressBar: WWWW<'ProgressBar'>
-    CircularProgressBar: WWWW<'CircularProgressBar'>
-    ProgressBarWithMiddle: WWWW<'ProgressBarWithMiddle'>
-    DOTAUserName: WWWW<'DOTAUserName'>
-    DOTAUserRichPresence: WWWW<'DOTAUserRichPresence'>
-    DOTAAvatarImage: WWWW<'DOTAAvatarImage'>
-    Countdown: WWWW<'Countdown'>
-    Button: WWWW<'Button'>
-    TextButton: WWWW<'TextButton'>
-    ToggleButton: WWWW<'ToggleButton'>
-    RadioButton: WWWW<'RadioButton'>
-    TextEntry: WWWW<'TextEntry'>
-    NumberEntry: WWWW<'NumberEntry'>
-    Slider: WWWW<'Slider'>
-    SlottedSlider: WWWW<'SlottedSlider'>
-    DropDown: WWWW<'DropDown'>
-    ContextMenuScript: WWWW<'ContextMenuScript'>
-    Carousel: WWWW<'Carousel'>
-    CarouselNav: WWWW<'CarouselNav'>
-    DOTAHUDOverlayMap: WWWW<'DOTAHUDOverlayMap'>
-    DOTAMinimap: WWWW<'DOTAMinimap'>
-    HTML: WWWW<'HTML'>
-    TabButton: WWWW<'TabButton'>
-    TabContents: WWWW<'TabContents'>
-    CustomLayoutPanel: WWWW<'CustomLayoutPanel'>
-    GenericPanel: WWWW<'GenericPanel'>
 }
 
 export type panoramaDiv<T extends PanelType> = ExoticComponent<AttributesByPanel[T]>

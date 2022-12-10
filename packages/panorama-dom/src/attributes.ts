@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { InternalPanel, noop, queueMicrotask } from './utils';
 import { panelBaseNames } from './panel-base';
-import { AttributesByPanel, PanelTypeByName } from './panels';
+import { AttributesByPanel } from './panels';
 import { panoramaDivMember } from '../types/attributes';
-import { PanelType, PNC } from '../types/tpanel';
+import { PanelType, PanelTypeByName, PNC } from '../types/tpanel';
 
 const enum PropertyType {
   SET,
