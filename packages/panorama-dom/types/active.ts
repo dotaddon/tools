@@ -27,16 +27,18 @@ export interface panoramaBaseDivActivate {
         | 'onscrolledtorightedge'
 
     TabButton:
-    | 'onselect'
-    | 'ondeselect'
-    
+        | 'onselect'
+        | 'ondeselect'
+
     DropDown:
-    | 'oninputsubmit'
+        | 'oninputsubmit'
+
     Slider:
-    | 'onvaluechanged'
+        | 'onvaluechanged'
+
     TextEntry:
-    | 'ontextentrychange'
-    | 'oninputsubmit'
+        | 'ontextentrychange'
+        | 'oninputsubmit'
     // | 'ontextentrysubmit' // doesn't seem to be ever triggered
 }
 

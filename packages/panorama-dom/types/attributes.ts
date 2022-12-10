@@ -1,5 +1,5 @@
 import { panelStyles } from "./utils"
-import {PanelType, PNC} from "./tpanel"
+import {PNC} from "./tpanel"
 
 export type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
 export interface panoramaBaseDivMember {

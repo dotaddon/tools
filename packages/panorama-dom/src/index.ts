@@ -4,7 +4,8 @@ import { InternalPanel, reactPanoramaSymbol } from './utils';
 import './panels';
 import { reconciler } from './reconciler';
 
-export * from './attribute-types';
+export * from '../types/attributes';
+export * from '../types/active';
 
 /**
  * Render a React element into the layout in the supplied container.
