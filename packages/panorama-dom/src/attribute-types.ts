@@ -4,62 +4,72 @@ type hisoCombination<T, S> = {
   [P in keyof S]?: P extends keyof T ? T[P] : S[P]
 };
 type EventHandler<T extends PanelBase> = (panel: T) => void;
-export interface PanelAttributes<T extends PanelBase = Panel> extends ClassAttributes<T> {
-  children?: ReactNode;
-  dangerouslyCreateChildren?: string;
-  dialogVariables?: Record<string, string | number | Date>;
 
-  id?: string;
-  className?: string;
-  style?: hisoCombination<VCSSStyleDeclaration2, VCSSStyleDeclaration>;
-  hittest?: boolean;
-  hittestchildren?: boolean;
-  acceptsfocus?: boolean;
-  tabindex?: number | 'auto';
-  inputnamespace?: string;
-  draggable?: boolean;
-  enabled?: boolean;
-  visible?: boolean;
-  // TODO: sectionpos?: 'auto';?
+/** 已经实现的事件 */
+type PanelEventTrue =
+  | 'onload'
+  | 'onfocus'
+  | 'onactivate'
+  | 'onmouseactivate'
+  | 'ondblclick'
+  | 'oncontextmenu'
+  | 'onmouseover'
+  | 'onmouseout'
+  | 'onmovedown'
+  | 'onmoveleft'
+  | 'onmoveright'
+  | 'onmoveup'
+  | 'oncancel'
+  | 'ontabforward'
+  | 'ondescendantfocus'
+  | 'onblur'
+  | 'ondescendantblur'
+  | 'ontabbackward'
+  | 'onscrolledtobottom'
+  | 'onscrolledtorightedge';
 
-  onload?: EventHandler<T>;
-  onfocus?: EventHandler<T>;
-  onactivate?: EventHandler<T>;
-  onmouseactivate?: EventHandler<T>;
-  ondblclick?: EventHandler<T>;
-  oncontextmenu?: EventHandler<T>;
-  onmouseover?: EventHandler<T>;
-  onmouseout?: EventHandler<T>;
-  onmovedown?: EventHandler<T>;
-  onmoveleft?: EventHandler<T>;
-  onmoveright?: EventHandler<T>;
-  onmoveup?: EventHandler<T>;
-  oncancel?: EventHandler<T>;
-  ontabforward?: EventHandler<T>;
-  ondescendantfocus?: EventHandler<T>;
-  onblur?: EventHandler<T>;
-  ondescendantblur?: EventHandler<T>;
-  ontabbackward?: EventHandler<T>;
-  onscrolledtobottom?: EventHandler<T>;
-  onscrolledtorightedge?: EventHandler<T>;
+/** 已经实现的属性 */
+type PanelBaseAttributesTrue = {
+  dangerouslyCreateChildren: string;
+  dialogVariables: Record<string, string | number | Date>;
+
+  id: string;
+  className: string;
+  style: hisoCombination<VCSSStyleDeclaration2, VCSSStyleDeclaration>;
+  hittest: boolean;
+  hittestchildren: boolean;
+  acceptsfocus: boolean;
+  tabindex: number | 'auto';
+  inputnamespace: string;
+  draggable: boolean;
+  enabled: boolean;
+  visible: boolean;
+  // TODO: sectionpos: 'auto';?
 }
 
-interface LabelLikeAttributes<T extends Panel> extends PanelAttributes<T> {
+export type PanelAttributes<T extends PanelBase = Panel> = ClassAttributes<T>
+  & Partial<Record<PanelEventTrue, EventHandler<T>>>
+  & Partial<PanelBaseAttributesTrue>
+  & {
+    children: ReactNode;
+  }
+
+type LabelBaseAttributes = {
   /**
    * Note: Using this attribute is the same as assigning `text` property on a Label panel - it does
    * not localize strings and ignores dialog variables. If you need the behavior of XML attribute,
    * use `localizedText` instead.
    */
-  text?: string | number;
-  localizedText?: string;
-  html?: boolean;
+  text: string | number;
+  localizedText: string;
+  html: boolean;
 }
 
-export interface LabelAttributes extends LabelLikeAttributes<LabelPanel> {
+export type LabelAttributes = PanelAttributes<LabelPanel> & Partial<LabelBaseAttributes> & {
   allowtextselection?: boolean;
 }
 
-export interface ImageAttributes<T extends ImagePanel = ImagePanel> extends PanelAttributes<T> {
+export type ImageAttributes<T extends ImagePanel = ImagePanel> = PanelAttributes<T> & {
   src?: string;
   scaling?: ScalingFunction;
 }
@@ -176,6 +186,10 @@ export interface DOTAEconItemAttributes extends PanelAttributes<EconItemPanel> {
   itemstyle?: number;
 }
 
+// export type ProgressBarAttributes = PanelAttributes<ProgressBar> & Partial<ProgressBar>
+// export type CircularProgressBarAttributes = PanelAttributes<CircularProgressBar> & Partial<CircularProgressBar>
+// export type ProgressBarWithMiddleAttributes = PanelAttributes<ProgressBarWithMiddle> & Partial<ProgressBarWithMiddle>
+
 export interface ProgressBarAttributes extends PanelAttributes<ProgressBar> {
   value?: number;
   min?: number;
@@ -195,7 +209,7 @@ export interface ProgressBarWithMiddleAttributes extends PanelAttributes<Progres
   max?: number;
 }
 
-export interface DOTAUserNameAttributes extends PanelAttributes<UserName> {
+export type DOTAUserNameAttributes = PanelAttributes<UserName> & {
   steamid?: string | 'local';
 }
 
@@ -218,22 +232,19 @@ export interface CountdownAttributes extends PanelAttributes<CountdownPanel> {
   timeDialogVariable?: string;
 }
 
-export interface TextButtonAttributes extends LabelLikeAttributes<TextButton> { }
+export type TextButtonAttributes = PanelAttributes<TextButton> & Partial<LabelBaseAttributes>
 
-export interface ToggleButtonAttributes extends LabelLikeAttributes<ToggleButton> {
-  selected?: boolean; // checked?
-  onselect?: EventHandler<RadioButton>;
-  ondeselect?: EventHandler<RadioButton>;
+type RadioButtonBaseAttributes = {
+  selected: boolean; // checked?
+  onselect: EventHandler<RadioButton>;
+  ondeselect: EventHandler<RadioButton>;
 }
+export type ToggleButtonAttributes = PanelAttributes<ToggleButton> & Partial<LabelBaseAttributes> & Partial<RadioButtonBaseAttributes>
 
-export interface RadioButtonAttributes extends PanelAttributes<RadioButton> {
+export type RadioButtonAttributes = PanelAttributes<RadioButton> & Partial<RadioButtonBaseAttributes> & {
   group?: string;
   text?: string;
   html?: boolean;
-
-  selected?: boolean;
-  onselect?: EventHandler<RadioButton>;
-  ondeselect?: EventHandler<RadioButton>;
 }
 
 export interface TextEntryAttributes extends PanelAttributes<TextEntry> {

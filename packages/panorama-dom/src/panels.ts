@@ -69,7 +69,7 @@ export type PanelTypeByName<T extends PanelType> = PanoramaPanelNameMap[Extract<
 
 declare global {
   /* eslint-disable no-var, vars-on-top */
-  var Panel: ExoticComponent<attributes.PanelAttributes>;
+  var Panel: ExoticComponent<AttributesByPanel['Panel']>;
   var Label: ExoticComponent<attributes.LabelAttributes>;
 
   var Image: ExoticComponent<attributes.ImageAttributes>;
