@@ -1,4 +1,4 @@
-import { hisoCombination } from "./utils"
+import { panelStyles } from "./utils"
 
 export type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
 export interface panoramaBaseDivMember {
@@ -8,7 +8,7 @@ export interface panoramaBaseDivMember {
 
         id: string
         className: string
-        style: hisoCombination<VCSSStyleDeclaration2, VCSSStyleDeclaration>
+        style: panelStyles
         hittest: boolean
         hittestchildren: boolean
         acceptsfocus: boolean
