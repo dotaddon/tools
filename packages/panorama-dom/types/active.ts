@@ -1,9 +1,10 @@
+import { PanelType, PanelTypeByName, PNC } from "./tpanel";
 
 
 export type EventHandler<T extends PanelBase> = (panel: T) => void;
 
 /** 已经实现的事件 */
-export interface panoramaBaseDivActivate {
+export interface panoramaBaseDivActivate extends Record<PanelType, string> {
     Panel:
         | 'onload'
         | 'onfocus'
@@ -26,6 +27,15 @@ export interface panoramaBaseDivActivate {
         | 'onscrolledtobottom'
         | 'onscrolledtorightedge'
 
+    TabContents:
+        | 'onselect'
+        | 'ondeselect'
+    RadioButton:
+        | 'onselect'
+        | 'ondeselect'
+    ToggleButton:
+        | 'onselect'
+        | 'ondeselect'
     TabButton:
         | 'onselect'
         | 'ondeselect'
@@ -35,24 +45,16 @@ export interface panoramaBaseDivActivate {
 
     Slider:
         | 'onvaluechanged'
-
+    SlottedSlider:
+        | 'onvaluechanged'
+    NumberEntry:
+        | 'onvaluechanged'
     TextEntry:
         | 'ontextentrychange'
         | 'oninputsubmit'
     // | 'ontextentrysubmit' // doesn't seem to be ever triggered
 }
 
-export type TextEntryEvent =
-    Record<panoramaBaseDivActivate['DropDown'], EventHandler<TextEntry>>
-
-export type SliderEvent<T extends PanelBase = Panel> =
-    Record<panoramaBaseDivActivate['Slider'], EventHandler<T>>
-
-export type DropDownEvent =
-    Record<panoramaBaseDivActivate['DropDown'], EventHandler<DropDown>>
-
-export type panoramaDivAcitve<T extends PanelBase = Panel> = 
-Record<panoramaBaseDivActivate['Panel'], EventHandler<T>>
-
-export type TabButtonEvent<T extends PanelBase = Panel> = 
-Record<panoramaBaseDivActivate['TabButton'], EventHandler<T>>
+export type panoramaDivAcitve<T extends PanelType = 'Panel'> = {
+    [k in keyof panoramaBaseDivActivate[T] | keyof panoramaBaseDivActivate['Panel']]: EventHandler<PanelTypeByName<T>>
+}
