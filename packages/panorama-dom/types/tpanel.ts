@@ -58,9 +58,9 @@ export type PanelType =
     | 'GenericPanel'
 
 
-export type PNC = Record<PanelType, Record<string, any>>
+export type PNC<T =any> = Record<PanelType, T>
 
-export type PanelTypeByName<T extends PanelType> = PanoramaPanelNameMap[Extract<
+export type DivByPanelType<T extends PanelType> = PanoramaPanelNameMap[Extract<
     T,
     keyof PanoramaPanelNameMap
 >];

@@ -1,10 +1,10 @@
-import { PanelType, PanelTypeByName, PNC } from "./tpanel";
+import { PanelType, DivByPanelType, PNC } from "./tpanel";
 
 
 export type EventHandler<T extends PanelBase> = (panel: T) => void;
 
 /** 已经实现的事件 */
-export interface panoramaBaseDivActivate extends Record<PanelType, string> {
+export interface panoramaDivActivates extends PNC<PanelEvent> {
     Panel:
         | 'onload'
         | 'onfocus'
@@ -55,6 +55,6 @@ export interface panoramaBaseDivActivate extends Record<PanelType, string> {
     // | 'ontextentrysubmit' // doesn't seem to be ever triggered
 }
 
-export type panoramaDivAcitve<T extends PanelType = 'Panel'> = {
-    [k in keyof panoramaBaseDivActivate[T] | keyof panoramaBaseDivActivate['Panel']]: EventHandler<PanelTypeByName<T>>
+export type panoramaDivActive<T extends PanelType = 'Panel'> = {
+    [k in keyof panoramaDivActivates[T] | keyof panoramaDivActivates['Panel']]: EventHandler<DivByPanelType<T>>
 }

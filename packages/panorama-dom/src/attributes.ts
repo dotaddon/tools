@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { InternalPanel, noop, queueMicrotask } from './utils';
 import { panelBaseNames } from './panel-base';
-import { AttributesByPanel } from './panels';
-import { panoramaDivMember } from '../types/attributes';
-import { PanelType, PanelTypeByName, PNC } from '../types/tpanel';
+import { AttributesFromPanelType } from './panels';
+import { PanelAttributes } from '../types/attributes';
+import { PanelType, DivByPanelType, PNC } from '../types/tpanel';
 
 const enum PropertyType {
   SET,
@@ -13,14 +13,14 @@ const enum PropertyType {
 }
 
 /** 获取板子的指定类型的属性 */
-type AttributesMatchingType<TPanel extends PanelBase, TType> = {
-  [P in keyof TPanel]: [TType] extends [TPanel[P]] ? P : never;
+type AttributesMatchingType<TPanel extends PanelBase, FindType> = {
+  [P in keyof TPanel]: [FindType] extends [TPanel[P]] ? P : never;
 }[keyof TPanel];
 
 type PropertyInformation<
   PanelName extends PanelType, // 标签名
   TAttribute extends keyof TC[PanelName], // 属性名
-  TC extends PNC = AttributesByPanel,
+  TC extends PNC = AttributesFromPanelType,
   TValue = TC[PanelName][TAttribute], // 属性类型
   > = { 
     initial?: boolean | string
@@ -29,14 +29,14 @@ type PropertyInformation<
   } & ({
       type: PropertyType.SET;
       name: AttributesMatchingType<
-        PanelTypeByName<PanelName>,
+        DivByPanelType<PanelName>,
         // TODO:
         NonNullable<TValue>
       >;
   } | {
       type: PropertyType.SETTER;
       name: AttributesMatchingType<
-        PanelTypeByName<PanelName>,
+        DivByPanelType<PanelName>,
         // TODO:
         (value: NonNullable<TValue>) => void
       >;
@@ -46,7 +46,7 @@ type PropertyInformation<
   } | {
       type: PropertyType.CUSTOM;
       update(
-        panel: InternalPanel<PanelTypeByName<PanelName>>,
+        panel: InternalPanel<DivByPanelType<PanelName>>,
         newValue: TValue,
         oldValue: TValue,
         propName: TAttribute,
@@ -56,24 +56,23 @@ type PropertyInformation<
 
 const panelPropertyInformation: {
   [TName in PanelType]?: {
-    [TAttribute in keyof AttributesByPanel[TName]]?: PropertyInformation<TName, TAttribute>;
+    [TAttribute in keyof AttributesFromPanelType[TName]]?: PropertyInformation<TName, TAttribute>;
   };
 } = {};
-// 
+
 type PanelPropertyInformation<TName extends PanelType> = {
-  [TAttribute in keyof panoramaDivMember[TName]]: PropertyInformation<TName, TAttribute, panoramaDivMember>;
+  [TAttribute in keyof PanelAttributes[TName]]: PropertyInformation<TName, TAttribute, PanelAttributes>;
 };
-function definePanelPropertyInformation<TName extends PanelType>(
-  name: TName,
-  properties: PanelPropertyInformation<TName>,
-) {
+function definePanelPropertyInformation<TName extends PanelType>
+( name: TName, properties: PanelPropertyInformation<TName>)
+{
   panelPropertyInformation[name] = properties as any;
 }
 
 const PANORAMA_INVALID_DATE = 2 ** 52;
 
 const propertiesInformation: {
-  [TAttribute in keyof panoramaDivMember['Panel']]: PropertyInformation<'Panel', TAttribute, panoramaDivMember>;
+  [TAttribute in keyof PanelAttributes['Panel']]: PropertyInformation<'Panel', TAttribute, PanelAttributes>;
 } = {
   id: { type: PropertyType.INITIAL_ONLY, initial: false },
 

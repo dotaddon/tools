@@ -1,8 +1,9 @@
-import { panelStyles } from "./utils"
+import { PanelStyles } from "./utils"
 import {PNC} from "./tpanel"
 
-export type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
-export interface panoramaBaseDivMember {
+type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
+/** 初始板属性 用于继承 */
+export interface PanelAttributesBase extends PNC<Record<string,any>> {
     Label:{
         /**
          * Note: Using this attribute is the same as assigning `text` property on a Label panel - it does
@@ -70,15 +71,15 @@ export interface panoramaBaseDivMember {
         // renderwaterreflections: boolean
     }
 }
-
-export interface panoramaDivMember extends PNC {
+/** 板属性 */
+export interface PanelAttributes extends PNC<Record<string, any>> {
     Panel: {
         dangerouslyCreateChildren: string
         dialogVariables: Record<string, string | number | Date>
 
         id: string
         className: string
-        style: panelStyles
+        style: PanelStyles
         hittest: boolean
         hittestchildren: boolean
         acceptsfocus: boolean
@@ -89,48 +90,48 @@ export interface panoramaDivMember extends PNC {
         visible: boolean
         // TODO: sectionpos: 'auto'?
     }
-    Label: panoramaBaseDivMember['Label'] & {
+    Label: PanelAttributesBase['Label'] & {
         allowtextselection: boolean
     }
 
-    Image: panoramaBaseDivMember['Image']
-    DOTAAbilityImage:  panoramaBaseDivMember['Image'] & {
+    Image: PanelAttributesBase['Image']
+    DOTAAbilityImage:  PanelAttributesBase['Image'] & {
         abilityname: string
         abilityid: number
         contextEntityIndex: AbilityEntityIndex
         /** @default false */
         showtooltip: boolean
     }
-    DOTAItemImage: panoramaBaseDivMember['Image'] &  {
+    DOTAItemImage: PanelAttributesBase['Image'] &  {
         itemname: string
         contextEntityIndex: ItemEntityIndex
         /** @default true */
         showtooltip: boolean
     }
-    DOTAHeroImage: panoramaBaseDivMember['Image'] & {
+    DOTAHeroImage: PanelAttributesBase['Image'] & {
         heroname: string
         heroid: HeroID
         heroimagestyle: 'icon' | 'portrait' | 'landscape'
         usedefaultimage: boolean
     }
-    DOTACountryFlagImage: panoramaBaseDivMember['Image']& {
+    DOTACountryFlagImage: PanelAttributesBase['Image']& {
         country_code: string
     }
-    DOTALeagueImage: panoramaBaseDivMember['Image'] &  {
+    DOTALeagueImage: PanelAttributesBase['Image'] &  {
         leagueid: number
         /** @default 'Banner' */
         leagueimagestyle: 'Banner' | 'Square' | 'LargeIcon'
     }
-    EconItemImage: panoramaBaseDivMember['Image'] & {
+    EconItemImage: PanelAttributesBase['Image'] & {
         itemdef: number
     }
 
-    AnimatedImageStrip: panoramaBaseDivMember['Image'] & {
+    AnimatedImageStrip: PanelAttributesBase['Image'] & {
         frametime: string
         defaultframe: number
         animating: boolean
     }
-    DOTAEmoticon: panoramaDivMember['AnimatedImageStrip'] & {
+    DOTAEmoticon: PanelAttributes['AnimatedImageStrip'] & {
         emoticonid: number
         alias: string
     }
@@ -151,8 +152,8 @@ export interface panoramaDivMember extends PNC {
         autoplay: MovieAutoPlay
     }
 
-    DOTAScenePanel: panoramaBaseDivMember['DOTAScenePanel']
-    DOTAParticleScenePanel: panoramaBaseDivMember['DOTAScenePanel'] & {
+    DOTAScenePanel: PanelAttributesBase['DOTAScenePanel']
+    DOTAParticleScenePanel: PanelAttributesBase['DOTAScenePanel'] & {
         particleName: string
         cameraOrigin: [number, number, number] | string
         lookAt: [number, number, number] | string
@@ -182,9 +183,9 @@ export interface panoramaDivMember extends PNC {
         max: number
     }
 
-    DOTAUserName: panoramaBaseDivMember['DOTAUserName']
-    DOTAUserRichPresence: panoramaBaseDivMember['DOTAUserName']
-    DOTAAvatarImage: panoramaBaseDivMember['DOTAUserName'] &  {
+    DOTAUserName: PanelAttributesBase['DOTAUserName']
+    DOTAUserRichPresence: PanelAttributesBase['DOTAUserName']
+    DOTAAvatarImage: PanelAttributesBase['DOTAUserName'] &  {
         nocompendiumborder: boolean
         lazy: boolean
     }
@@ -199,9 +200,9 @@ export interface panoramaDivMember extends PNC {
     }
 
     Button: {}
-    TextButton: panoramaBaseDivMember['Label']
-    ToggleButton: panoramaBaseDivMember['Label'] & panoramaBaseDivMember['ToggleButton']
-    RadioButton: panoramaBaseDivMember['ToggleButton'] & {
+    TextButton: PanelAttributesBase['Label']
+    ToggleButton: PanelAttributesBase['Label'] & PanelAttributesBase['ToggleButton']
+    RadioButton: PanelAttributesBase['ToggleButton'] & {
         group: string
         text: string
         html: boolean
@@ -224,8 +225,8 @@ export interface panoramaDivMember extends PNC {
         /** @default 1 */
         increment: number
     }
-    Slider: panoramaBaseDivMember['Slider']
-    SlottedSlider: panoramaBaseDivMember['Slider'] & {
+    Slider: PanelAttributesBase['Slider']
+    SlottedSlider: PanelAttributesBase['Slider'] & {
         notches: number
     }
 
