@@ -1,5 +1,5 @@
 import { ExoticComponent } from 'react';
-import { panoramaDivAcitve } from '../types/active';
+import { DropDownEvent, panoramaDivAcitve, SliderEvent, TabButtonEvent, TextEntryEvent } from '../types/active';
 import { panoramaBaseDivMember, panoramaDivMember } from '../types/attributes';
 import { reactRequ } from '../types/utils';
 
@@ -29,21 +29,21 @@ export interface AttributesByPanel {
   Countdown: reactRequ<CountdownPanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<CountdownPanel> & panoramaDivMember['Countdown']>
   Button: reactRequ<Button> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<Button> & panoramaDivMember['Button']>
   TextButton: reactRequ<TextButton> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<TextButton> & panoramaDivMember['TextButton']>
-  ToggleButton: reactRequ<ToggleButton> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ToggleButton> & panoramaDivMember['ToggleButton']>
-  RadioButton: reactRequ<RadioButton> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<RadioButton> & panoramaDivMember['RadioButton']>
-  TextEntry: reactRequ<TextEntry> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<TextEntry> & panoramaDivMember['TextEntry']>
-  NumberEntry: reactRequ<NumberEntry> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<NumberEntry> & panoramaDivMember['NumberEntry']>
-  Slider: reactRequ<SliderPanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<SliderPanel> & panoramaDivMember['Slider']>
-  SlottedSlider: reactRequ<SlottedSlider> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<SlottedSlider> & panoramaDivMember['SlottedSlider']>
-  DropDown: reactRequ<DropDown> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<DropDown> & panoramaDivMember['DropDown']>
+  ToggleButton: reactRequ<ToggleButton> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ToggleButton> & TabButtonEvent<ToggleButton> & panoramaDivMember['ToggleButton']>
+  RadioButton: reactRequ<RadioButton> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<RadioButton> & TabButtonEvent<RadioButton>& panoramaDivMember['RadioButton']>
+  TextEntry: reactRequ<TextEntry> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<TextEntry> & TextEntryEvent & panoramaDivMember['TextEntry']>
+  NumberEntry: reactRequ<NumberEntry> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<NumberEntry> & SliderEvent<NumberEntry> & panoramaDivMember['NumberEntry']>
+  Slider: reactRequ<SliderPanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<SliderPanel> & SliderEvent<SliderPanel>& panoramaDivMember['Slider']>
+  SlottedSlider: reactRequ<SlottedSlider> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<SlottedSlider> & SliderEvent<SlottedSlider> & panoramaDivMember['SlottedSlider']>
+  DropDown: reactRequ<DropDown> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<DropDown> & DropDownEvent & panoramaDivMember['DropDown']>
   ContextMenuScript: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['ContextMenuScript']>
   Carousel: reactRequ<CarouselPanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<CarouselPanel> & panoramaDivMember['Carousel']>
   CarouselNav: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['CarouselNav']>
   DOTAHUDOverlayMap: reactRequ<HUDOverlayMap> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<HUDOverlayMap> & panoramaDivMember['DOTAHUDOverlayMap']>
   DOTAMinimap: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['DOTAMinimap']>
   HTML: reactRequ<HTML> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<HTML> & panoramaDivMember['HTML']>
-  TabButton: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['TabButton']>
-  TabContents: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['TabContents']>
+  TabButton: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & TabButtonEvent & panoramaDivMember['TabButton']>
+  TabContents: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & TabButtonEvent & panoramaDivMember['TabContents']>
   CustomLayoutPanel: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['CustomLayoutPanel']>
   GenericPanel: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['GenericPanel']>
 }

@@ -1,4 +1,3 @@
-import { EventHandler } from "./active"
 import { hisoCombination } from "./utils"
 
 export type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
@@ -36,8 +35,6 @@ export interface panoramaBaseDivMember {
     }
     ToggleButton:{
         selected: boolean // checked?
-        onselect: EventHandler<RadioButton>
-        ondeselect: EventHandler<RadioButton>
     }
     Slider:{
         style: never
@@ -217,13 +214,9 @@ export interface panoramaDivMember {
         textmode: 'normal' | 'password' | 'numeric' | 'numericpassword'
 
         text: string
-        ontextentrychange: EventHandler<TextEntry>
-        oninputsubmit: EventHandler<TextEntry>
-        // ontextentrysubmit doesn't seem to be ever triggered
     }
     NumberEntry: {
         value: number
-        onvaluechanged: EventHandler<NumberEntry>
         /** @default 0 */
         min: number
         /** @default 1000000 */
@@ -231,17 +224,13 @@ export interface panoramaDivMember {
         /** @default 1 */
         increment: number
     }
-    Slider: panoramaBaseDivMember['Slider'] & {
-        onvaluechanged: EventHandler<SliderPanel>
-    }
+    Slider: panoramaBaseDivMember['Slider']
     SlottedSlider: panoramaBaseDivMember['Slider'] & {
-        onvaluechanged: EventHandler<SlottedSlider>
         notches: number
     }
 
     DropDown: {
         selected: string
-        oninputsubmit: EventHandler<DropDown>
     }
     ContextMenuScript: {}
 
@@ -281,14 +270,11 @@ export interface panoramaDivMember {
     }
 
     TabButton: {
-
         group: string
         localizedText: string
         html: boolean
 
         selected: boolean
-        onselect: EventHandler<Panel>
-        ondeselect: EventHandler<Panel>
     }
     TabContents: {
 
@@ -296,8 +282,6 @@ export interface panoramaDivMember {
         group: string
 
         selected: boolean
-        onselect: EventHandler<Panel>
-        ondeselect: EventHandler<Panel>
     }
 
     CustomLayoutPanel: {
