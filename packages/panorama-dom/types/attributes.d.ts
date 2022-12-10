@@ -34,7 +34,7 @@ export interface panoramaBaseDivMember {
         src: string
         scaling: ScalingFunction
     }
-    RadioButton:{
+    ToggleButton:{
         selected: boolean // checked?
         onselect: EventHandler<RadioButton>
         ondeselect: EventHandler<RadioButton>
@@ -91,44 +91,44 @@ export interface panoramaBaseDivMember {
 }
 
 export interface panoramaDivMember {
-    Panel: panoramaBaseDivMember['Panel']
+    Panel: {}
     Label: panoramaBaseDivMember['Label'] & {
         allowtextselection: boolean
     }
 
-    Image: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Image']
-    DOTAAbilityImage: panoramaBaseDivMember['Panel'] &  panoramaBaseDivMember['Image'] & {
+    Image: panoramaBaseDivMember['Image']
+    DOTAAbilityImage:  panoramaBaseDivMember['Image'] & {
         abilityname: string
         abilityid: number
         contextEntityIndex: AbilityEntityIndex
         /** @default false */
         showtooltip: boolean
     }
-    DOTAItemImage: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Image'] &  {
+    DOTAItemImage: panoramaBaseDivMember['Image'] &  {
         itemname: string
         contextEntityIndex: ItemEntityIndex
         /** @default true */
         showtooltip: boolean
     }
-    DOTAHeroImage: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Image'] & {
+    DOTAHeroImage: panoramaBaseDivMember['Image'] & {
         heroname: string
         heroid: HeroID
         heroimagestyle: 'icon' | 'portrait' | 'landscape'
         usedefaultimage: boolean
     }
-    DOTACountryFlagImage: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Image']& {
+    DOTACountryFlagImage: panoramaBaseDivMember['Image']& {
         country_code: string
     }
-    DOTALeagueImage: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Image'] &  {
+    DOTALeagueImage: panoramaBaseDivMember['Image'] &  {
         leagueid: number
         /** @default 'Banner' */
         leagueimagestyle: 'Banner' | 'Square' | 'LargeIcon'
     }
-    EconItemImage: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Image'] & {
+    EconItemImage: panoramaBaseDivMember['Image'] & {
         itemdef: number
     }
 
-    AnimatedImageStrip: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Image'] & {
+    AnimatedImageStrip: panoramaBaseDivMember['Image'] & {
         frametime: string
         defaultframe: number
         animating: boolean
@@ -138,7 +138,7 @@ export interface panoramaDivMember {
         alias: string
     }
 
-    Movie: panoramaBaseDivMember['Panel'] &{
+    Movie: {
         src: string
         repeat: boolean
         controls: Parameters<MoviePanel['SetControls']>[0]
@@ -146,7 +146,7 @@ export interface panoramaDivMember {
         /** @default 'onload' */
         autoplay: MovieAutoPlay
     }
-    DOTAHeroMovie: panoramaBaseDivMember['Panel'] &{
+    DOTAHeroMovie: {
         heroid: HeroID
         heroname: string
         persona: any
@@ -154,8 +154,8 @@ export interface panoramaDivMember {
         autoplay: MovieAutoPlay
     }
 
-    DOTAScenePanel: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['DOTAScenePanel']
-    DOTAParticleScenePanel: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['DOTAScenePanel'] & {
+    DOTAScenePanel: panoramaBaseDivMember['DOTAScenePanel']
+    DOTAParticleScenePanel: panoramaBaseDivMember['DOTAScenePanel'] & {
         particleName: string
         cameraOrigin: [number, number, number] | string
         lookAt: [number, number, number] | string
@@ -163,36 +163,36 @@ export interface panoramaDivMember {
         squarePixels: boolean
         startActive: boolean
     }
-    DOTAEconItem: panoramaBaseDivMember['Panel'] &{
+    DOTAEconItem: {
         itemdef: number
         itemstyle: number
     }
 
-    ProgressBar: panoramaBaseDivMember['Panel'] &{
+    ProgressBar: {
         value: number
         min: number
         max: number
     }
-    CircularProgressBar: panoramaBaseDivMember['Panel'] & {
+    CircularProgressBar: {
         value: number
         min: number
         max: number
     }
-    ProgressBarWithMiddle: panoramaBaseDivMember['Panel'] &{
+    ProgressBarWithMiddle: {
         lowervalue: number
         uppervalue: number
         min: number
         max: number
     }
 
-    DOTAUserName: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['DOTAUserName']
-    DOTAUserRichPresence: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['DOTAUserName']
-    DOTAAvatarImage: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['DOTAUserName'] &  {
+    DOTAUserName: panoramaBaseDivMember['DOTAUserName']
+    DOTAUserRichPresence: panoramaBaseDivMember['DOTAUserName']
+    DOTAAvatarImage: panoramaBaseDivMember['DOTAUserName'] &  {
         nocompendiumborder: boolean
         lazy: boolean
     }
 
-    Countdown: panoramaBaseDivMember['Panel'] & {
+    Countdown: {
         startTime: number
         endTime: number
         /** @default 1 */
@@ -201,16 +201,16 @@ export interface panoramaDivMember {
         timeDialogVariable: string
     }
 
-    Button: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Panel']
-    TextButton: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Label']
-    ToggleButton: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Label'] & panoramaBaseDivMember['RadioButton']
-    RadioButton: panoramaBaseDivMember['RadioButton'] & {
+    Button: {}
+    TextButton: panoramaBaseDivMember['Label']
+    ToggleButton: panoramaBaseDivMember['Label'] & panoramaBaseDivMember['ToggleButton']
+    RadioButton: panoramaBaseDivMember['ToggleButton'] & {
         group: string
         text: string
         html: boolean
     }
 
-    TextEntry: panoramaBaseDivMember['Panel'] & {
+    TextEntry: {
         multiline: boolean
         placeholder: string
         maxchars: number
@@ -221,7 +221,7 @@ export interface panoramaDivMember {
         oninputsubmit: EventHandler<TextEntry>
         // ontextentrysubmit doesn't seem to be ever triggered
     }
-    NumberEntry: panoramaBaseDivMember['Panel'] & {
+    NumberEntry: {
         value: number
         onvaluechanged: EventHandler<NumberEntry>
         /** @default 0 */
@@ -231,21 +231,21 @@ export interface panoramaDivMember {
         /** @default 1 */
         increment: number
     }
-    Slider: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Slider'] & {
+    Slider: panoramaBaseDivMember['Slider'] & {
         onvaluechanged: EventHandler<SliderPanel>
     }
-    SlottedSlider: panoramaBaseDivMember['Panel'] & panoramaBaseDivMember['Slider'] & {
+    SlottedSlider: panoramaBaseDivMember['Slider'] & {
         onvaluechanged: EventHandler<SlottedSlider>
         notches: number
     }
 
-    DropDown: panoramaBaseDivMember['Panel'] & {
+    DropDown: {
         selected: string
         oninputsubmit: EventHandler<DropDown>
     }
-    ContextMenuScript: panoramaBaseDivMember['Panel']
+    ContextMenuScript: {}
 
-    Carousel: panoramaBaseDivMember['Panel'] & {
+    Carousel: {
         focus: 'center' | 'edge'
         'focus-offset': string
         wrap: boolean
@@ -256,11 +256,11 @@ export interface panoramaDivMember {
         'autoscroll-delay': string
         'x-offset': string
     }
-    CarouselNav: panoramaBaseDivMember['Panel'] & {
+    CarouselNav: {
         carouselid: string
     }
 
-    DOTAHUDOverlayMap: panoramaBaseDivMember['Panel'] & {
+    DOTAHUDOverlayMap: {
         maptexture: string
         /** @default 4 */
         mapscale: number
@@ -272,15 +272,15 @@ export interface panoramaDivMember {
         fixedBackgroundTexturePosition: { size: number; x: number; y: number }
 
     }
-    DOTAMinimap: panoramaBaseDivMember['Panel']
+    DOTAMinimap: {}
 
-    HTML: panoramaBaseDivMember['Panel'] & {
+    HTML: {
 
         url: string
   // SetIgnoreCursor doesn't seem to do anything
     }
 
-    TabButton: panoramaBaseDivMember['Panel'] & {
+    TabButton: {
 
         group: string
         localizedText: string
@@ -290,7 +290,7 @@ export interface panoramaDivMember {
         onselect: EventHandler<Panel>
         ondeselect: EventHandler<Panel>
     }
-    TabContents: panoramaBaseDivMember['Panel'] & {
+    TabContents: {
 
         tabid: string
         group: string
@@ -300,10 +300,10 @@ export interface panoramaDivMember {
         ondeselect: EventHandler<Panel>
     }
 
-    CustomLayoutPanel: panoramaBaseDivMember['Panel'] & {
+    CustomLayoutPanel: {
         layout: string
     }
-    GenericPanel: panoramaBaseDivMember['Panel'] & {
+    GenericPanel: {
         type: string
         [key: string]: any
     }

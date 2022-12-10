@@ -1,51 +1,51 @@
 import { ExoticComponent } from 'react';
 import { panoramaDivAcitve } from '../types/active';
-import { panoramaDivMember } from '../types/attributes';
+import { panoramaBaseDivMember, panoramaDivMember } from '../types/attributes';
 import { reactRequ } from '../types/utils';
 
 export interface AttributesByPanel {
-  Panel: reactRequ<Panel> & Partial<panoramaDivAcitve<Panel> & panoramaDivMember['Panel']>
-  Label: reactRequ<LabelPanel> & Partial<panoramaDivAcitve<LabelPanel> & panoramaDivMember['Label']>
-  Image: reactRequ<ImagePanel> & Partial<panoramaDivAcitve<ImagePanel> & panoramaDivMember['Image']>
-  DOTAAbilityImage: reactRequ<AbilityImage> & Partial<panoramaDivAcitve<AbilityImage> & panoramaDivMember['DOTAAbilityImage']>
-  DOTAItemImage: reactRequ<ItemImage> & Partial<panoramaDivAcitve<ItemImage> & panoramaDivMember['DOTAItemImage']>
-  DOTAHeroImage: reactRequ<HeroImage> & Partial<panoramaDivAcitve<HeroImage> & panoramaDivMember['DOTAHeroImage']>
-  DOTACountryFlagImage: reactRequ<ImagePanel> & Partial<panoramaDivAcitve<ImagePanel> & panoramaDivMember['DOTACountryFlagImage']>
-  DOTALeagueImage: reactRequ<LeagueImage> & Partial<panoramaDivAcitve<LeagueImage> & panoramaDivMember['DOTALeagueImage']>
-  EconItemImage: reactRequ<ImagePanel> & Partial<panoramaDivAcitve<ImagePanel> & panoramaDivMember['EconItemImage']>
-  AnimatedImageStrip: reactRequ<AnimatedImageStrip> & Partial<panoramaDivAcitve<AnimatedImageStrip> & panoramaDivMember['AnimatedImageStrip']>
-  DOTAEmoticon: reactRequ<AnimatedImageStrip> & Partial<panoramaDivAcitve<AnimatedImageStrip> & panoramaDivMember['DOTAEmoticon']>
-  Movie: reactRequ<MoviePanel> & Partial<panoramaDivAcitve<MoviePanel> & panoramaDivMember['Movie']>
-  DOTAHeroMovie: reactRequ<HeroMovie> & Partial<panoramaDivAcitve<HeroMovie> & panoramaDivMember['DOTAHeroMovie']>
-  DOTAScenePanel: reactRequ<ScenePanel> & Partial<panoramaDivAcitve<ScenePanel> & panoramaDivMember['DOTAScenePanel']>
-  DOTAParticleScenePanel: reactRequ<ScenePanel> & Partial<panoramaDivAcitve<ScenePanel> & panoramaDivMember['DOTAParticleScenePanel']>
-  DOTAEconItem: reactRequ<EconItemPanel> & Partial<panoramaDivAcitve<EconItemPanel> & panoramaDivMember['DOTAEconItem']>
-  ProgressBar: reactRequ<ProgressBar> & Partial<panoramaDivAcitve<ProgressBar> & panoramaDivMember['ProgressBar']>
-  CircularProgressBar: reactRequ<CircularProgressBar> & Partial<panoramaDivAcitve<CircularProgressBar> & panoramaDivMember['CircularProgressBar']>
-  ProgressBarWithMiddle: reactRequ<ProgressBarWithMiddle> & Partial<panoramaDivAcitve<ProgressBarWithMiddle> & panoramaDivMember['ProgressBarWithMiddle']>
-  DOTAUserName: reactRequ<UserName> & Partial<panoramaDivAcitve<UserName> & panoramaDivMember['DOTAUserName']>
-  DOTAUserRichPresence: reactRequ<UserRichPresence> & Partial<panoramaDivAcitve<UserRichPresence> & panoramaDivMember['DOTAUserRichPresence']>
-  DOTAAvatarImage: reactRequ<AvatarImage> & Partial<panoramaDivAcitve<AvatarImage> & panoramaDivMember['DOTAAvatarImage']>
-  Countdown: reactRequ<CountdownPanel> & Partial<panoramaDivAcitve<CountdownPanel> & panoramaDivMember['Countdown']>
-  Button: reactRequ<Button> & Partial<panoramaDivAcitve<Button> & panoramaDivMember['Button']>
-  TextButton: reactRequ<TextButton> & Partial<panoramaDivAcitve<TextButton> & panoramaDivMember['TextButton']>
-  ToggleButton: reactRequ<ToggleButton> & Partial<panoramaDivAcitve<ToggleButton> & panoramaDivMember['ToggleButton']>
-  RadioButton: reactRequ<RadioButton> & Partial<panoramaDivAcitve<RadioButton> & panoramaDivMember['RadioButton']>
-  TextEntry: reactRequ<TextEntry> & Partial<panoramaDivAcitve<TextEntry> & panoramaDivMember['TextEntry']>
-  NumberEntry: reactRequ<NumberEntry> & Partial<panoramaDivAcitve<NumberEntry> & panoramaDivMember['NumberEntry']>
-  Slider: reactRequ<SliderPanel> & Partial<panoramaDivAcitve<SliderPanel> & panoramaDivMember['Slider']>
-  SlottedSlider: reactRequ<SlottedSlider> & Partial<panoramaDivAcitve<SlottedSlider> & panoramaDivMember['SlottedSlider']>
-  DropDown: reactRequ<DropDown> & Partial<panoramaDivAcitve<DropDown> & panoramaDivMember['DropDown']>
-  ContextMenuScript: reactRequ & Partial<panoramaDivAcitve & panoramaDivMember['ContextMenuScript']>
-  Carousel: reactRequ<CarouselPanel> & Partial<panoramaDivAcitve<CarouselPanel> & panoramaDivMember['Carousel']>
-  CarouselNav: reactRequ & Partial<panoramaDivAcitve & panoramaDivMember['CarouselNav']>
-  DOTAHUDOverlayMap: reactRequ<HUDOverlayMap> & Partial<panoramaDivAcitve<HUDOverlayMap> & panoramaDivMember['DOTAHUDOverlayMap']>
-  DOTAMinimap: reactRequ & Partial<panoramaDivAcitve & panoramaDivMember['DOTAMinimap']>
-  HTML: reactRequ<HTML> & Partial<panoramaDivAcitve<HTML> & panoramaDivMember['HTML']>
-  TabButton: reactRequ & Partial<panoramaDivAcitve & panoramaDivMember['TabButton']>
-  TabContents: reactRequ & Partial<panoramaDivAcitve & panoramaDivMember['TabContents']>
-  CustomLayoutPanel: reactRequ & Partial<panoramaDivAcitve & panoramaDivMember['CustomLayoutPanel']>
-  GenericPanel: reactRequ & Partial<panoramaDivAcitve & panoramaDivMember['GenericPanel']>
+  Panel: reactRequ<Panel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<Panel> & panoramaDivMember['Panel']>
+  Label: reactRequ<LabelPanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<LabelPanel> & panoramaDivMember['Label']>
+  Image: reactRequ<ImagePanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ImagePanel> & panoramaDivMember['Image']>
+  DOTAAbilityImage: reactRequ<AbilityImage> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<AbilityImage> & panoramaDivMember['DOTAAbilityImage']>
+  DOTAItemImage: reactRequ<ItemImage> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ItemImage> & panoramaDivMember['DOTAItemImage']>
+  DOTAHeroImage: reactRequ<HeroImage> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<HeroImage> & panoramaDivMember['DOTAHeroImage']>
+  DOTACountryFlagImage: reactRequ<ImagePanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ImagePanel> & panoramaDivMember['DOTACountryFlagImage']>
+  DOTALeagueImage: reactRequ<LeagueImage> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<LeagueImage> & panoramaDivMember['DOTALeagueImage']>
+  EconItemImage: reactRequ<ImagePanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ImagePanel> & panoramaDivMember['EconItemImage']>
+  AnimatedImageStrip: reactRequ<AnimatedImageStrip> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<AnimatedImageStrip> & panoramaDivMember['AnimatedImageStrip']>
+  DOTAEmoticon: reactRequ<AnimatedImageStrip> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<AnimatedImageStrip> & panoramaDivMember['DOTAEmoticon']>
+  Movie: reactRequ<MoviePanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<MoviePanel> & panoramaDivMember['Movie']>
+  DOTAHeroMovie: reactRequ<HeroMovie> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<HeroMovie> & panoramaDivMember['DOTAHeroMovie']>
+  DOTAScenePanel: reactRequ<ScenePanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ScenePanel> & panoramaDivMember['DOTAScenePanel']>
+  DOTAParticleScenePanel: reactRequ<ScenePanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ScenePanel> & panoramaDivMember['DOTAParticleScenePanel']>
+  DOTAEconItem: reactRequ<EconItemPanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<EconItemPanel> & panoramaDivMember['DOTAEconItem']>
+  ProgressBar: reactRequ<ProgressBar> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ProgressBar> & panoramaDivMember['ProgressBar']>
+  CircularProgressBar: reactRequ<CircularProgressBar> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<CircularProgressBar> & panoramaDivMember['CircularProgressBar']>
+  ProgressBarWithMiddle: reactRequ<ProgressBarWithMiddle> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ProgressBarWithMiddle> & panoramaDivMember['ProgressBarWithMiddle']>
+  DOTAUserName: reactRequ<UserName> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<UserName> & panoramaDivMember['DOTAUserName']>
+  DOTAUserRichPresence: reactRequ<UserRichPresence> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<UserRichPresence> & panoramaDivMember['DOTAUserRichPresence']>
+  DOTAAvatarImage: reactRequ<AvatarImage> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<AvatarImage> & panoramaDivMember['DOTAAvatarImage']>
+  Countdown: reactRequ<CountdownPanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<CountdownPanel> & panoramaDivMember['Countdown']>
+  Button: reactRequ<Button> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<Button> & panoramaDivMember['Button']>
+  TextButton: reactRequ<TextButton> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<TextButton> & panoramaDivMember['TextButton']>
+  ToggleButton: reactRequ<ToggleButton> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<ToggleButton> & panoramaDivMember['ToggleButton']>
+  RadioButton: reactRequ<RadioButton> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<RadioButton> & panoramaDivMember['RadioButton']>
+  TextEntry: reactRequ<TextEntry> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<TextEntry> & panoramaDivMember['TextEntry']>
+  NumberEntry: reactRequ<NumberEntry> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<NumberEntry> & panoramaDivMember['NumberEntry']>
+  Slider: reactRequ<SliderPanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<SliderPanel> & panoramaDivMember['Slider']>
+  SlottedSlider: reactRequ<SlottedSlider> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<SlottedSlider> & panoramaDivMember['SlottedSlider']>
+  DropDown: reactRequ<DropDown> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<DropDown> & panoramaDivMember['DropDown']>
+  ContextMenuScript: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['ContextMenuScript']>
+  Carousel: reactRequ<CarouselPanel> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<CarouselPanel> & panoramaDivMember['Carousel']>
+  CarouselNav: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['CarouselNav']>
+  DOTAHUDOverlayMap: reactRequ<HUDOverlayMap> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<HUDOverlayMap> & panoramaDivMember['DOTAHUDOverlayMap']>
+  DOTAMinimap: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['DOTAMinimap']>
+  HTML: reactRequ<HTML> & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve<HTML> & panoramaDivMember['HTML']>
+  TabButton: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['TabButton']>
+  TabContents: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['TabContents']>
+  CustomLayoutPanel: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['CustomLayoutPanel']>
+  GenericPanel: reactRequ & Partial<panoramaBaseDivMember['Panel'] & panoramaDivAcitve & panoramaDivMember['GenericPanel']>
 }
 
 export type PanelType = keyof AttributesByPanel;
