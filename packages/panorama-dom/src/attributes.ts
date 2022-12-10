@@ -71,9 +71,7 @@ function definePanelPropertyInformation<TName extends PanelType>
 
 const PANORAMA_INVALID_DATE = 2 ** 52;
 
-const propertiesInformation: {
-  [TAttribute in keyof PanelAttributes['Panel']]: PropertyInformation<'Panel', TAttribute, PanelAttributes>;
-} = {
+const propertiesInformation: PanelPropertyInformation<'Panel'> = {
   id: { type: PropertyType.INITIAL_ONLY, initial: false },
 
   enabled: { type: PropertyType.SET, name: 'enabled' },
