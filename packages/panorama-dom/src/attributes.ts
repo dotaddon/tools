@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { InternalPanel, noop, queueMicrotask } from './utils';
-import { PanelAttributes } from './attribute-types';
 import { panelBaseNames } from './panel-base';
 import { AttributesByPanel, PanelType, PanelTypeByName } from './panels';
 
@@ -11,48 +10,46 @@ const enum PropertyType {
   CUSTOM,
 }
 
+/** 获取板子的指定类型的属性 */
 type AttributesMatchingType<TPanel extends PanelBase, TType> = {
   [P in keyof TPanel]: [TType] extends [TPanel[P]] ? P : never;
 }[keyof TPanel];
 
 type PropertyInformation<
-  TName extends PanelType,
-  TAttribute extends keyof AttributesByPanel[TName]
-  > = { initial?: boolean | string; throwOnIncomplete?: true; } & (
-    | {
+  PanelName extends PanelType,
+  TAttribute extends keyof AttributesByPanel[PanelName],
+  TValue = AttributesByPanel[PanelName][TAttribute]
+  > = { 
+    initial?: boolean | string
+    throwOnIncomplete?: true
+    preOperation?(value: TValue): any
+  } & ({
       type: PropertyType.SET;
       name: AttributesMatchingType<
-        PanelTypeByName<TName>,
+        PanelTypeByName<PanelName>,
         // TODO:
-        NonNullable<AttributesByPanel[TName][TAttribute]>
+        NonNullable<TValue>
       >;
-      preOperation?(value: AttributesByPanel[TName][TAttribute]): any;
-    }
-    | {
+  } | {
       type: PropertyType.SETTER;
       name: AttributesMatchingType<
-        PanelTypeByName<TName>,
+        PanelTypeByName<PanelName>,
         // TODO:
-        (value: NonNullable<AttributesByPanel[TName][TAttribute]>) => void
+        (value: NonNullable<TValue>) => void
       >;
-      preOperation?(value: AttributesByPanel[TName][TAttribute]): any;
-    }
-    | {
+  } | {
       type: PropertyType.INITIAL_ONLY;
       initial: boolean | string;
-      preOperation?(value: AttributesByPanel[TName][TAttribute]): any;
-    }
-    | {
+  } | {
       type: PropertyType.CUSTOM;
       update(
-        panel: InternalPanel<PanelTypeByName<TName>>,
-        newValue: AttributesByPanel[TName][TAttribute],
-        oldValue: AttributesByPanel[TName][TAttribute],
+        panel: InternalPanel<PanelTypeByName<PanelName>>,
+        newValue: TValue,
+        oldValue: TValue,
         propName: TAttribute,
       ): void;
-      preOperation?(value: AttributesByPanel[TName][TAttribute]): any;
-    }
-  );
+  }
+);
 
 const panelPropertyInformation: {
   [TName in PanelType]?: {
@@ -63,7 +60,7 @@ const panelPropertyInformation: {
 type PanelPropertyInformation<TName extends PanelType> = {
   [TAttribute in Exclude<
     keyof AttributesByPanel[TName],
-    keyof PanelAttributes | PanelEvent
+    keyof AttributesByPanel['Panel'] | PanelEvent
   >]: PropertyInformation<TName, TAttribute>;
 };
 function definePanelPropertyInformation<TName extends PanelType>(
@@ -77,7 +74,7 @@ const PANORAMA_INVALID_DATE = 2 ** 52;
 
 const propertiesInformation: {
   [TAttribute in Exclude<
-    keyof PanelAttributes,
+    keyof AttributesByPanel['Panel'],
     'key' | 'ref' | 'children' | PanelEvent
   >]: PropertyInformation<'Panel', TAttribute>;
 } = {
