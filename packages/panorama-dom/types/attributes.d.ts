@@ -1,24 +1,8 @@
 import { panelStyles } from "./utils"
+import {PanelType, PNC} from "./tpanel"
 
 export type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
 export interface panoramaBaseDivMember {
-    Panel:{
-        dangerouslyCreateChildren: string
-        dialogVariables: Record<string, string | number | Date>
-
-        id: string
-        className: string
-        style: panelStyles
-        hittest: boolean
-        hittestchildren: boolean
-        acceptsfocus: boolean
-        tabindex: number | 'auto'
-        inputnamespace: string
-        draggable: boolean
-        enabled: boolean
-        visible: boolean
-  // TODO: sectionpos: 'auto'?
-    }
     Label:{
         /**
          * Note: Using this attribute is the same as assigning `text` property on a Label panel - it does
@@ -37,7 +21,7 @@ export interface panoramaBaseDivMember {
         selected: boolean // checked?
     }
     Slider:{
-        style: never
+        style?: never
         value: number
         /** @default 0 */
         min: number
@@ -87,8 +71,24 @@ export interface panoramaBaseDivMember {
     }
 }
 
-export interface panoramaDivMember {
-    Panel: {}
+export interface panoramaDivMember extends PNC {
+    Panel: {
+        dangerouslyCreateChildren: string
+        dialogVariables: Record<string, string | number | Date>
+
+        id: string
+        className: string
+        style: panelStyles
+        hittest: boolean
+        hittestchildren: boolean
+        acceptsfocus: boolean
+        tabindex: number | 'auto'
+        inputnamespace: string
+        draggable: boolean
+        enabled: boolean
+        visible: boolean
+        // TODO: sectionpos: 'auto'?
+    }
     Label: panoramaBaseDivMember['Label'] & {
         allowtextselection: boolean
     }
@@ -292,3 +292,4 @@ export interface panoramaDivMember {
         [key: string]: any
     }
 }
+

@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { InternalPanel, noop, queueMicrotask } from './utils';
 import { panelBaseNames } from './panel-base';
-import { AttributesByPanel, PanelType, PanelTypeByName } from './panels';
+import { AttributesByPanel, PanelTypeByName } from './panels';
+import { panoramaDivMember } from '../types/attributes';
+import { PanelType, PNC } from '../types/tpanel';
 
 const enum PropertyType {
   SET,
@@ -16,9 +18,10 @@ type AttributesMatchingType<TPanel extends PanelBase, TType> = {
 }[keyof TPanel];
 
 type PropertyInformation<
-  PanelName extends PanelType,
-  TAttribute extends keyof AttributesByPanel[PanelName],
-  TValue = AttributesByPanel[PanelName][TAttribute]
+  PanelName extends PanelType, // 标签名
+  TAttribute extends keyof TC[PanelName], // 属性名
+  TC extends PNC = AttributesByPanel,
+  TValue = TC[PanelName][TAttribute], // 属性类型
   > = { 
     initial?: boolean | string
     throwOnIncomplete?: true
@@ -56,12 +59,9 @@ const panelPropertyInformation: {
     [TAttribute in keyof AttributesByPanel[TName]]?: PropertyInformation<TName, TAttribute>;
   };
 } = {};
-
+// 
 type PanelPropertyInformation<TName extends PanelType> = {
-  [TAttribute in Exclude<
-    keyof AttributesByPanel[TName],
-    keyof AttributesByPanel['Panel'] | PanelEvent
-  >]: PropertyInformation<TName, TAttribute>;
+  [TAttribute in keyof panoramaDivMember[TName]]: PropertyInformation<TName, TAttribute, panoramaDivMember>;
 };
 function definePanelPropertyInformation<TName extends PanelType>(
   name: TName,
@@ -73,10 +73,7 @@ function definePanelPropertyInformation<TName extends PanelType>(
 const PANORAMA_INVALID_DATE = 2 ** 52;
 
 const propertiesInformation: {
-  [TAttribute in Exclude<
-    keyof AttributesByPanel['Panel'],
-    'key' | 'ref' | 'children' | PanelEvent
-  >]: PropertyInformation<'Panel', TAttribute>;
+  [TAttribute in keyof panoramaDivMember['Panel']]: PropertyInformation<'Panel', TAttribute, panoramaDivMember>;
 } = {
   id: { type: PropertyType.INITIAL_ONLY, initial: false },
 
