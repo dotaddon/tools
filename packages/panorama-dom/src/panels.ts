@@ -4,7 +4,7 @@ import { PanelAttributes } from '../types/attributes';
 import { PanelType, DivByPanelType } from '../types/tpanel';
 import { ReactDomDivProps } from '../types/utils';
 
-export type AttributesFromPanelType = {
+export type PanelAttributesExpand = {
     [P in PanelType]: ReactDomDivProps<DivByPanelType<P>>
     & Partial<
         panoramaDivActive<P>
@@ -13,7 +13,7 @@ export type AttributesFromPanelType = {
     >
 }
 
-export type panoramaDiv<T extends PanelType> = ExoticComponent<AttributesFromPanelType[T]>
+export type panoramaDiv<T extends PanelType> = ExoticComponent<PanelAttributesExpand[T]>
 
 declare global {
     /* eslint-disable no-var, vars-on-top */

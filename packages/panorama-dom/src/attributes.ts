@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { InternalPanel, noop, queueMicrotask } from './utils';
 import { panelBaseNames } from './panel-base';
-import { AttributesFromPanelType } from './panels';
+import { PanelAttributesExpand } from './panels';
 import { PanelAttributes } from '../types/attributes';
 import { PanelType, DivByPanelType, PNC } from '../types/tpanel';
 
@@ -20,7 +20,7 @@ type AttributesMatchingType<TPanel extends PanelBase, FindType> = {
 type PropertyInformation<
   PanelName extends PanelType, // 标签名
   TAttribute extends keyof TC[PanelName], // 属性名
-  TC extends PNC = AttributesFromPanelType,
+  TC extends PNC = PanelAttributesExpand,
   TValue = TC[PanelName][TAttribute], // 属性类型
   > = { 
     initial?: boolean | string
@@ -54,15 +54,13 @@ type PropertyInformation<
   }
 );
 
+type PanelPropertyInformation<TName extends PanelType, TC extends PNC = PanelAttributes> = {
+  [TAttribute in keyof TC[TName]]: PropertyInformation<TName, TAttribute, TC>;
+};
 const panelPropertyInformation: {
-  [TName in PanelType]?: {
-    [TAttribute in keyof AttributesFromPanelType[TName]]?: PropertyInformation<TName, TAttribute>;
-  };
+    [TName in PanelType]?: PanelPropertyInformation<TName, PanelAttributesExpand>;
 } = {};
 
-type PanelPropertyInformation<TName extends PanelType> = {
-  [TAttribute in keyof PanelAttributes[TName]]: PropertyInformation<TName, TAttribute, PanelAttributes>;
-};
 function definePanelPropertyInformation<TName extends PanelType>
 ( name: TName, properties: PanelPropertyInformation<TName>)
 {
