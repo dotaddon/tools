@@ -69,7 +69,7 @@ function definePanelPropertyInformation<TName extends PanelType>
 
 const PANORAMA_INVALID_DATE = 2 ** 52;
 
-const propertiesInformation: PanelPropertyInformation<'Panel'> = {
+definePanelPropertyInformation('Panel', {
   id: { type: PropertyType.INITIAL_ONLY, initial: false },
 
   enabled: { type: PropertyType.SET, name: 'enabled' },
@@ -184,8 +184,7 @@ const propertiesInformation: PanelPropertyInformation<'Panel'> = {
   },
 
   draggable: { type: PropertyType.SETTER, name: 'SetDraggable' },
-};
-
+})
 const labelTextAttributes = {
   // Number can be assigned to text
   text: { type: PropertyType.SET, name: 'text' as never },
@@ -543,6 +542,15 @@ const genericPanelPropertyInfo: PropertyInformation<'GenericPanel', string> = {
   initial: true,
 };
 
+function RunFunInPanelContext<T extends PanelBase = Panel>
+(funcName: string, content: InternalPanel<T>, ...args:any[]){
+  let func = content._eventHandlers![funcName]
+  if (typeof func == 'string')
+    content.RunScriptInPanelContext(func)
+  else
+    func(content, ...args)
+}
+
 const uiEventPropertyInfo: PropertyInformation<'Panel', any> = {
   type: PropertyType.CUSTOM,
   update(panel, newValue, _oldValue, propName) {
@@ -551,11 +559,11 @@ const uiEventPropertyInfo: PropertyInformation<'Panel', any> = {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {
       $.RegisterEventHandler(propName.slice(6), panel, (...args) =>
-        panel._eventHandlers![propName](...args),
+        RunFunInPanelContext(propName, panel, ...args)
       );
     }
 
-    panel._eventHandlers[propName] = newValue !== undefined ? newValue : noop;
+    panel._eventHandlers[propName] = newValue ?? noop;
   },
 };
 
@@ -569,10 +577,12 @@ const panelEventPropertyInfo: PropertyInformation<'Panel', any> = {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {
-      panel.SetPanelEvent(propName, () => panel._eventHandlers![propName](panel));
+      panel.SetPanelEvent(propName, () =>
+        RunFunInPanelContext(propName, panel)
+      );
     }
 
-    panel._eventHandlers[propName] = newValue !== undefined ? newValue : noop;
+    panel._eventHandlers[propName] = newValue ?? noop;
   },
 };
 
@@ -580,24 +590,29 @@ export function getPropertyInfo(
   type: PanelType,
   propName: string,
 ): PropertyInformation<any, any> | undefined {
-  const propertyInformation = propertiesInformation[propName as keyof typeof propertiesInformation];
+
+  let result = (panelPropertyInformation['Panel'] as any)?.[propName];
   if (
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    propertyInformation !== undefined &&
-    !(panelBaseNames.has(type) && propertyInformation.type === PropertyType.SET)
-  ) {
-    return propertyInformation;
-  }
+    result !== undefined && !( panelBaseNames.has(type) && result.type === PropertyType.SET )
+  )
+    return result;
 
-  const panelProperty = (panelPropertyInformation[type] as any)?.[propName];
-  if (panelProperty) return panelProperty;
+  result = (panelPropertyInformation[type] as any)?.[propName];
+  if (result)
+    return result;
 
-  if (propName === 'children') return undefined;
+  if (propName === 'children')
+    return undefined;
 
-  if (propName.startsWith('on-ui-')) return uiEventPropertyInfo;
-  if (propName.startsWith('on')) return panelEventPropertyInfo;
+  if (propName.startsWith('on-ui-'))
+    return uiEventPropertyInfo;
 
-  if (type === 'GenericPanel') return genericPanelPropertyInfo;
+  if (propName.startsWith('on'))
+    return panelEventPropertyInfo;
+
+  if (type === 'GenericPanel')
+    return genericPanelPropertyInfo;
 
   if (process.env.BUILD_ENV === 'development') {
     console.warn(`Attribute "${propName}" on panel of type "${type}" is unknown`);

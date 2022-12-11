@@ -1,8 +1,5 @@
 import { PanelType, DivByPanelType, PNC } from "./tpanel";
 
-
-export type EventHandler<T extends PanelBase> = (panel: T) => void;
-
 /** 已经实现的事件 */
 export interface panoramaDivActivates extends PNC<PanelEvent> {
     Panel:
@@ -55,6 +52,18 @@ export interface panoramaDivActivates extends PNC<PanelEvent> {
     // | 'ontextentrysubmit' // doesn't seem to be ever triggered
 }
 
+export interface panoramaEventDeclarations {
+    DragStart(settings: DragSettings): boolean
+    DragEnd(dragged: Panel): boolean
+    DragDrop(dragged: Panel): boolean
+    DragEnter(dragged: Panel): boolean
+    DragLeave(dragged: Panel): boolean
+}
+
+export type EventHandler<T extends PanelBase> = ((panel: T) => void) | string;
 export type panoramaDivActive<T extends PanelType = 'Panel'> = {
-    [k in keyof panoramaDivActivates[T] | keyof panoramaDivActivates['Panel']]: EventHandler<DivByPanelType<T>>
+    [k in panoramaDivActivates['Panel'] | panoramaDivActivates[T]]: EventHandler<DivByPanelType<T>>
+} & {
+    [k in `on-ui-${keyof panoramaEventDeclarations}`]: 
+    (panel: DivByPanelType<T>, ...arg: Parameters<panoramaEventDeclarations[k extends `on-ui-${infer R}`?R:never]>) => void
 }
