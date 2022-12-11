@@ -13,7 +13,7 @@ export const reactPanoramaSymbol = Symbol('_reactPanoramaSymbol');
 export type InternalPanel<T extends PanelBase = Panel> = T & {
   _reactPanoramaSymbol?: typeof reactPanoramaSymbol;
   _rootContainer?: ReactReconciler.FiberRoot;
-  _eventHandlers?: Record<string, (...args: any[]) => void>;
+  _eventHandlers?: Record<string, ((...args: any[]) => void)|string>;
   _rotateParams?: Partial<Record<string, number>>;
   _econItemDef?: number;
   _econItemStyle?: number;

@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { InternalPanel, noop, queueMicrotask } from './utils';
-import { PanelAttributes } from './attribute-types';
 import { panelBaseNames } from './panel-base';
-import { AttributesByPanel, PanelType, PanelTypeByName } from './panels';
+import { PanelAttributesExpand } from './panels';
+import { PanelAttributes } from '../types/attributes';
+import { PanelType, DivByPanelType, PNC } from '../types/tpanel';
 
 const enum PropertyType {
   SET,
@@ -11,76 +12,64 @@ const enum PropertyType {
   CUSTOM,
 }
 
-type AttributesMatchingType<TPanel extends PanelBase, TType> = {
-  [P in keyof TPanel]: [TType] extends [TPanel[P]] ? P : never;
+/** 获取板子的指定类型的属性 */
+type AttributesMatchingType<TPanel extends PanelBase, FindType> = {
+  [P in keyof TPanel]: [FindType] extends [TPanel[P]] ? P : never;
 }[keyof TPanel];
 
 type PropertyInformation<
-  TName extends PanelType,
-  TAttribute extends keyof AttributesByPanel[TName]
-  > = { initial?: boolean | string; throwOnIncomplete?: true; } & (
-    | {
+  PanelName extends PanelType, // 标签名
+  TAttribute extends keyof TC[PanelName], // 属性名
+  TC extends PNC = PanelAttributesExpand,
+  TValue = TC[PanelName][TAttribute], // 属性类型
+  > = { 
+    initial?: boolean | string
+    throwOnIncomplete?: true
+    preOperation?(value: TValue): any
+  } & ({
       type: PropertyType.SET;
       name: AttributesMatchingType<
-        PanelTypeByName<TName>,
+        DivByPanelType<PanelName>,
         // TODO:
-        NonNullable<AttributesByPanel[TName][TAttribute]>
+        NonNullable<TValue>
       >;
-      preOperation?(value: AttributesByPanel[TName][TAttribute]): any;
-    }
-    | {
+  } | {
       type: PropertyType.SETTER;
       name: AttributesMatchingType<
-        PanelTypeByName<TName>,
+        DivByPanelType<PanelName>,
         // TODO:
-        (value: NonNullable<AttributesByPanel[TName][TAttribute]>) => void
+        (value: NonNullable<TValue>) => void
       >;
-      preOperation?(value: AttributesByPanel[TName][TAttribute]): any;
-    }
-    | {
+  } | {
       type: PropertyType.INITIAL_ONLY;
       initial: boolean | string;
-      preOperation?(value: AttributesByPanel[TName][TAttribute]): any;
-    }
-    | {
+  } | {
       type: PropertyType.CUSTOM;
       update(
-        panel: InternalPanel<PanelTypeByName<TName>>,
-        newValue: AttributesByPanel[TName][TAttribute],
-        oldValue: AttributesByPanel[TName][TAttribute],
+        panel: InternalPanel<DivByPanelType<PanelName>>,
+        newValue: TValue,
+        oldValue: TValue,
         propName: TAttribute,
       ): void;
-      preOperation?(value: AttributesByPanel[TName][TAttribute]): any;
-    }
-  );
+  }
+);
 
+type PanelPropertyInformation<TName extends PanelType, TC extends PNC = PanelAttributes> = {
+  [TAttribute in keyof TC[TName]]: PropertyInformation<TName, TAttribute, TC>;
+};
 const panelPropertyInformation: {
-  [TName in PanelType]?: {
-    [TAttribute in keyof AttributesByPanel[TName]]?: PropertyInformation<TName, TAttribute>;
-  };
+    [TName in PanelType]?: PanelPropertyInformation<TName, PanelAttributesExpand>;
 } = {};
 
-type PanelPropertyInformation<TName extends PanelType> = {
-  [TAttribute in Exclude<
-    keyof AttributesByPanel[TName],
-    keyof PanelAttributes | PanelEvent
-  >]: PropertyInformation<TName, TAttribute>;
-};
-function definePanelPropertyInformation<TName extends PanelType>(
-  name: TName,
-  properties: PanelPropertyInformation<TName>,
-) {
+function definePanelPropertyInformation<TName extends PanelType>
+( name: TName, properties: PanelPropertyInformation<TName>)
+{
   panelPropertyInformation[name] = properties as any;
 }
 
 const PANORAMA_INVALID_DATE = 2 ** 52;
 
-const propertiesInformation: {
-  [TAttribute in Exclude<
-    keyof PanelAttributes,
-    'key' | 'ref' | 'children' | PanelEvent
-  >]: PropertyInformation<'Panel', TAttribute>;
-} = {
+definePanelPropertyInformation('Panel', {
   id: { type: PropertyType.INITIAL_ONLY, initial: false },
 
   enabled: { type: PropertyType.SET, name: 'enabled' },
@@ -195,8 +184,7 @@ const propertiesInformation: {
   },
 
   draggable: { type: PropertyType.SETTER, name: 'SetDraggable' },
-};
-
+})
 const labelTextAttributes = {
   // Number can be assigned to text
   text: { type: PropertyType.SET, name: 'text' as never },
@@ -554,6 +542,15 @@ const genericPanelPropertyInfo: PropertyInformation<'GenericPanel', string> = {
   initial: true,
 };
 
+function RunFunInPanelContext<T extends PanelBase = Panel>
+(funcName: string, content: InternalPanel<T>, ...args:any[]){
+  let func = content._eventHandlers![funcName]
+  if (typeof func == 'string')
+    content.RunScriptInPanelContext(func)
+  else
+    func(content, ...args)
+}
+
 const uiEventPropertyInfo: PropertyInformation<'Panel', any> = {
   type: PropertyType.CUSTOM,
   update(panel, newValue, _oldValue, propName) {
@@ -562,11 +559,11 @@ const uiEventPropertyInfo: PropertyInformation<'Panel', any> = {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {
       $.RegisterEventHandler(propName.slice(6), panel, (...args) =>
-        panel._eventHandlers![propName](...args),
+        RunFunInPanelContext(propName, panel, ...args)
       );
     }
 
-    panel._eventHandlers[propName] = newValue !== undefined ? newValue : noop;
+    panel._eventHandlers[propName] = newValue ?? noop;
   },
 };
 
@@ -580,10 +577,12 @@ const panelEventPropertyInfo: PropertyInformation<'Panel', any> = {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {
-      panel.SetPanelEvent(propName, () => panel._eventHandlers![propName](panel));
+      panel.SetPanelEvent(propName, () =>
+        RunFunInPanelContext(propName, panel)
+      );
     }
 
-    panel._eventHandlers[propName] = newValue !== undefined ? newValue : noop;
+    panel._eventHandlers[propName] = newValue ?? noop;
   },
 };
 
@@ -591,24 +590,29 @@ export function getPropertyInfo(
   type: PanelType,
   propName: string,
 ): PropertyInformation<any, any> | undefined {
-  const propertyInformation = propertiesInformation[propName as keyof typeof propertiesInformation];
+
+  let result = (panelPropertyInformation['Panel'] as any)?.[propName];
   if (
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    propertyInformation !== undefined &&
-    !(panelBaseNames.has(type) && propertyInformation.type === PropertyType.SET)
-  ) {
-    return propertyInformation;
-  }
+    result !== undefined && !( panelBaseNames.has(type) && result.type === PropertyType.SET )
+  )
+    return result;
 
-  const panelProperty = (panelPropertyInformation[type] as any)?.[propName];
-  if (panelProperty) return panelProperty;
+  result = (panelPropertyInformation[type] as any)?.[propName];
+  if (result)
+    return result;
 
-  if (propName === 'children') return undefined;
+  if (propName === 'children')
+    return undefined;
 
-  if (propName.startsWith('on-ui-')) return uiEventPropertyInfo;
-  if (propName.startsWith('on')) return panelEventPropertyInfo;
+  if (propName.startsWith('on-ui-'))
+    return uiEventPropertyInfo;
 
-  if (type === 'GenericPanel') return genericPanelPropertyInfo;
+  if (propName.startsWith('on'))
+    return panelEventPropertyInfo;
+
+  if (type === 'GenericPanel')
+    return genericPanelPropertyInfo;
 
   if (process.env.BUILD_ENV === 'development') {
     console.warn(`Attribute "${propName}" on panel of type "${type}" is unknown`);

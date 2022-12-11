@@ -1,208 +1,156 @@
 import { ExoticComponent } from 'react';
-import * as attributes from './attribute-types';
+import { panoramaDivActive } from '../types/active';
+import { PanelAttributes } from '../types/attributes';
+import { PanelType, DivByPanelType } from '../types/tpanel';
+import { ReactDomDivProps } from '../types/utils';
 
-export interface AttributesByPanel {
-  Panel: attributes.PanelAttributes;
-  Label: attributes.LabelAttributes;
-
-  Image: attributes.ImageAttributes;
-  DOTAAbilityImage: attributes.DOTAAbilityImageAttributes;
-  DOTAItemImage: attributes.DOTAItemImageAttributes;
-  DOTAHeroImage: attributes.DOTAHeroImageAttributes;
-  DOTACountryFlagImage: attributes.DOTACountryFlagImageAttributes;
-  DOTALeagueImage: attributes.DOTALeagueImageAttributes;
-  EconItemImage: attributes.EconItemImageAttributes;
-
-  AnimatedImageStrip: attributes.AnimatedImageStripAttributes;
-  DOTAEmoticon: attributes.DOTAEmoticonAttributes;
-
-  Movie: attributes.MovieAttributes;
-  DOTAHeroMovie: attributes.DOTAHeroMovieAttributes;
-
-  DOTAScenePanel: attributes.DOTAScenePanelAttributes;
-  DOTAParticleScenePanel: attributes.DOTAParticleScenePanelAttributes;
-  DOTAEconItem: attributes.DOTAEconItemAttributes;
-
-  ProgressBar: attributes.ProgressBarAttributes;
-  CircularProgressBar: attributes.CircularProgressBarAttributes;
-  ProgressBarWithMiddle: attributes.ProgressBarWithMiddleAttributes;
-
-  DOTAUserName: attributes.DOTAUserNameAttributes;
-  DOTAUserRichPresence: attributes.DOTAUserRichPresenceAttributes;
-  DOTAAvatarImage: attributes.DOTAAvatarImageAttributes;
-
-  Countdown: attributes.CountdownAttributes;
-
-  Button: attributes.PanelAttributes;
-  TextButton: attributes.TextButtonAttributes;
-  ToggleButton: attributes.ToggleButtonAttributes;
-  RadioButton: attributes.RadioButtonAttributes;
-
-  TextEntry: attributes.TextEntryAttributes;
-  NumberEntry: attributes.NumberEntryAttributes;
-  Slider: attributes.SliderAttributes;
-  SlottedSlider: attributes.SlottedSliderAttributes;
-
-  DropDown: attributes.DropDownAttributes;
-  ContextMenuScript: attributes.PanelAttributes;
-
-  Carousel: attributes.CarouselAttributes;
-  CarouselNav: attributes.CarouselNavAttributes;
-
-  DOTAHUDOverlayMap: attributes.DOTAHUDOverlayMapAttributes;
-  DOTAMinimap: attributes.PanelAttributes;
-
-  HTML: attributes.HTMLAttributes;
-
-  TabButton: attributes.TabButtonAttributes;
-  TabContents: attributes.TabContentsAttributes;
-
-  CustomLayoutPanel: attributes.CustomLayoutPanelAttributes;
-  GenericPanel: attributes.GenericPanelAttributes;
+export type PanelAttributesExpand = {
+    [P in PanelType]: ReactDomDivProps<DivByPanelType<P>>
+    & Partial<
+        panoramaDivActive<P>
+        & PanelAttributes[P]
+        & PanelAttributes['Panel']
+    >
 }
 
-export type PanelType = keyof AttributesByPanel;
-export type PanelTypeByName<T extends PanelType> = PanoramaPanelNameMap[Extract<
-  T,
-  keyof PanoramaPanelNameMap
->];
+export type panoramaDiv<T extends PanelType> = ExoticComponent<PanelAttributesExpand[T]>
 
 declare global {
-  /* eslint-disable no-var, vars-on-top */
-  var Panel: ExoticComponent<attributes.PanelAttributes>;
-  var Label: ExoticComponent<attributes.LabelAttributes>;
+    /* eslint-disable no-var, vars-on-top */
+    var Panel: panoramaDiv<'Panel'>
+    var Label: panoramaDiv<'Label'>
 
-  var Image: ExoticComponent<attributes.ImageAttributes>;
-  var DOTAAbilityImage: ExoticComponent<attributes.DOTAAbilityImageAttributes>;
-  var DOTAItemImage: ExoticComponent<attributes.DOTAItemImageAttributes>;
-  var DOTAHeroImage: ExoticComponent<attributes.DOTAHeroImageAttributes>;
-  var DOTACountryFlagImage: ExoticComponent<attributes.DOTACountryFlagImageAttributes>;
-  var DOTALeagueImage: ExoticComponent<attributes.DOTALeagueImageAttributes>;
-  var EconItemImage: ExoticComponent<attributes.EconItemImageAttributes>;
+    var Image: panoramaDiv<'Image'>
+    var DOTAAbilityImage: panoramaDiv<'DOTAAbilityImage'>
+    var DOTAItemImage: panoramaDiv<'DOTAItemImage'>
+    var DOTAHeroImage: panoramaDiv<'DOTAHeroImage'>
+    var DOTACountryFlagImage: panoramaDiv<'DOTACountryFlagImage'>
+    var DOTALeagueImage: panoramaDiv<'DOTALeagueImage'>
+    var EconItemImage: panoramaDiv<'EconItemImage'>
 
-  var AnimatedImageStrip: ExoticComponent<attributes.AnimatedImageStripAttributes>;
-  var DOTAEmoticon: ExoticComponent<attributes.DOTAEmoticonAttributes>;
+    var AnimatedImageStrip: panoramaDiv<'AnimatedImageStrip'>
+    var DOTAEmoticon: panoramaDiv<'DOTAEmoticon'>
 
-  var Movie: ExoticComponent<attributes.MovieAttributes>;
-  var DOTAHeroMovie: ExoticComponent<attributes.DOTAHeroMovieAttributes>;
+    var Movie: panoramaDiv<'Movie'>
+    var DOTAHeroMovie: panoramaDiv<'DOTAHeroMovie'>
 
-  var DOTAScenePanel: ExoticComponent<attributes.DOTAScenePanelAttributes>;
-  var DOTAParticleScenePanel: ExoticComponent<attributes.DOTAParticleScenePanelAttributes>;
-  var DOTAEconItem: ExoticComponent<attributes.DOTAEconItemAttributes>;
+    var DOTAScenePanel: panoramaDiv<'DOTAScenePanel'>
+    var DOTAParticleScenePanel: panoramaDiv<'DOTAParticleScenePanel'>
+    var DOTAEconItem: panoramaDiv<'DOTAEconItem'>
 
-  var ProgressBar: ExoticComponent<attributes.ProgressBarAttributes>;
-  var CircularProgressBar: ExoticComponent<attributes.CircularProgressBarAttributes>;
-  var ProgressBarWithMiddle: ExoticComponent<attributes.ProgressBarWithMiddleAttributes>;
+    var ProgressBar: panoramaDiv<'ProgressBar'>
+    var CircularProgressBar: panoramaDiv<'CircularProgressBar'>
+    var ProgressBarWithMiddle: panoramaDiv<'ProgressBarWithMiddle'>
 
-  var DOTAUserName: ExoticComponent<attributes.DOTAUserNameAttributes>;
-  var DOTAUserRichPresence: ExoticComponent<attributes.DOTAUserRichPresenceAttributes>;
-  var DOTAAvatarImage: ExoticComponent<attributes.DOTAAvatarImageAttributes>;
+    var DOTAUserName: panoramaDiv<'DOTAUserName'>
+    var DOTAUserRichPresence: panoramaDiv<'DOTAUserRichPresence'>
+    var DOTAAvatarImage: panoramaDiv<'DOTAAvatarImage'>
 
-  var Countdown: ExoticComponent<attributes.CountdownAttributes>;
+    var Countdown: panoramaDiv<'Countdown'>
 
-  var Button: ExoticComponent<attributes.PanelAttributes>;
-  var TextButton: ExoticComponent<attributes.TextButtonAttributes>;
-  var ToggleButton: ExoticComponent<attributes.ToggleButtonAttributes>;
-  var RadioButton: ExoticComponent<attributes.RadioButtonAttributes>;
+    var Button: panoramaDiv<'Button'>
+    var TextButton: panoramaDiv<'TextButton'>
+    var ToggleButton: panoramaDiv<'ToggleButton'>
+    var RadioButton: panoramaDiv<'RadioButton'>
 
-  var TextEntry: ExoticComponent<attributes.TextEntryAttributes>;
-  var NumberEntry: ExoticComponent<attributes.NumberEntryAttributes>;
-  var Slider: ExoticComponent<attributes.SliderAttributes>;
-  var SlottedSlider: ExoticComponent<attributes.SlottedSliderAttributes>;
+    var TextEntry: panoramaDiv<'TextEntry'>
+    var NumberEntry: panoramaDiv<'NumberEntry'>
+    var Slider: panoramaDiv<'Slider'>
+    var SlottedSlider: panoramaDiv<'SlottedSlider'>
 
-  var DropDown: ExoticComponent<attributes.DropDownAttributes>;
-  var ContextMenuScript: ExoticComponent<attributes.PanelAttributes>;
+    var DropDown: panoramaDiv<'DropDown'>
+    var ContextMenuScript: panoramaDiv<'ContextMenuScript'>
 
-  var Carousel: ExoticComponent<attributes.CarouselAttributes>;
-  var CarouselNav: ExoticComponent<attributes.CarouselNavAttributes>;
+    var Carousel: panoramaDiv<'Carousel'>
+    var CarouselNav: panoramaDiv<'CarouselNav'>
 
-  var DOTAHUDOverlayMap: ExoticComponent<attributes.DOTAHUDOverlayMapAttributes>;
-  var DOTAMinimap: ExoticComponent<attributes.PanelAttributes>;
+    var DOTAHUDOverlayMap: panoramaDiv<'DOTAHUDOverlayMap'>
+    var DOTAMinimap: panoramaDiv<'DOTAMinimap'>
 
-  var HTML: ExoticComponent<attributes.HTMLAttributes>;
+    var HTML: panoramaDiv<'HTML'>
 
-  var TabButton: ExoticComponent<attributes.TabButtonAttributes>;
-  var TabContents: ExoticComponent<attributes.TabContentsAttributes>;
+    var TabButton: panoramaDiv<'TabButton'>
+    var TabContents: panoramaDiv<'TabContents'>
 
-  var CustomLayoutPanel: ExoticComponent<attributes.CustomLayoutPanelAttributes>;
-  /**
-   * This element allows to render any unsupported Panorama panel type.
-   * All unknown attributes are assumed to be XML properties.
-   *
-   * @example
-   * return (
-   *   <GenericPanel
-   *     type="DOTABuffList"
-   *     showdebuffs={false}
-   *     style={{ backgroundColor: 'black' }}
-   *   />
-   * );
-   */
-  var GenericPanel: ExoticComponent<attributes.GenericPanelAttributes>;
-  /* eslint-enable */
+    var CustomLayoutPanel: panoramaDiv<'CustomLayoutPanel'>
+    /**
+     * This element allows to render any unsupported Panorama panel type.
+     * All unknown attributes are assumed to be XML properties.
+     *
+     * @example
+     * return (
+     *   <GenericPanel
+     *     type="DOTABuffList"
+     *     showdebuffs={false}
+     *     style={{ backgroundColor: 'black' }}
+     *   />
+     * );
+     */
+    var GenericPanel: panoramaDiv<'GenericPanel'>;
+    /* eslint-enable */
 }
 
 // eslint-disable-next-line no-new-func
 const global: typeof globalThis = new Function('return this')();
 
 for (const panelName of [
-  'Panel',
-  'Label',
+    'Panel',
+    'Label',
 
-  'Image',
-  'DOTAAbilityImage',
-  'DOTAItemImage',
-  'DOTAHeroImage',
-  'DOTACountryFlagImage',
-  'DOTALeagueImage',
-  'EconItemImage',
+    'Image',
+    'DOTAAbilityImage',
+    'DOTAItemImage',
+    'DOTAHeroImage',
+    'DOTACountryFlagImage',
+    'DOTALeagueImage',
+    'EconItemImage',
 
-  'AnimatedImageStrip',
-  'DOTAEmoticon',
+    'AnimatedImageStrip',
+    'DOTAEmoticon',
 
-  'Movie',
-  'DOTAHeroMovie',
+    'Movie',
+    'DOTAHeroMovie',
 
-  'DOTAScenePanel',
-  'DOTAParticleScenePanel',
-  'DOTAEconItem',
+    'DOTAScenePanel',
+    'DOTAParticleScenePanel',
+    'DOTAEconItem',
 
-  'ProgressBar',
-  'CircularProgressBar',
-  'ProgressBarWithMiddle',
+    'ProgressBar',
+    'CircularProgressBar',
+    'ProgressBarWithMiddle',
 
-  'DOTAUserName',
-  'DOTAUserRichPresence',
-  'DOTAAvatarImage',
+    'DOTAUserName',
+    'DOTAUserRichPresence',
+    'DOTAAvatarImage',
 
-  'Countdown',
+    'Countdown',
 
-  'Button',
-  'TextButton',
-  'ToggleButton',
-  'RadioButton',
+    'Button',
+    'TextButton',
+    'ToggleButton',
+    'RadioButton',
 
-  'TextEntry',
-  'NumberEntry',
-  'Slider',
-  'SlottedSlider',
+    'TextEntry',
+    'NumberEntry',
+    'Slider',
+    'SlottedSlider',
 
-  'DropDown',
-  'ContextMenuScript',
+    'DropDown',
+    'ContextMenuScript',
 
-  'Carousel',
-  'CarouselNav',
+    'Carousel',
+    'CarouselNav',
 
-  'DOTAHUDOverlayMap',
-  'DOTAMinimap',
+    'DOTAHUDOverlayMap',
+    'DOTAMinimap',
 
-  'HTML',
+    'HTML',
 
-  'TabButton',
-  'TabContents',
+    'TabButton',
+    'TabContents',
 
-  'CustomLayoutPanel',
-  'GenericPanel',
+    'CustomLayoutPanel',
+    'GenericPanel',
 ] as const) {
-  global[panelName] = panelName as any;
+    global[panelName] = panelName as any;
 }
