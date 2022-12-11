@@ -60,10 +60,11 @@ export interface panoramaEventDeclarations {
     DragLeave(dragged: Panel): boolean
 }
 
-export type EventHandler<T extends PanelBase> = ((panel: T) => void) | string;
+export type EventHandler<T extends PanelBase, P extends any[] = void[]> = ((panel: T, ...args:P) => void) | string;
 export type panoramaDivActive<T extends PanelType = 'Panel'> = {
-    [k in panoramaDivActivates['Panel'] | panoramaDivActivates[T]]: EventHandler<DivByPanelType<T>>
+    [k in panoramaDivActivates['Panel'] | panoramaDivActivates[T]]: 
+        EventHandler<DivByPanelType<T>>
 } & {
     [k in `on-ui-${keyof panoramaEventDeclarations}`]: 
-    (panel: DivByPanelType<T>, ...arg: Parameters<panoramaEventDeclarations[k extends `on-ui-${infer R}`?R:never]>) => void
+        EventHandler<DivByPanelType<T>, Parameters<panoramaEventDeclarations[k extends `on-ui-${infer R}` ? R : never]>>
 }
