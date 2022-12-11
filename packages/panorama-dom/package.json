@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/panorama-react-dom",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "React for Valve's Panorama UI (for Dota 2 Custom Games).",
   "keywords": [
     "dota",
