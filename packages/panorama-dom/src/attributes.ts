@@ -100,7 +100,7 @@ definePanelPropertyInformation('Panel', {
         if (!status) {
           const indentedLayout = newValue.replace(/^/gm, '    ');
           throw new Error(
-            `Cannot create children for "dangerouslyCreateChildren":\n${indentedLayout}`,
+            `无法为“dangerouslyCreateChildren”创建子级 :\n${indentedLayout}`
           );
         }
       }
@@ -615,7 +615,7 @@ export function getPropertyInfo(
     return genericPanelPropertyInfo;
 
   if (process.env.BUILD_ENV === 'development') {
-    console.warn(`Attribute "${propName}" on panel of type "${type}" is unknown`);
+    console.warn(`未知属性"${propName}"出现在"${type}"类型的面板上`);
     return genericPanelPropertyInfo;
   }
 }
@@ -661,8 +661,8 @@ export function updateProperty(
 
   if (panelBaseNames.has(type) && propertyInformation.throwOnIncomplete) {
     throw new Error(
-      `Attribute "${propName}" cannot be ${propertyInformation.initial ? 'changed on' : 'added to'
-      } incomplete ${type} panel type.${propertyInformation.initial ? ' Add a "key" attribute to force re-mount.' : ''
+      `无法为不完整的'${type}'面板${propertyInformation.initial ? '更改' : '添加'}属性'${propName}'.${
+        propertyInformation.initial ? ' 添加“key”属性以强制重新装载。' : ''
       }`,
     );
   }
@@ -680,7 +680,7 @@ export function updateProperty(
       break;
     case PropertyType.INITIAL_ONLY:
       throw new Error(
-        `Attribute "${propName}" cannot be changed. Add a "key" attribute to force re-mount.`,
+        `无法更改属性"${propName}"。添加“key”属性以强制重新装载。`,
       );
     case PropertyType.CUSTOM:
       propertyInformation.update(panel, newValue, oldValue, propName);

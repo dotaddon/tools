@@ -113,7 +113,7 @@ const hostConfig: ReactReconciler.HostConfig<
     return panel;
   },
   createTextInstance() {
-    throw new Error('React-DOM does not support text nodes. Use <Label /> element instead.');
+    throw new Error('React DOM不支持文本节点。请改用<Label/>元素。');
   },
   appendInitialChild: appendChild,
   finalizeInitialChildren: () => false,
