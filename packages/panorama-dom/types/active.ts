@@ -52,14 +52,6 @@ export interface panoramaDivActivates extends PNC<PanelEvent> {
     // | 'ontextentrysubmit' // doesn't seem to be ever triggered
 }
 
-export interface panoramaEventDeclarations {
-    DragStart(settings: DragSettings): boolean
-    DragEnd(dragged: Panel): boolean
-    DragDrop(dragged: Panel): boolean
-    DragEnter(dragged: Panel): boolean
-    DragLeave(dragged: Panel): boolean
-}
-
 export type EventHandler<T extends PanelBase, P extends any[] = void[]> = ((panel: T, ...args:P) => void) | string;
 export type panoramaDivActive<T extends PanelType = 'Panel'> = {
     [k in panoramaDivActivates['Panel'] | panoramaDivActivates[T]]: 

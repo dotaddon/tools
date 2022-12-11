@@ -1,3 +1,7 @@
+/**
+ * 可以通过on-ui-AddStyle 监听 AddStyle 事件
+ * 
+ */
 
 // 官方控制台公布的 2021年9月更新
 interface panoramaEventDeclarations {
@@ -220,4 +224,13 @@ interface panoramaEventDeclarations {
     /** 点击buff按钮 */
     DOTAHUDBuffClicked(): void
     PostGameProgressConfirmAbusiveCoachRatingFinished( arg0: boolean, arg1: string ): void
+}
+
+// 拖拽事件
+interface panoramaEventDeclarations {
+    DragStart(settings: DragSettings): boolean
+    DragEnd(dragged: Panel): boolean
+    DragDrop(dragged: Panel): boolean
+    DragEnter(dragged: Panel): boolean
+    DragLeave(dragged: Panel): boolean
 }
