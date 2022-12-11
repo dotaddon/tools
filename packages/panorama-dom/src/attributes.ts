@@ -542,15 +542,6 @@ const genericPanelPropertyInfo: PropertyInformation<'GenericPanel', string> = {
   initial: true,
 };
 
-function RunFunInPanelContext<T extends PanelBase = Panel>
-(funcName: string, content: InternalPanel<T>, ...args:any[]){
-  let func = content._eventHandlers![funcName]
-  if (typeof func == 'string')
-    content.RunScriptInPanelContext(func)
-  else
-    func(content, ...args)
-}
-
 const uiEventPropertyInfo: PropertyInformation<'Panel', any> = {
   type: PropertyType.CUSTOM,
   update(panel, newValue, _oldValue, propName) {
@@ -558,8 +549,13 @@ const uiEventPropertyInfo: PropertyInformation<'Panel', any> = {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {
-      $.RegisterEventHandler(propName.slice(6), panel, (...args) =>
-        RunFunInPanelContext(propName, panel, ...args)
+      $.RegisterEventHandler(propName.slice(6), panel, (...args) =>{
+
+        if (typeof panel._eventHandlers![propName] == 'string')
+          panel.RunScriptInPanelContext(panel._eventHandlers![propName] as string)
+        else
+          (panel._eventHandlers![propName] as any)(panel, ...args)
+      }
       );
     }
 
@@ -577,8 +573,12 @@ const panelEventPropertyInfo: PropertyInformation<'Panel', any> = {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {
-      panel.SetPanelEvent(propName, () =>
-        RunFunInPanelContext(propName, panel)
+      panel.SetPanelEvent(propName, () => {
+        if (typeof panel._eventHandlers![propName] == 'string')
+          panel.RunScriptInPanelContext(panel._eventHandlers![propName] as string)
+        else
+          (panel._eventHandlers![propName] as any)(panel)
+      }
       );
     }
 
