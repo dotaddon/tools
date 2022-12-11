@@ -542,22 +542,6 @@ const genericPanelPropertyInfo: PropertyInformation<'GenericPanel', string> = {
   initial: true,
 };
 
-const uiEventPropertyInfo: PropertyInformation<'Panel', any> = {
-  type: PropertyType.CUSTOM,
-  update(panel, newValue, _oldValue, propName) {
-    panel._eventHandlers ??= {};
-
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (panel._eventHandlers[propName] === undefined) {
-      $.RegisterEventHandler(propName.slice(6), panel, (...args) =>
-        panel._eventHandlers![propName](panel, ...args)
-      );
-    }
-
-    panel._eventHandlers[propName] = newValue ?? noop;
-  },
-};
-
 const panelEventPropertyInfo: PropertyInformation<'Panel', any> = {
   type: PropertyType.CUSTOM,
   update(panel, newValue, _oldValue, propName) {
@@ -568,9 +552,14 @@ const panelEventPropertyInfo: PropertyInformation<'Panel', any> = {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {
-      panel.SetPanelEvent(propName, () =>
-        panel._eventHandlers![propName](panel)
-      );
+      if (propName.startsWith('on-ui-'))
+        $.RegisterEventHandler(propName.slice(6), panel, (...args) =>
+          panel._eventHandlers![propName](panel, ...args)
+        );
+      else
+        panel.SetPanelEvent(propName, () =>
+          panel._eventHandlers![propName](panel)
+        );
     }
 
     panel._eventHandlers[propName] = newValue ?? noop;
@@ -595,9 +584,6 @@ export function getPropertyInfo(
 
   if (propName === 'children')
     return undefined;
-
-  if (propName.startsWith('on-ui-'))
-    return uiEventPropertyInfo;
 
   if (propName.startsWith('on'))
     return panelEventPropertyInfo;
