@@ -3,4 +3,4 @@
 /// <reference types="@moddota/panorama-types" />
 /// <reference path="types/css.d.ts" />
 /// <reference path="types/ScenePanel.d.ts" />
-/// <reference path="types/panel.d.ts" />
+/// <reference path="types/active.d.ts" />

@@ -1,5 +1,4 @@
 import { DependencyList, useEffect } from "react";
-import { panoramaEventDeclarations } from "./list";
 
 /** 触发控件事件
  * @param event 事件名

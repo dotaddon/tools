@@ -8,3 +8,7 @@ declare const process: {
 declare interface CustomUIConfig {
     temporaryScheduleHandle: ScheduleID;
 }
+declare interface PanoramaPanelNameMap {
+    TabButton: Panel,
+    TabContents: Panel,
+}

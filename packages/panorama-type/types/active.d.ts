@@ -1,6 +1,6 @@
 
 // 官方控制台公布的 2021年9月更新
-export interface panoramaEventDeclarations {
+interface panoramaEventDeclarations {
     /** 向板添加一个css类。 */
     AddStyle(className: string): void
     /** Add a CSS class to a panel after a specified delay. */
@@ -161,7 +161,7 @@ export interface panoramaEventDeclarations {
 }
 
 // 自己总结出来的 2021年3月更新
-export interface panoramaEventDeclarations {
+interface panoramaEventDeclarations {
     /** 触发商店的显示或隐藏 */
     DOTAHUDToggleShop(): void
     FireCustomGameEvent_Str( arg0: string, arg1: string ): void
@@ -208,7 +208,7 @@ export interface panoramaEventDeclarations {
 
 
 // 自己总结出来的 2022年7月更新
-export interface panoramaEventDeclarations {
+interface panoramaEventDeclarations {
     /** 玩家属性详情弹出面板 显示 */
     DOTAHUDHideDamageArmorTooltip(): void
     /** 玩家属性详情弹出面板 隐藏 */
