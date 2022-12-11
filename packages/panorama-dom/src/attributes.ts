@@ -549,13 +549,8 @@ const uiEventPropertyInfo: PropertyInformation<'Panel', any> = {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {
-      $.RegisterEventHandler(propName.slice(6), panel, (...args) =>{
-
-        if (typeof panel._eventHandlers![propName] == 'string')
-          panel.RunScriptInPanelContext(panel._eventHandlers![propName] as string)
-        else
-          (panel._eventHandlers![propName] as any)(panel, ...args)
-      }
+      $.RegisterEventHandler(propName.slice(6), panel, (...args) =>
+        panel._eventHandlers![propName](panel, ...args)
       );
     }
 
@@ -573,12 +568,8 @@ const panelEventPropertyInfo: PropertyInformation<'Panel', any> = {
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {
-      panel.SetPanelEvent(propName, () => {
-        if (typeof panel._eventHandlers![propName] == 'string')
-          panel.RunScriptInPanelContext(panel._eventHandlers![propName] as string)
-        else
-          (panel._eventHandlers![propName] as any)(panel)
-      }
+      panel.SetPanelEvent(propName, () =>
+        panel._eventHandlers![propName](panel)
       );
     }
 
