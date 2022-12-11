@@ -7,5 +7,5 @@ export type hisoCombination<T, S> = {
 export type PanelStyles = hisoCombination<VCSSStyleDeclaration2, VCSSStyleDeclaration>
 
 export type ReactDomDivProps<T extends PanelBase = Panel> = ClassAttributes<T> & {
-    children: ReactNode;
+    children?: ReactNode;
 }
