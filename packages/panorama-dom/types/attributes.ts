@@ -57,9 +57,9 @@ export interface PanelAttributesBase extends PNC<Record<string,any>> {
 
         // acceleration: number
         antialias: boolean
-        // deferredalpha: any
-        // drawbackground: boolean
-        // environment: any
+        // deferredalpha: boolean
+        // drawbackground: boolean // 是否绘制背景
+        // environment: "default" | any
         // 'live-mode': any
         panoramasurfaceheight: number
         panoramasurfacewidth: number
