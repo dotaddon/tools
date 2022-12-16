@@ -23,17 +23,6 @@ export interface panoramaDivActivates extends PNC<PanelEvent> {
         | 'ontabbackward'
         | 'onscrolledtobottom'
         | 'onscrolledtorightedge'
-
-    TabContents:
-        | 'onselect'
-        | 'ondeselect'
-    RadioButton:
-        | 'onselect'
-        | 'ondeselect'
-    ToggleButton:
-        | 'onselect'
-        | 'ondeselect'
-    TabButton:
         | 'onselect'
         | 'ondeselect'
 

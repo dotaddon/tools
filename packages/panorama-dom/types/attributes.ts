@@ -6,17 +6,40 @@ type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
 export interface PanelAttributesBase extends PNC<Record<string,any>> {
     Label:{
         /**
-         * Note: Using this attribute is the same as assigning `text` property on a Label panel - it does
-         * not localize strings and ignores dialog variables. If you need the behavior of XML attribute,
-         * use `localizedText` instead.
+         * *注意：使用此属性与在“标签”面板上分配“文本”属性相同
+         * 它不会本地化字符串并忽略对话框变量。
+         * 如果需要XML属性的行为，请改用“localizedText”。
          */
-        text: string | number
+        text: string | number | ((panel: LabelPanel) => string);
         localizedText: string
-        html: boolean
+        unlocalized: boolean;
+        html: boolean;
     }
     Image:{
         src: string
         scaling: ScalingFunction
+        svgfillrule?: 'nonzero' | 'evenodd';
+        svgopacity?: number;
+        svgstrokeopacity?: number;
+        svgstrokelinejoin?: 'miter' | 'round' | 'bevel' | 'inherit';
+        svgstrokelinecap?: 'butt' | 'round' | 'square';
+        svgstrokewidth?: number;
+        svgstroke?: '#ffffff' | string;
+        svgfillopacity?: number;
+        svgfill?: '#ffffff' | string;
+        /**
+         * texturewidth and textureheight can be used to override the size of vector graphics. Default value of -1 indicates texture width/height to be determined from source file
+         */
+        texturewidth?: number;
+        /**
+         * texturewidth and textureheight can be used to override the size of vector graphics. Default value of -1 indicates texture width/height to be determined from source file
+         */
+        textureheight?: number;
+        srcset?: string;
+        animate?: string;
+        defaultsrc?: string;
+        verticalalign?: VCSSVerticalAlign;
+        horizontalalign?: VCSSHorizontalAlign | 'middle';
     }
     ToggleButton:{
         selected: boolean // checked?
@@ -40,35 +63,41 @@ export interface PanelAttributesBase extends PNC<Record<string,any>> {
     }
 
     DOTAScenePanel: {
-        unit: string
-        'activity-modifier': string
+        'post-process-fade'?: number;
+        'post-process-material'?: string;
+        'animate-during-pause'?: boolean;
+        'pin-fov'?: 'horizontal' | 'vertical';
+        'live-mode'?: 'high_end_only' | string;
+        'no-intro-effects'?: boolean;
+        environment?: 'default' | 'full_body' | 'full_body_right_side' | 'card';
+        'activity-modifier'?: string;
+        unit?: string;
 
-        map: string
-        camera: string
-        light: string
+        map?: string;
+        camera?: string;
+        light?: string;
 
-        pitchmin: number
-        pitchmax: number
-        yawmin: number
-        yawmax: number
-        allowrotation: boolean
-        rotateonhover: boolean
-        rotateonmousemove: boolean
+        pitchmin?: number;
+        pitchmax?: number;
+        yawmin?: number;
+        yawmax?: number;
+        acceleration?: number;
+        autorotatespeed?: number;
+        allowrotation?: boolean;
+        rotateonhover?: boolean;
+        rotateonmousemove?: boolean;
 
-        // acceleration: number
-        antialias: boolean
-        // deferredalpha: boolean
-        // drawbackground: boolean // 是否绘制背景
-        // environment: "default" | any
-        // 'live-mode': any
-        panoramasurfaceheight: number
-        panoramasurfacewidth: number
-        panoramasurfacexml: string
-        particleonly: boolean
-        // 'pin-fov': any
-        renderdeferred: boolean
-        rendershadows: boolean
-        // renderwaterreflections: boolean
+        antialias?: boolean;
+        deferredalpha?: boolean;
+        drawbackground?: boolean;
+        panoramasurfaceheight?: number;
+        panoramasurfacewidth?: number;
+        panoramasurfacexml?: string;
+        particleonly?: boolean;
+        renderdeferred?: boolean;
+        rendershadows?: boolean;
+        renderwaterreflections?: boolean;
+        allowsuspendrepaint?: boolean;
     }
 }
 /** 板属性 */
@@ -88,10 +117,33 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         draggable: boolean
         enabled: boolean
         visible: boolean
+
+        useglobalcontext?: boolean;
+        disallowedstyleflags?: string;
+        'never-cache-composition-layer'?: boolean;
+        'always-cache-composition-layer'?: boolean;
+        'require-composition-layer'?: boolean;
+        registerforreadyevents?: boolean;
+        readyfordisplay?: boolean;
+        clipaftertransform?: boolean;
+        rememberchildfocus?: boolean;
+        keepscrolltobottom?: boolean;
+        sendchildscrolledintoviewevents?: boolean;
+        'overscroll-x'?: number;
+        'overscroll-y'?: number;
+        scrollparenttofitwhenfocused?: boolean;
+        acceptsinput?: boolean;
+        analogstickscroll?: boolean;
+        childfocusonhover?: boolean;
+        focusonhover?: boolean;
+        mousecanactivate?: 'unfocused' | 'iffocused' | 'ifparentfocused(<parentid>)' | string;
+        defaultfocus?: string;
+        selectionposboundary?: 'both' | 'vertical' | 'horizontal' | string;
         // TODO: sectionpos: 'auto'?
     }
     Label: PanelAttributesBase['Label'] & {
         allowtextselection: boolean
+        imgscaling: number;
     }
 
     Image: PanelAttributesBase['Image']
@@ -113,9 +165,8 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         heroid: HeroID
         heroimagestyle: 'icon' | 'portrait' | 'landscape'
         usedefaultimage: boolean
-    }
-    DOTACountryFlagImage: PanelAttributesBase['Image']& {
-        country_code: string
+        persona?: string;
+        defaultimage?: string;
     }
     DOTALeagueImage: PanelAttributesBase['Image'] &  {
         leagueid: number
@@ -124,12 +175,15 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
     }
     EconItemImage: PanelAttributesBase['Image'] & {
         itemdef: number
+        itemstyle?: number;
     }
 
     AnimatedImageStrip: PanelAttributesBase['Image'] & {
         frametime: string
         defaultframe: number
         animating: boolean
+        framewidth?: number;
+        frameheight?: number;
     }
     DOTAEmoticon: PanelAttributes['AnimatedImageStrip'] & {
         emoticonid: number
@@ -143,23 +197,40 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         title: string
         /** @default 'onload' */
         autoplay: MovieAutoPlay
+
+        volume?: number;
+        muted?: boolean;
+        notreadybehavior?: boolean;
+        loadbehavior?: boolean;
     }
     DOTAHeroMovie: {
         heroid: HeroID
         heroname: string
-        persona: any
+        persona: string
         /** @default 'off' */
         autoplay: MovieAutoPlay
+        src?: string;
+        volume?: number;
+        muted?: boolean;
+        repeat?: boolean;
+        notreadybehavior?: boolean;
+        loadbehavior?: boolean;
+
     }
+
+//TODO export interface RenderPanelAttributes extends PanelAttributes { }
 
     DOTAScenePanel: PanelAttributesBase['DOTAScenePanel']
     DOTAParticleScenePanel: PanelAttributesBase['DOTAScenePanel'] & {
-        particleName: string
-        cameraOrigin: [number, number, number] | string
-        lookAt: [number, number, number] | string
-        fov: number
-        squarePixels: boolean
-        startActive: boolean
+        syncSpawn?: boolean;
+        fov?: number;
+        startActive?: boolean;
+        squarePixels?: boolean;
+        farPlane?: number;
+        lookAt?: [number, number, number] | string;
+        cameraOrigin?: [number, number, number] | string;
+        useMapCamera?: boolean;
+        particleName?: string;
     }
     DOTAEconItem: {
         itemdef: number
@@ -203,6 +274,7 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
     TextButton: PanelAttributesBase['Label']
     ToggleButton: PanelAttributesBase['Label'] & PanelAttributesBase['ToggleButton']
     RadioButton: PanelAttributesBase['ToggleButton'] & {
+        global?: boolean;
         group: string
         text: string
         html: boolean
@@ -215,6 +287,9 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         textmode: 'normal' | 'password' | 'numeric' | 'numericpassword'
 
         text: string
+        autocompleteposition?: 'top' | string;
+        capslockwarn?: 1 | 0;
+        undohistory?: 'enabled';
     }
     NumberEntry: {
         value: number
@@ -239,9 +314,7 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         focus: 'center' | 'edge'
         'focus-offset': string
         wrap: boolean
-        selectionposboundary: string
         'panels-visible': number
-        clipaftertransform: boolean
         AllowOversized: any
         'autoscroll-delay': string
         'x-offset': string

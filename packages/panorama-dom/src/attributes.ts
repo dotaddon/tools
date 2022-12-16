@@ -107,6 +107,27 @@ definePanelPropertyInformation('Panel', {
     },
   },
 
+  useglobalcontext: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  disallowedstyleflags: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  'never-cache-composition-layer': { type: PropertyType.INITIAL_ONLY, initial: true, },
+  'always-cache-composition-layer': { type: PropertyType.INITIAL_ONLY, initial: true, },
+  'require-composition-layer': { type: PropertyType.INITIAL_ONLY, initial: true, },
+  registerforreadyevents: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  readyfordisplay: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  clipaftertransform: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  rememberchildfocus: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  keepscrolltobottom: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  sendchildscrolledintoviewevents: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  'overscroll-x': { type: PropertyType.INITIAL_ONLY, initial: true, },
+  'overscroll-y': { type: PropertyType.INITIAL_ONLY, initial: true, },
+  scrollparenttofitwhenfocused: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  acceptsinput: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  analogstickscroll: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  childfocusonhover: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  focusonhover: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  mousecanactivate: { type: PropertyType.INITIAL_ONLY, initial: true, },
+  defaultfocus: { type: PropertyType.INITIAL_ONLY, initial: true, },
+
   dialogVariables: {
     type: PropertyType.CUSTOM,
     update(panel, newValue = {}, oldValue = {}) {
@@ -186,21 +207,47 @@ definePanelPropertyInformation('Panel', {
   draggable: { type: PropertyType.SETTER, name: 'SetDraggable' },
 })
 const labelTextAttributes = {
-  // Number can be assigned to text
-  text: { type: PropertyType.SET, name: 'text' as never },
+  text: {
+    type: PropertyType.CUSTOM,
+    update(panel: any, newValue: string | number | ((panel: any) => string)) {
+      if (typeof newValue === 'function') {
+        panel.text = newValue(panel);
+      } else {
+        panel.text = newValue;
+      }
+    }
+  },
   localizedText: { type: PropertyType.INITIAL_ONLY, initial: 'text' },
   // Label.html setter doesn't appear to work correctly
   html: { type: PropertyType.INITIAL_ONLY, initial: true },
+  unlocalized: { type: PropertyType.INITIAL_ONLY, initial: true },
 } as const;
 
 definePanelPropertyInformation('Label', {
   ...labelTextAttributes,
   allowtextselection: { type: PropertyType.INITIAL_ONLY, initial: true },
+  imgscaling: { type: PropertyType.INITIAL_ONLY, initial: true },
 });
 
 const imageAttributes: PanelPropertyInformation<'Image'> = {
-  scaling: { type: PropertyType.SETTER, name: 'SetScaling', initial: true },
+  svgfillrule: { type: PropertyType.INITIAL_ONLY, initial: true },
+  svgopacity: { type: PropertyType.INITIAL_ONLY, initial: true },
+  svgstrokeopacity: { type: PropertyType.INITIAL_ONLY, initial: true },
+  svgstrokelinejoin: { type: PropertyType.INITIAL_ONLY, initial: true },
+  svgstrokelinecap: { type: PropertyType.INITIAL_ONLY, initial: true },
+  svgstrokewidth: { type: PropertyType.INITIAL_ONLY, initial: true },
+  svgstroke: { type: PropertyType.INITIAL_ONLY, initial: true },
+  svgfillopacity: { type: PropertyType.INITIAL_ONLY, initial: true },
+  svgfill: { type: PropertyType.INITIAL_ONLY, initial: true },
+  texturewidth: { type: PropertyType.INITIAL_ONLY, initial: true },
+  textureheight: { type: PropertyType.INITIAL_ONLY, initial: true },
+  srcset: { type: PropertyType.INITIAL_ONLY, initial: true },
+  animate: { type: PropertyType.INITIAL_ONLY, initial: true },
+  defaultsrc: { type: PropertyType.INITIAL_ONLY, initial: true },
   src: { type: PropertyType.SETTER, name: 'SetImage', initial: true },
+  verticalalign: { type: PropertyType.INITIAL_ONLY, initial: true },
+  horizontalalign: { type: PropertyType.INITIAL_ONLY, initial: true },
+  scaling: { type: PropertyType.SETTER, name: 'SetScaling', initial: true },
 };
 
 definePanelPropertyInformation('Image', imageAttributes);
@@ -226,11 +273,8 @@ definePanelPropertyInformation('DOTAHeroImage', {
   heroname: { type: PropertyType.SET, name: 'heroname', initial: true },
   heroimagestyle: { type: PropertyType.SET, name: 'heroimagestyle', initial: true },
   usedefaultimage: { type: PropertyType.INITIAL_ONLY, initial: true },
-});
-
-definePanelPropertyInformation('DOTACountryFlagImage', {
-  ...imageAttributes,
-  country_code: { type: PropertyType.INITIAL_ONLY, initial: true },
+  persona: { type: PropertyType.SET, name: 'persona', initial: true },
+  defaultimage: { type: PropertyType.INITIAL_ONLY, initial: true },
 });
 
 definePanelPropertyInformation('DOTALeagueImage', {
@@ -242,10 +286,13 @@ definePanelPropertyInformation('DOTALeagueImage', {
 definePanelPropertyInformation('EconItemImage', {
   ...imageAttributes,
   itemdef: { type: PropertyType.INITIAL_ONLY, initial: true },
+  itemstyle: { type: PropertyType.INITIAL_ONLY, initial: 'styleindex' },
 });
 
 const animatedImageStripAttributes: PanelPropertyInformation<'AnimatedImageStrip'> = {
   ...imageAttributes,
+  framewidth: { type: PropertyType.INITIAL_ONLY, initial: true },
+  frameheight: { type: PropertyType.INITIAL_ONLY, initial: true },
   frametime: { type: PropertyType.INITIAL_ONLY, initial: true },
   defaultframe: { type: PropertyType.INITIAL_ONLY, initial: true },
   animating: { type: PropertyType.INITIAL_ONLY, initial: true },
@@ -261,17 +308,28 @@ definePanelPropertyInformation('DOTAEmoticon', {
 
 definePanelPropertyInformation('Movie', {
   src: { type: PropertyType.SETTER, name: 'SetMovie', initial: true },
-  controls: { type: PropertyType.SETTER, name: 'SetControls', initial: true },
+  volume: { type: PropertyType.SETTER, name: 'SetPlaybackVolume', initial: true },
+  muted: { type: PropertyType.INITIAL_ONLY, initial: true },
   repeat: { type: PropertyType.SETTER, name: 'SetRepeat', initial: true },
-  title: { type: PropertyType.SETTER, name: 'SetTitle', initial: true },
+  notreadybehavior: { type: PropertyType.INITIAL_ONLY, initial: true },
+  loadbehavior: { type: PropertyType.INITIAL_ONLY, initial: true },
   autoplay: { type: PropertyType.INITIAL_ONLY, initial: true },
+  title: { type: PropertyType.SETTER, name: 'SetTitle', initial: true },
+  controls: { type: PropertyType.SETTER, name: 'SetControls', initial: true },
 });
 
 definePanelPropertyInformation('DOTAHeroMovie', {
+  src: { type: PropertyType.INITIAL_ONLY, initial: true },
+  volume: { type: PropertyType.INITIAL_ONLY, initial: true },
+  muted: { type: PropertyType.INITIAL_ONLY, initial: true },
+  repeat: { type: PropertyType.INITIAL_ONLY, initial: true },
+  notreadybehavior: { type: PropertyType.INITIAL_ONLY, initial: true },
+  loadbehavior: { type: PropertyType.INITIAL_ONLY, initial: true },
+  autoplay: { type: PropertyType.INITIAL_ONLY, initial: true },
+
   heroid: { type: PropertyType.SET, name: 'heroid', initial: true },
   heroname: { type: PropertyType.SET, name: 'heroname', initial: true },
-  persona: { type: PropertyType.SET, name: 'persona' },
-  autoplay: { type: PropertyType.INITIAL_ONLY, initial: true },
+  persona: { type: PropertyType.SET, name: 'persona', initial: true },
 });
 
 const createSceneRotationSetter = <TProp extends 'pitchmin' | 'pitchmax' | 'yawmin' | 'yawmax'>(
@@ -291,9 +349,15 @@ const createSceneRotationSetter = <TProp extends 'pitchmin' | 'pitchmax' | 'yawm
 });
 
 const scenePanelAttributes = {
-  // TODO: panel.SetUnit?
-  unit: { type: PropertyType.INITIAL_ONLY, initial: true },
+  'post-process-fade': { type: PropertyType.INITIAL_ONLY, initial: true },
+  'post-process-material': { type: PropertyType.INITIAL_ONLY, initial: true },
+  'animate-during-pause': { type: PropertyType.INITIAL_ONLY, initial: true },
+  'pin-fov': { type: PropertyType.INITIAL_ONLY, initial: true },
+  'live-mode': { type: PropertyType.INITIAL_ONLY, initial: true },
+  'no-intro-effects': { type: PropertyType.INITIAL_ONLY, initial: true },
+  environment: { type: PropertyType.INITIAL_ONLY, initial: true },
   'activity-modifier': { type: PropertyType.INITIAL_ONLY, initial: true },
+  unit: { type: PropertyType.INITIAL_ONLY, initial: true },
 
   map: { type: PropertyType.INITIAL_ONLY, initial: true },
   camera: { type: PropertyType.INITIAL_ONLY, initial: true },
@@ -303,26 +367,29 @@ const scenePanelAttributes = {
   pitchmax: createSceneRotationSetter('pitchmax'),
   yawmin: createSceneRotationSetter('yawmin'),
   yawmax: createSceneRotationSetter('yawmax'),
+  acceleration: { type: PropertyType.INITIAL_ONLY, initial: true },
+  autorotatespeed: { type: PropertyType.INITIAL_ONLY, initial: true },
   allowrotation: { type: PropertyType.INITIAL_ONLY, initial: true },
   rotateonhover: { type: PropertyType.INITIAL_ONLY, initial: true },
   rotateonmousemove: { type: PropertyType.INITIAL_ONLY, initial: true },
 
   antialias: { type: PropertyType.INITIAL_ONLY, initial: true },
+  deferredalpha: { type: PropertyType.INITIAL_ONLY, initial: true },
+  drawbackground: { type: PropertyType.INITIAL_ONLY, initial: true },
   panoramasurfaceheight: { type: PropertyType.INITIAL_ONLY, initial: true },
   panoramasurfacewidth: { type: PropertyType.INITIAL_ONLY, initial: true },
   panoramasurfacexml: { type: PropertyType.INITIAL_ONLY, initial: true },
   particleonly: { type: PropertyType.INITIAL_ONLY, initial: true },
   renderdeferred: { type: PropertyType.INITIAL_ONLY, initial: true },
   rendershadows: { type: PropertyType.INITIAL_ONLY, initial: true },
+  renderwaterreflections: { type: PropertyType.INITIAL_ONLY, initial: true },
+  allowsuspendrepaint: { type: PropertyType.INITIAL_ONLY, initial: true },
 } as const;
 
-definePanelPropertyInformation('DOTAScenePanel', {
-  ...scenePanelAttributes,
-});
+definePanelPropertyInformation('DOTAScenePanel', scenePanelAttributes);
 
 definePanelPropertyInformation('DOTAParticleScenePanel', {
   ...scenePanelAttributes,
-  particleName: { type: PropertyType.INITIAL_ONLY, initial: true },
   cameraOrigin: {
     type: PropertyType.INITIAL_ONLY,
     initial: true,
@@ -345,14 +412,19 @@ definePanelPropertyInformation('DOTAParticleScenePanel', {
       return value;
     }
   },
+  syncSpawn: { type: PropertyType.INITIAL_ONLY, initial: true },
   fov: { type: PropertyType.INITIAL_ONLY, initial: true },
-  squarePixels: { type: PropertyType.INITIAL_ONLY, initial: true },
   startActive: { type: PropertyType.INITIAL_ONLY, initial: true },
+  squarePixels: { type: PropertyType.INITIAL_ONLY, initial: true },
+  farPlane: { type: PropertyType.INITIAL_ONLY, initial: true },
+  useMapCamera: { type: PropertyType.INITIAL_ONLY, initial: true },
+  particleName: { type: PropertyType.INITIAL_ONLY, initial: true },
 });
 
 definePanelPropertyInformation('DOTAEconItem', {
   itemdef: {
     type: PropertyType.CUSTOM,
+    initial: true,
     update(panel, newValue) {
       panel._econItemDef = newValue;
       panel.SetItemByDefinitionAndStyle(panel._econItemDef || 0, panel._econItemStyle || 0);
@@ -360,6 +432,7 @@ definePanelPropertyInformation('DOTAEconItem', {
   },
   itemstyle: {
     type: PropertyType.CUSTOM,
+    initial: 'styleindex',
     update(panel, newValue) {
       panel._econItemStyle = newValue;
       panel.SetItemByDefinitionAndStyle(panel._econItemDef || 0, panel._econItemStyle || 0);
@@ -419,6 +492,7 @@ definePanelPropertyInformation('ToggleButton', {
 });
 
 definePanelPropertyInformation('RadioButton', {
+  global: { type: PropertyType.INITIAL_ONLY, initial: true },
   group: { type: PropertyType.INITIAL_ONLY, initial: true },
   text: { type: PropertyType.INITIAL_ONLY, initial: true },
   html: { type: PropertyType.INITIAL_ONLY, initial: true },
@@ -431,6 +505,9 @@ definePanelPropertyInformation('TextEntry', {
   maxchars: { type: PropertyType.SETTER, name: 'SetMaxChars', initial: true },
   placeholder: { type: PropertyType.INITIAL_ONLY, initial: true },
   textmode: { type: PropertyType.INITIAL_ONLY, initial: true },
+  capslockwarn: { type: PropertyType.INITIAL_ONLY, initial: true },
+  undohistory: { type: PropertyType.INITIAL_ONLY, initial: true },
+  autocompleteposition: { type: PropertyType.INITIAL_ONLY, initial: true },
 });
 
 definePanelPropertyInformation('NumberEntry', {
@@ -485,9 +562,7 @@ definePanelPropertyInformation('Carousel', {
   focus: { type: PropertyType.INITIAL_ONLY, initial: true },
   'focus-offset': { type: PropertyType.INITIAL_ONLY, initial: true },
   wrap: { type: PropertyType.INITIAL_ONLY, initial: true },
-  selectionposboundary: { type: PropertyType.INITIAL_ONLY, initial: true },
   'panels-visible': { type: PropertyType.INITIAL_ONLY, initial: true },
-  clipaftertransform: { type: PropertyType.INITIAL_ONLY, initial: true },
   AllowOversized: { type: PropertyType.INITIAL_ONLY, initial: true },
   'autoscroll-delay': { type: PropertyType.INITIAL_ONLY, initial: true },
   'x-offset': { type: PropertyType.INITIAL_ONLY, initial: true },

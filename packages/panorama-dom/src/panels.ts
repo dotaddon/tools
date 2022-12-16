@@ -24,7 +24,6 @@ declare global {
     var DOTAAbilityImage: panoramaDiv<'DOTAAbilityImage'>
     var DOTAItemImage: panoramaDiv<'DOTAItemImage'>
     var DOTAHeroImage: panoramaDiv<'DOTAHeroImage'>
-    var DOTACountryFlagImage: panoramaDiv<'DOTACountryFlagImage'>
     var DOTALeagueImage: panoramaDiv<'DOTALeagueImage'>
     var EconItemImage: panoramaDiv<'EconItemImage'>
 
@@ -101,7 +100,6 @@ for (const panelName of [
     'DOTAAbilityImage',
     'DOTAItemImage',
     'DOTAHeroImage',
-    'DOTACountryFlagImage',
     'DOTALeagueImage',
     'EconItemImage',
 
