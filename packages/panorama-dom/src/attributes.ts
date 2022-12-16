@@ -57,9 +57,7 @@ type PropertyInformation<
 type PanelPropertyInformation<TName extends PanelType, TC extends PNC = PanelAttributes> = {
   [TAttribute in keyof TC[TName]]: PropertyInformation<TName, TAttribute, TC>;
 };
-const panelPropertyInformation: {
-    [TName in PanelType]?: PanelPropertyInformation<TName, PanelAttributesExpand>;
-} = {};
+const panelPropertyInformation: Record<string, PanelPropertyInformation<any, PanelAttributesExpand>> = {};
 
 function definePanelPropertyInformation<TName extends PanelType>
 ( name: TName, properties: PanelPropertyInformation<TName>)
@@ -641,27 +639,22 @@ const panelEventPropertyInfo: PropertyInformation<'Panel', any> = {
   },
 };
 
-export function getPropertyInfo(
-  type: PanelType,
-  propName: string,
-): PropertyInformation<any, any> | undefined {
-
-  let result = (panelPropertyInformation['Panel'] as any)?.[propName];
-  if (
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    result !== undefined && !( panelBaseNames.has(type) && result.type === PropertyType.SET )
-  )
-    return result;
-
-  result = (panelPropertyInformation[type] as any)?.[propName];
-  if (result)
-    return result;
-
+export function getPropertyInfo( type: PanelType, propName: string ): PropertyInformation<any, any> | undefined {
   if (propName === 'children')
     return undefined;
 
   if (propName.startsWith('on'))
     return panelEventPropertyInfo;
+
+  let result = panelPropertyInformation['Panel'][propName];
+  if (
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
+    !result || panelBaseNames.has(type) && result.type === PropertyType.SET
+  )
+    result = panelPropertyInformation[type]?.[propName];
+
+  if (result)
+    return result;
 
   if (type === 'GenericPanel')
     return genericPanelPropertyInfo;
@@ -712,11 +705,10 @@ export function updateProperty(
   }
 
   if (panelBaseNames.has(type) && propertyInformation.throwOnIncomplete) {
-    throw new Error(
-      `无法为不完整的'${type}'面板${propertyInformation.initial ? '更改' : '添加'}属性'${propName}'.${
-        propertyInformation.initial ? ' 添加“key”属性以强制重新装载。' : ''
-      }`,
-    );
+    if (propertyInformation.initial)
+      throw new Error( `无法为不完整的'${type}'面板更改属性'${propName}'。 添加“key”属性以强制重新装载。`);
+    else
+      throw new Error( `无法为不完整的'${type}'面板添加属性'${propName}'。` );
   }
 
   if (typeof propertyInformation.preOperation === 'function') {
@@ -731,9 +723,8 @@ export function updateProperty(
       (panel as any)[propertyInformation.name](newValue);
       break;
     case PropertyType.INITIAL_ONLY:
-      throw new Error(
-        `无法更改属性"${propName}"。添加“key”属性以强制重新装载。`,
-      );
+      throw new Error( `无法更改属性"${propName}"。添加“key”属性以强制重新装载。` );
+
     case PropertyType.CUSTOM:
       propertyInformation.update(panel, newValue, oldValue, propName);
       break;
