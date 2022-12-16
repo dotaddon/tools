@@ -18,34 +18,34 @@ export interface PanelAttributesBase extends PNC<Record<string,any>> {
     Image:{
         src: string
         scaling: ScalingFunction
-        svgfillrule?: 'nonzero' | 'evenodd';
-        svgopacity?: number;
-        svgstrokeopacity?: number;
-        svgstrokelinejoin?: 'miter' | 'round' | 'bevel' | 'inherit';
-        svgstrokelinecap?: 'butt' | 'round' | 'square';
-        svgstrokewidth?: number;
-        svgstroke?: '#ffffff' | string;
-        svgfillopacity?: number;
-        svgfill?: '#ffffff' | string;
+        svgfillrule: 'nonzero' | 'evenodd';
+        svgopacity: number;
+        svgstrokeopacity: number;
+        svgstrokelinejoin: 'miter' | 'round' | 'bevel' | 'inherit';
+        svgstrokelinecap: 'butt' | 'round' | 'square';
+        svgstrokewidth: number;
+        svgstroke: '#ffffff' | string;
+        svgfillopacity: number;
+        svgfill: '#ffffff' | string;
         /**
          * texturewidth and textureheight can be used to override the size of vector graphics. Default value of -1 indicates texture width/height to be determined from source file
          */
-        texturewidth?: number;
+        texturewidth: number;
         /**
          * texturewidth and textureheight can be used to override the size of vector graphics. Default value of -1 indicates texture width/height to be determined from source file
          */
-        textureheight?: number;
-        srcset?: string;
-        animate?: string;
-        defaultsrc?: string;
-        verticalalign?: VCSSVerticalAlign;
-        horizontalalign?: VCSSHorizontalAlign | 'middle';
+        textureheight: number;
+        srcset: string;
+        animate: string;
+        defaultsrc: string;
+        verticalalign: VCSSVerticalAlign;
+        horizontalalign: VCSSHorizontalAlign | 'middle';
     }
     ToggleButton:{
         selected: boolean // checked?
     }
     Slider:{
-        style?: never
+        style: never
         value: number
         /** @default 0 */
         min: number
@@ -63,41 +63,41 @@ export interface PanelAttributesBase extends PNC<Record<string,any>> {
     }
 
     DOTAScenePanel: {
-        'post-process-fade'?: number;
-        'post-process-material'?: string;
-        'animate-during-pause'?: boolean;
-        'pin-fov'?: 'horizontal' | 'vertical';
-        'live-mode'?: 'high_end_only' | string;
-        'no-intro-effects'?: boolean;
-        environment?: 'default' | 'full_body' | 'full_body_right_side' | 'card';
-        'activity-modifier'?: string;
-        unit?: string;
+        'post-process-fade': number;
+        'post-process-material': string;
+        'animate-during-pause': boolean;
+        'pin-fov': 'horizontal' | 'vertical';
+        'live-mode': 'high_end_only' | string;
+        'no-intro-effects': boolean;
+        environment: 'default' | 'full_body' | 'full_body_right_side' | 'card';
+        'activity-modifier': string;
+        unit: string;
 
-        map?: string;
-        camera?: string;
-        light?: string;
+        map: string;
+        camera: string;
+        light: string;
 
-        pitchmin?: number;
-        pitchmax?: number;
-        yawmin?: number;
-        yawmax?: number;
-        acceleration?: number;
-        autorotatespeed?: number;
-        allowrotation?: boolean;
-        rotateonhover?: boolean;
-        rotateonmousemove?: boolean;
+        pitchmin: number;
+        pitchmax: number;
+        yawmin: number;
+        yawmax: number;
+        acceleration: number;
+        autorotatespeed: number;
+        allowrotation: boolean;
+        rotateonhover: boolean;
+        rotateonmousemove: boolean;
 
-        antialias?: boolean;
-        deferredalpha?: boolean;
-        drawbackground?: boolean;
-        panoramasurfaceheight?: number;
-        panoramasurfacewidth?: number;
-        panoramasurfacexml?: string;
-        particleonly?: boolean;
-        renderdeferred?: boolean;
-        rendershadows?: boolean;
-        renderwaterreflections?: boolean;
-        allowsuspendrepaint?: boolean;
+        antialias: boolean;
+        deferredalpha: boolean;
+        drawbackground: boolean;
+        panoramasurfaceheight: number;
+        panoramasurfacewidth: number;
+        panoramasurfacexml: string;
+        particleonly: boolean;
+        renderdeferred: boolean;
+        rendershadows: boolean;
+        renderwaterreflections: boolean;
+        allowsuspendrepaint: boolean;
     }
 }
 /** 板属性 */
@@ -118,27 +118,27 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         enabled: boolean
         visible: boolean
 
-        useglobalcontext?: boolean;
-        disallowedstyleflags?: string;
-        'never-cache-composition-layer'?: boolean;
-        'always-cache-composition-layer'?: boolean;
-        'require-composition-layer'?: boolean;
-        registerforreadyevents?: boolean;
-        readyfordisplay?: boolean;
-        clipaftertransform?: boolean;
-        rememberchildfocus?: boolean;
-        keepscrolltobottom?: boolean;
-        sendchildscrolledintoviewevents?: boolean;
-        'overscroll-x'?: number;
-        'overscroll-y'?: number;
-        scrollparenttofitwhenfocused?: boolean;
-        acceptsinput?: boolean;
-        analogstickscroll?: boolean;
-        childfocusonhover?: boolean;
-        focusonhover?: boolean;
-        mousecanactivate?: 'unfocused' | 'iffocused' | 'ifparentfocused(<parentid>)' | string;
-        defaultfocus?: string;
-        selectionposboundary?: 'both' | 'vertical' | 'horizontal' | string;
+        useglobalcontext: boolean;
+        disallowedstyleflags: string;
+        'never-cache-composition-layer': boolean;
+        'always-cache-composition-layer': boolean;
+        'require-composition-layer': boolean;
+        registerforreadyevents: boolean;
+        readyfordisplay: boolean;
+        clipaftertransform: boolean;
+        rememberchildfocus: boolean;
+        keepscrolltobottom: boolean;
+        sendchildscrolledintoviewevents: boolean;
+        'overscroll-x': number;
+        'overscroll-y': number;
+        scrollparenttofitwhenfocused: boolean;
+        acceptsinput: boolean;
+        analogstickscroll: boolean;
+        childfocusonhover: boolean;
+        focusonhover: boolean;
+        mousecanactivate: 'unfocused' | 'iffocused' | 'ifparentfocused(<parentid>)' | string;
+        defaultfocus: string;
+        selectionposboundary: 'both' | 'vertical' | 'horizontal' | string;
         // TODO: sectionpos: 'auto'?
     }
     Label: PanelAttributesBase['Label'] & {
@@ -165,8 +165,8 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         heroid: HeroID
         heroimagestyle: 'icon' | 'portrait' | 'landscape'
         usedefaultimage: boolean
-        persona?: string;
-        defaultimage?: string;
+        persona: string;
+        defaultimage: string;
     }
     DOTALeagueImage: PanelAttributesBase['Image'] &  {
         leagueid: number
@@ -175,15 +175,15 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
     }
     EconItemImage: PanelAttributesBase['Image'] & {
         itemdef: number
-        itemstyle?: number;
+        itemstyle: number;
     }
 
     AnimatedImageStrip: PanelAttributesBase['Image'] & {
         frametime: string
         defaultframe: number
         animating: boolean
-        framewidth?: number;
-        frameheight?: number;
+        framewidth: number;
+        frameheight: number;
     }
     DOTAEmoticon: PanelAttributes['AnimatedImageStrip'] & {
         emoticonid: number
@@ -198,10 +198,10 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         /** @default 'onload' */
         autoplay: MovieAutoPlay
 
-        volume?: number;
-        muted?: boolean;
-        notreadybehavior?: boolean;
-        loadbehavior?: boolean;
+        volume: number;
+        muted: boolean;
+        notreadybehavior: boolean;
+        loadbehavior: boolean;
     }
     DOTAHeroMovie: {
         heroid: HeroID
@@ -209,12 +209,12 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         persona: string
         /** @default 'off' */
         autoplay: MovieAutoPlay
-        src?: string;
-        volume?: number;
-        muted?: boolean;
-        repeat?: boolean;
-        notreadybehavior?: boolean;
-        loadbehavior?: boolean;
+        src: string;
+        volume: number;
+        muted: boolean;
+        repeat: boolean;
+        notreadybehavior: boolean;
+        loadbehavior: boolean;
 
     }
 
@@ -222,15 +222,15 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
 
     DOTAScenePanel: PanelAttributesBase['DOTAScenePanel']
     DOTAParticleScenePanel: PanelAttributesBase['DOTAScenePanel'] & {
-        syncSpawn?: boolean;
-        fov?: number;
-        startActive?: boolean;
-        squarePixels?: boolean;
-        farPlane?: number;
-        lookAt?: [number, number, number] | string;
-        cameraOrigin?: [number, number, number] | string;
-        useMapCamera?: boolean;
-        particleName?: string;
+        syncSpawn: boolean;
+        fov: number;
+        startActive: boolean;
+        squarePixels: boolean;
+        farPlane: number;
+        lookAt: [number, number, number] | string;
+        cameraOrigin: [number, number, number] | string;
+        useMapCamera: boolean;
+        particleName: string;
     }
     DOTAEconItem: {
         itemdef: number
@@ -274,7 +274,7 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
     TextButton: PanelAttributesBase['Label']
     ToggleButton: PanelAttributesBase['Label'] & PanelAttributesBase['ToggleButton']
     RadioButton: PanelAttributesBase['ToggleButton'] & {
-        global?: boolean;
+        global: boolean;
         group: string
         text: string
         html: boolean
@@ -287,9 +287,9 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         textmode: 'normal' | 'password' | 'numeric' | 'numericpassword'
 
         text: string
-        autocompleteposition?: 'top' | string;
-        capslockwarn?: 1 | 0;
-        undohistory?: 'enabled';
+        autocompleteposition: 'top' | string;
+        capslockwarn: 1 | 0;
+        undohistory: 'enabled';
     }
     NumberEntry: {
         value: number
