@@ -24,6 +24,7 @@ const windowRoot = (() => {
   let panel: Panel | null = $.GetContextPanel();
   while (panel) {
     if (panel.BHasClass('WindowRoot')) return panel;
+    if (panel.BHasClass('WorldUIRoot')) return panel;
     panel = panel.GetParent();
   }
 })()!;
