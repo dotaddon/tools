@@ -62,3 +62,14 @@ interface VCSSStyleDeclaration2 {
     /** 字体文件 */
     fontFamily: DefaultFont | string
 }
+
+type vcssPick = 
+  | 'not'
+  | 'hover'
+  | 'active'
+  | 'selected'
+  | 'disabled'
+  | 'enabled'
+  | 'focus'
+  | 'descendantfocus'
+  | 'Selected'
