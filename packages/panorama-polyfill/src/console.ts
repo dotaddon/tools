@@ -8,8 +8,15 @@ declare global {
 
   // eslint-disable-next-line vars-on-top, no-var
   var console: Console;
+  interface CustomUIConfig {
+    console: Console
+  }
 }
 
-// eslint-disable-next-line no-new-func
-const global: typeof globalThis = new Function('return this')();
-global.console = console;
+
+GameUI.CustomUIConfig().console = console
+
+$.GetContextPanel().RunScriptInPanelContext(`
+    if (!this.console)
+      this.console = GameUI.CustomUIConfig().console;
+`)

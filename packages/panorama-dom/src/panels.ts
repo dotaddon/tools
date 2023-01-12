@@ -89,9 +89,8 @@ declare global {
     /* eslint-enable */
 }
 
-// eslint-disable-next-line no-new-func
-const global: typeof globalThis = new Function('return this')();
 
+$.GetContextPanel().RunScriptInPanelContext(`
 for (const panelName of [
     'Panel',
     'Label',
@@ -149,6 +148,8 @@ for (const panelName of [
 
     'CustomLayoutPanel',
     'GenericPanel',
-] as const) {
-    global[panelName] = panelName as any;
+]) {
+    if (!this[panelName])
+    this[panelName] = panelName;
 }
+`)

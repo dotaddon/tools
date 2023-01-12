@@ -20,13 +20,17 @@ declare global {
     ...args: TArgs
   ): number;
   function clearImmediate(handle?: number): void;
+
+  interface CustomUIConfig {
+    __polyfillTimers :typeof timers
+  }
 }
 
-// eslint-disable-next-line no-new-func
-const global: typeof globalThis = new Function('return this')();
-global.setInterval = timers.setInterval;
-global.clearInterval = timers.clearInterval;
-global.setTimeout = timers.setTimeout;
-global.clearTimeout = timers.clearTimeout;
-global.setImmediate = timers.setImmediate;
-global.clearImmediate = timers.clearImmediate;
+GameUI.CustomUIConfig().__polyfillTimers = timers
+
+$.GetContextPanel().RunScriptInPanelContext(`
+  for (const func in GameUI.CustomUIConfig().__polyfillTimers){
+    if (!this[func])
+    this[func] = GameUI.CustomUIConfig().__polyfillTimers[func]
+  }
+`)
