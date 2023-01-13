@@ -1,4 +1,4 @@
-import { DependencyList, useEffect } from "react";
+import { DependencyList, useLayoutEffect } from "react";
 
 /** 主动触发游戏事件 */
 export function FireGameEvent<T extends keyof CustomGameEventDeclarations>(
@@ -21,7 +21,7 @@ export function useGameEvent<T extends keyof CustomGameEventDeclarations | keyof
     callback: (event: NetworkedData<GameEvents.InferGameEventType<T, object>>) => void,
     dependencies: DependencyList = [],
 ) {
-    useEffect(() => {
+    useLayoutEffect(() => {
         const id = GameEvents.Subscribe(eventName, callback);
         return () => GameEvents.Unsubscribe(id);
     }, dependencies);

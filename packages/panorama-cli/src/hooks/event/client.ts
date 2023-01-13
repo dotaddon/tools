@@ -1,4 +1,4 @@
-import { DependencyList, useEffect } from "react";
+import { DependencyList, useLayoutEffect } from "react";
 
 /** 触发控件事件
  * @param event 事件名
@@ -25,7 +25,7 @@ export function FireClientEventAsync<K extends keyof panoramaEventDeclarations, 
  */
 export function useClientEvent<K extends keyof panoramaEventDeclarations>
     (event: K, callback: (...data: Parameters<panoramaEventDeclarations[K]>) => void, dependencies: DependencyList = [] ) {
-    useEffect(() => {
+    useLayoutEffect(() => {
         //@ts-ignore
         const id = $.RegisterForUnhandledEvent(event, callback);
         return () => $.UnregisterForUnhandledEvent(event, id);

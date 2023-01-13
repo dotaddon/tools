@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useLayoutEffect, useState } from 'react';
 
 /** 获取自定义 NetTable 中某个键的值，并在它更改时更新组件。
  * Gets the value of a key in a custom NetTable and updates component when it changes.
@@ -10,7 +10,7 @@ export function useNetTableKey<
 >(name: TName, key: K): NetworkedData<T[K]> | null {
     const [value, setValue] = useState(() => CustomNetTables.GetTableValue<TName, T, K>(name, key));
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const listener = CustomNetTables.SubscribeNetTableListener(name, (_, eventKey, eventValue) => {
             if (key === eventKey) {
                 setValue(eventValue);
@@ -38,7 +38,7 @@ export function useNetTableAll<
         ),
     );
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const listener = CustomNetTables.SubscribeNetTableListener(name, (_, eventKey, eventValue) => {
             setValue((current) => ({ ...(current as any), [eventKey]: eventValue }));
         });
