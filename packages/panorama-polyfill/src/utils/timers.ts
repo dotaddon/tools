@@ -3,7 +3,6 @@ declare global {
     __polyfillTimersResolve: Map<polyfillScheduleID, (value: void | PromiseLike<void>) => void>
   }
 }
-GameUI.CustomUIConfig().__polyfillTimersResolve = new Map()
 
 
 function ScheduleDelay(id: polyfillScheduleID) {
@@ -16,6 +15,8 @@ function ScheduleDelay(id: polyfillScheduleID) {
     handle(0)
 `)
 }
+if (!GameUI.CustomUIConfig().__polyfillTimersResolve)
+  GameUI.CustomUIConfig().__polyfillTimersResolve = new Map()
 
 export type polyfillScheduleID = number & {
   readonly __polyfillScheduleID: never
