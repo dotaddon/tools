@@ -1,11 +1,30 @@
-const intervals = new Map<number, ScheduleID>();
-let nextIntervalId = -100000;
+export type polyfillScheduleID = number & {
+  readonly __polyfillScheduleID:never
+}
+const intervals = new Map<polyfillScheduleID, ScheduleID>()
+let nextIntervalId = 0;
+
+function getNextIntervalId(): polyfillScheduleID {
+  nextIntervalId += 1;
+  return nextIntervalId as any
+}
+
+function promiseForNext(ms: number, id: polyfillScheduleID): Promise<void> {
+  return new Promise((resolve) => {
+    intervals.set(id, $.Schedule(ms, () => resolve?.()))
+  })
+}
 
 export const setTimeout = <TArgs extends any[]>(
   callback: (...args: TArgs) => void,
   timeout = 0,
   ...args: TArgs
-): number => $.Schedule(timeout / 1000, () => callback(...args));
+): polyfillScheduleID => {
+  timeout /= 1000;
+  const intervalId = getNextIntervalId();
+  promiseForNext(timeout, intervalId).then(() => callback(...args))
+  return intervalId
+};
 
 export function setInterval<TArgs extends any[]>(
   callback: (...args: TArgs) => void,
@@ -13,33 +32,33 @@ export function setInterval<TArgs extends any[]>(
   ...args: TArgs
 ): number {
   timeout /= 1000;
-  nextIntervalId -= 1;
-  const intervalId = nextIntervalId;
+  const intervalId = getNextIntervalId();
 
-  const run = () => {
-    intervals.set(intervalId, $.Schedule(timeout, run));
-    callback(...args);
-  };
+  (function run() {
+    promiseForNext(timeout, intervalId)
+      .then(() => callback(...args))
+      .then(run)
+  })()
 
-  intervals.set(intervalId, $.Schedule(timeout, run));
   return intervalId;
 }
 
 export const setImmediate = <TArgs extends any[]>(
   callback: (...args: TArgs) => void,
   ...args: TArgs
-): number => $.Schedule(0, () => callback(...args));
+): polyfillScheduleID => setTimeout(callback,0,...args);
 
-function clearTimer(handle?: number) {
-  if (typeof handle === 'number') {
+function clearTimer(handle?: polyfillScheduleID) {
+  if (typeof handle !== 'number') 
+    return;
     // $.CancelScheduled throws on expired or non-existent timer handles
-    try {
-      if (handle < -100000) {
-        $.CancelScheduled(intervals.get(handle)!);
-      } else {
-        $.CancelScheduled(handle as ScheduleID);
-      }
-    } catch {}
+  let pro = intervals.get(handle)
+  if (!pro)
+    return;
+  try {
+    $.CancelScheduled(pro)
+  }catch (err) {
+
   }
 }
 
