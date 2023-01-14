@@ -1,5 +1,5 @@
 declare interface String {
-    /** 使用 {0} 的占位符， 用后续参数顶替 */
+    /** 使用 {number} 的占位符， 用后续参数顶替 */
     format(...args: Array<number | string>): string;
     /** 转化为方言 */
     local():string
