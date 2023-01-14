@@ -1,6 +1,26 @@
-export type polyfillScheduleID = number & {
-  readonly __polyfillScheduleID:never
+declare global {
+  interface CustomUIConfig {
+    __polyfillTimersResolve: Map<polyfillScheduleID, (value: void | PromiseLike<void>) => void>
+  }
 }
+GameUI.CustomUIConfig().__polyfillTimersResolve = new Map()
+
+
+function ScheduleDelay(id: polyfillScheduleID) {
+  $.GetContextPanel().RunScriptInPanelContext(`
+  if (!GameUI.CustomUIConfig().__polyfillTimersResolve)
+    return;
+  let handle = GameUI.CustomUIConfig().__polyfillTimersResolve.get(${id})
+  if(!handle)
+    return;
+    handle(0)
+`)
+}
+
+export type polyfillScheduleID = number & {
+  readonly __polyfillScheduleID: never
+}
+
 const intervals = new Map<polyfillScheduleID, ScheduleID>()
 let nextIntervalId = 0;
 
@@ -11,7 +31,8 @@ function getNextIntervalId(): polyfillScheduleID {
 
 function promiseForNext(ms: number, id: polyfillScheduleID): Promise<void> {
   return new Promise((resolve) => {
-    intervals.set(id, $.Schedule(ms, () => resolve?.()))
+    GameUI.CustomUIConfig().__polyfillTimersResolve.set(id, resolve)
+    intervals.set(id, $.Schedule(ms, () => ScheduleDelay(id)))
   })
 }
 
