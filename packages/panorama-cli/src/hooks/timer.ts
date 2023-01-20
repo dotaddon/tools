@@ -10,9 +10,9 @@ export const sleep = (msc: number)=>new Promise<void>((resolve, reject) => {
  * 处理effect 依赖项在 回调中被修改造成的微任务死循环
  */
 export function EffectCallbackAsync(callback: () => void, msc:number ) {
-    let timeout = Math.min(msc,4)
+    let timeout = Math.max(msc,4)
     const listener = setTimeout(callback, timeout)
-    return clearTimeout(listener)
+    return () => clearTimeout(listener)
 }
 
 /** 定时器 
@@ -45,4 +45,19 @@ export function useTick(
     const [value, setValue] = useState<boolean>(false);
     useEffect(() => EffectCallbackAsync(()=>setValue(e => !e),msc), [msc, value]);
     return value;
+}
+
+/** 往复式数据
+ * @param frequency 频率 毫秒
+ * @param amplitude 振幅
+ * @param median 中位
+ */
+export function useBreath(frequency: number, amplitude: number, median: number = 0) {
+    const [breath, setBreath] = useState(median);
+
+    useEffect(() =>
+        EffectCallbackAsync(() => setBreath((e) => (e + 1) % amplitude), frequency),
+        [breath]
+    );
+    return breath
 }
