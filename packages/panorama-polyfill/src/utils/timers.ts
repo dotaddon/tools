@@ -1,28 +1,9 @@
-declare global {
-  interface CustomUIConfig {
-    __polyfillTimersResolve: Map<polyfillScheduleID, (value: void | PromiseLike<void>) => void>
-  }
-}
-
-
-function ScheduleDelay(id: polyfillScheduleID) {
-  $.GetContextPanel().RunScriptInPanelContext(`
-  if (!GameUI.CustomUIConfig().__polyfillTimersResolve)
-    return;
-  let handle = GameUI.CustomUIConfig().__polyfillTimersResolve.get(${id})
-  if(!handle)
-    return;
-    handle(0)
-`)
-}
-if (!GameUI.CustomUIConfig().__polyfillTimersResolve)
-  GameUI.CustomUIConfig().__polyfillTimersResolve = new Map()
 
 export type polyfillScheduleID = number & {
   readonly __polyfillScheduleID: never
 }
 
-const intervals = new Map<polyfillScheduleID, ScheduleID>()
+const intervals = new Map<polyfillScheduleID, () => void>()
 let nextIntervalId = 0;
 
 function getNextIntervalId(): polyfillScheduleID {
@@ -30,11 +11,12 @@ function getNextIntervalId(): polyfillScheduleID {
   return nextIntervalId as any
 }
 
-function promiseForNext(ms: number, id: polyfillScheduleID): Promise<void> {
-  return new Promise((resolve) => {
-    GameUI.CustomUIConfig().__polyfillTimersResolve.set(id, resolve)
-    intervals.set(id, $.Schedule(ms, () => ScheduleDelay(id)))
+async function promiseForNext(ms: number, id: polyfillScheduleID): Promise<void> {
+  return new Promise<void>((resolve,reject) => {
+    $.Schedule(ms, resolve)
+    intervals.set(id, reject)
   })
+    .catch(e=>e && console.warn(e))
 }
 
 export const setTimeout = <TArgs extends any[]>(
@@ -44,7 +26,9 @@ export const setTimeout = <TArgs extends any[]>(
 ): polyfillScheduleID => {
   timeout /= 1000;
   const intervalId = getNextIntervalId();
-  promiseForNext(timeout, intervalId).then(() => callback(...args))
+  promiseForNext(timeout, intervalId)
+    .then(() => callback(...args))
+    .finally(() => intervals.delete(intervalId))
   return intervalId
 };
 
@@ -73,15 +57,11 @@ export const setImmediate = <TArgs extends any[]>(
 function clearTimer(handle?: polyfillScheduleID) {
   if (typeof handle !== 'number') 
     return;
-    // $.CancelScheduled throws on expired or non-existent timer handles
-  let pro = intervals.get(handle)
-  if (!pro)
+  let reject = intervals.get(handle)
+  if (!reject)
     return;
-  try {
-    $.CancelScheduled(pro)
-  }catch (err) {
-
-  }
+  reject()
+  intervals.delete(handle)
 }
 
 export { clearTimer as clearTimeout, clearTimer as clearInterval, clearTimer as clearImmediate };
