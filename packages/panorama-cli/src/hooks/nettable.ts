@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 /** 获取自定义 NetTable 中某个键的值，并在它更改时更新组件。
  * Gets the value of a key in a custom NetTable and updates component when it changes.
@@ -9,16 +9,16 @@ export function useNetTableKey<
     K extends keyof T
 >(name: TName, key: K): NetworkedData<T[K]> | null {
     const [value, setValue] = useState(() => CustomNetTables.GetTableValue<TName, T, K>(name, key));
+    const cb = useCallback((_: TName, eventKey: keyof T, eventValue: NetworkedData<T[keyof T]>) => {
+        if (key === eventKey) {
+            setValue(eventValue);
+        }
+    }, [name, key])
 
-    useLayoutEffect(() => {
-        const listener = CustomNetTables.SubscribeNetTableListener(name, (_, eventKey, eventValue) => {
-            if (key === eventKey) {
-                setValue(eventValue);
-            }
-        });
-
+    useEffect(() => {
+        const listener = CustomNetTables.SubscribeNetTableListener(name, cb);
         return () => CustomNetTables.UnsubscribeNetTableListener(listener);
-    }, [name, key]);
+    }, []);
 
     return value;
 }
@@ -38,13 +38,13 @@ export function useNetTableAll<
         ),
     );
 
-    useLayoutEffect(() => {
-        const listener = CustomNetTables.SubscribeNetTableListener(name, (_, eventKey, eventValue) => {
-            setValue((current) => ({ ...(current as any), [eventKey]: eventValue }));
-        });
-
+    const cb = useCallback(<K extends keyof T>(_: TName, eventKey: K, eventValue: NetworkedData<T[K]>) => {
+        setValue(current=>({...(current as any),[eventKey]:eventValue}))
+    }, [name])
+    useEffect(() => {
+        const listener = CustomNetTables.SubscribeNetTableListener(name, cb);
         return () => CustomNetTables.UnsubscribeNetTableListener(listener);
-    }, [name]);
+    }, []);
 
     return values;
 }
