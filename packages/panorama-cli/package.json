@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/panorama-cli",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "React for Valve's Panorama UI (for Dota 2 Custom Games).",
   "keywords": [
     "dota",
