@@ -1,19 +1,5 @@
-import { ExoticComponent } from 'react';
-import { panoramaDivActive } from '../types/active';
-import { PanelAttributes } from '../types/attributes';
-import { PanelType, DivByPanelType } from '../types/tpanel';
-import { ReactDomDivProps } from '../types/utils';
+import { panoramaDiv } from "../types/tpanel"
 
-export type PanelAttributesExpand = {
-    [P in PanelType]: ReactDomDivProps<DivByPanelType<P>>
-    & Partial<
-        panoramaDivActive<P>
-        & PanelAttributes[P]
-        & PanelAttributes['Panel']
-    >
-}
-
-export type panoramaDiv<T extends PanelType> = ExoticComponent<PanelAttributesExpand[T]>
 
 declare global {
     /* eslint-disable no-var, vars-on-top */

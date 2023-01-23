@@ -1,5 +1,15 @@
-import { PanelStyles } from "./utils"
-import {PNC} from "./tpanel"
+import { PanelStyles, ReactDomDivProps } from "./utils"
+import {DivByPanelType, PanelType, PNC} from "./tpanel"
+import { panoramaDivActive } from "./active"
+
+export type PanelAttributesExpand = {
+    [P in PanelType]: ReactDomDivProps<DivByPanelType<P>>
+    & Partial<
+        panoramaDivActive<P>
+        & PanelAttributes[P]
+        & PanelAttributes['Panel']
+    >
+}
 
 type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
 /** 初始板属性 用于继承 */
@@ -45,7 +55,7 @@ export interface PanelAttributesBase extends PNC<Record<string,any>> {
         selected: boolean // checked?
     }
     Slider:{
-        style: never
+        style?: never
         value: number
         /** @default 0 */
         min: number

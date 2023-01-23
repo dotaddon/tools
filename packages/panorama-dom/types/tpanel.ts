@@ -1,3 +1,6 @@
+import { ExoticComponent } from "react";
+import { PanelAttributesExpand } from "./attributes";
+
 export type PanelType =
     | 'Panel'
     | 'Label'
@@ -64,3 +67,5 @@ export type DivByPanelType<T extends PanelType> = PanoramaPanelNameMap[Extract<
     T,
     keyof PanoramaPanelNameMap
 >];
+
+export type panoramaDiv<T extends PanelType> = ExoticComponent<PanelAttributesExpand[T]>

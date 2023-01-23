@@ -1,11 +1,8 @@
 import { ReactNode, ReactPortal } from 'react';
 import { ReactNodeList } from 'react-reconciler';
 import { InternalPanel, reactPanoramaSymbol } from './utils';
-import './panels';
 import { reconciler } from './reconciler';
-
-export * from '../types/attributes';
-export * from '../types/active';
+import './panels';
 
 /**
  * Render a React element into the layout in the supplied container.
