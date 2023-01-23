@@ -1,5 +1,7 @@
-import { panoramaDiv } from "../types/tpanel"
+import { ExoticComponent } from "react"
+import { PanelType, PanelAttributes } from "../types"
 
+type panoramaDiv<T extends PanelType> = ExoticComponent<PanelAttributes<T>>
 
 declare global {
     /* eslint-disable no-var, vars-on-top */

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/prefer-optional-chain */
 import { InternalPanel, noop, queueMicrotask } from './utils';
 import { panelBaseNames } from './panel-base';
-import { PanelAttributesExpand, PanelAttributes, PanelType, DivByPanelType, PNC } from '../types';
+import { PanelAttributesExpand, PanelAttributesUtil, PanelType, DivByPanelType, PNC } from '../types';
 
 const enum PropertyType {
   SET,
@@ -52,7 +52,7 @@ type PropertyInformation<
   }
 );
 
-type PanelPropertyInformation<TName extends PanelType, TC extends PNC = PanelAttributes> = {
+type PanelPropertyInformation<TName extends PanelType, TC extends PNC = PanelAttributesUtil> = {
   [TAttribute in keyof TC[TName]]: PropertyInformation<TName, TAttribute, TC>;
 };
 const panelPropertyInformation: Record<string, PanelPropertyInformation<any, PanelAttributesExpand>> = {};

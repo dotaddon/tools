@@ -1,17 +1,30 @@
-import { PanelStyles, ReactDomDivProps } from "./utils"
-import {DivByPanelType, PanelType, PNC} from "./tpanel"
+import {DivByPanelType, PanelType, PNC} from "./panel"
 import { panoramaDivActive } from "./active"
+import { ClassAttributes, ReactNode } from "react"
+
+export type PanelAttributes<T extends PanelType = 'Panel'> = PanelAttributesExpand[T]
 
 export type PanelAttributesExpand = {
     [P in PanelType]: ReactDomDivProps<DivByPanelType<P>>
     & Partial<
         panoramaDivActive<P>
-        & PanelAttributes[P]
-        & PanelAttributes['Panel']
+        & PanelAttributesUtil[P]
+        & PanelAttributesUtil['Panel']
     >
 }
 
 type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
+
+type hisoCombination<T, S> = {
+    [P in keyof S]?: P extends keyof T ? T[P] : S[P]
+};
+
+export type PanelStyles = hisoCombination<VCSSStyleDeclaration2, VCSSStyleDeclaration>
+
+export type ReactDomDivProps<T extends PanelBase = Panel> = ClassAttributes<T> & {
+    children?: ReactNode;
+}
+
 /** 初始板属性 用于继承 */
 export interface PanelAttributesBase extends PNC<Record<string,any>> {
     Label:{
@@ -111,7 +124,7 @@ export interface PanelAttributesBase extends PNC<Record<string,any>> {
     }
 }
 /** 板属性 */
-export interface PanelAttributes extends PNC<Record<string, any>> {
+export interface PanelAttributesUtil extends PNC<Record<string, any>> {
     Panel: {
         dangerouslyCreateChildren: string
         dialogVariables: Record<string, string | number | Date>
@@ -195,7 +208,7 @@ export interface PanelAttributes extends PNC<Record<string, any>> {
         framewidth: number;
         frameheight: number;
     }
-    DOTAEmoticon: PanelAttributes['AnimatedImageStrip'] & {
+    DOTAEmoticon: PanelAttributesUtil['AnimatedImageStrip'] & {
         emoticonid: number
         alias: string
     }

@@ -4,7 +4,7 @@ import ReactReconciler from 'react-reconciler';
 import { InternalPanel, noop, temporaryPanelHost, temporaryScenePanelHost } from './utils';
 import { splitInitialProps, updateProperty, getPropertyInfo } from './attributes';
 import { fixPanelBase, panelBaseNames } from './panel-base';
-import { PanelType } from '../types/tpanel';
+import { PanelType } from '../types/panel';
 
 
 const rootHostContext = {};
