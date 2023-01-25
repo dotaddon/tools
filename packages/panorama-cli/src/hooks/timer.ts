@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, EffectCallback } from "react";
 
 /** 等待 不会冻结线程 */
 export const sleep = (msc: number)=>new Promise<void>((resolve, reject) => {
@@ -9,7 +9,7 @@ export const sleep = (msc: number)=>new Promise<void>((resolve, reject) => {
  * 将effect的微任务调整为宏任务
  * 处理effect 依赖项在 回调中被修改造成的微任务死循环
  */
-export function EffectCallbackAsync(callback: () => void, msc:number ) {
+export function EffectCallbackAsync(callback: () => void, msc: number): ReturnType<EffectCallback> {
     let timeout = Math.max(msc,4)
     const listener = setTimeout(callback, timeout)
     return () => clearTimeout(listener)
