@@ -3,11 +3,9 @@
     "extends": "./base.json",
     "compilerOptions": {
         "types": ["@moddota/dota-lua-types"],
-        "suppressImplicitAnyIndexErrors": true, // 抑制任何索引错误
+        "suppressImplicitAnyIndexErrors": true,
         "strictNullChecks": false,
-        "strictPropertyInitialization": false,
-        "preserveSymlinks": true, // 支持硬链接
-        "removeComments": true //编译 js 的时候，删除掉注释
+        "strictPropertyInitialization": false
     },
     "tstl": {
         "luaTarget": "JIT",
