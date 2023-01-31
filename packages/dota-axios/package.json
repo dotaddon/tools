@@ -1,0 +1,30 @@
+{
+  "name": "@mobilc/dota-axios",
+  "version": "0.0.1",
+  "description": "React for Valve's Panorama UI (for Dota 2 Custom Games).",
+  "keywords": [
+    "dota",
+    "panorama",
+    "react",
+    "jsx"
+  ],
+  "repository": "https://github.com/takegine/testdodo/issues",
+  "license": "MIT",
+  "authors": "西索酱",
+  "types": "dist/index.d.ts",
+  "main": "dist/index.js",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "run-p build:*",
+    "build:js": "tsup --config src/js/tsup.config.json",
+    "build:lua": "tstl -p src/lua/tsconfig.json"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

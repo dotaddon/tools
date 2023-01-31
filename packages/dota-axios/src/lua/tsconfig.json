@@ -1,0 +1,11 @@
+{
+    "extends": "@mobilc/tsconfig/lua.json",
+    "include": [ ".","../shared" ],
+    "compilerOptions": {
+        "outDir": "dist/lua",
+        "declaration": true
+    },
+    "tstl": {
+        "buildMode": "library",
+    }
+}

@@ -1,0 +1,12 @@
+{
+    "entry": [
+        "index.ts"
+    ],
+    "minify": false,
+    "splitting": false,
+    "clean": true,
+    "dts": true,
+    "external": [
+        "React"
+    ]
+}
