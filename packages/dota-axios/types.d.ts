@@ -1,7 +1,6 @@
 
-declare interface axiosEventPUI2Server extends axiosEvents.Event {
-
-}
+/** js 与 lua.server 通讯声明 */
+declare interface axiosEventPUI2Server extends axiosEvents.Event { }
 
 
 declare namespace axiosEvents {

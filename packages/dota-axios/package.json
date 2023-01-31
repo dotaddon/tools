@@ -11,14 +11,14 @@
   "repository": "https://github.com/takegine/testdodo/issues",
   "license": "MIT",
   "authors": "西索酱",
-  "types": "dist/index.d.ts",
-  "main": "dist/index.js",
+  "types": "types.d.ts",
   "files": [
-    "dist/**"
+    "dist/**",
+    "types.d.ts"
   ],
   "scripts": {
     "build": "run-p build:*",
-    "build:js": "tsup --config src/js/tsup.config.json",
+    "build:js": "tsup",
     "build:lua": "tstl -p src/lua/tsconfig.json"
   },
   "peerDependencies": {

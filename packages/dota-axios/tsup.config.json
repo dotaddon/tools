@@ -1,7 +1,8 @@
 {
     "entry": [
-        "index.ts"
+        "src/js/index.ts"
     ],
+    "outDir":"dist/js",
     "minify": false,
     "splitting": false,
     "clean": true,
