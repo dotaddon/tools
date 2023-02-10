@@ -2,7 +2,6 @@
  * 可以通过on-ui-AddStyle 监听 AddStyle 事件
  * 
  */
-
 // 官方控制台公布的 2021年9月更新
 interface panoramaEventDeclarations {
     /** 向板添加一个css类。 */
@@ -226,6 +225,18 @@ interface panoramaEventDeclarations {
     PostGameProgressConfirmAbusiveCoachRatingFinished( arg0: boolean, arg1: string ): void
 }
 
+// 小红象 发的 2023/2/10
+interface panoramaEventDeclarations {
+    /** 地面物品:hover 触发的事件
+     * @param x: The X screen coordinate of the dropped item or tooltip window
+     * @param y: The Y screen coordinate of the dropped item or tooltip window
+     * @param abilityName:string: The item's id (e.g. "item_claymore")
+     * @param playerId:PlayerID: The index of the player that originally owned the item. -1 if no one owns this item (e.g. launched as loot), becomes a valid player index (0+) when picked up.
+     * @param arg5:boolean: No clue, is always 'false' from what I can tell
+     */
+    DOTAShowDroppedItemTooltip(x: number, y: number, abilityName:string, playerId:PlayerID, arg5:boolean): void
+}
+
 // 拖拽事件
 interface panoramaEventDeclarations {
     DragStart(settings: DragSettings): boolean
@@ -234,3 +245,4 @@ interface panoramaEventDeclarations {
     DragEnter(dragged: Panel): boolean
     DragLeave(dragged: Panel): boolean
 }
+
