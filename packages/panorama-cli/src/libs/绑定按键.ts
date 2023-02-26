@@ -1,12 +1,12 @@
 const reloadKey = new Date().getTime()
 /**按键绑定 */
 export function KeyBind<T extends 按键列表>
-    (key: T, up?: (name: string) => void, down?: (name: string) => void)
+    (key: T, presses?: () => void, bounces?: () => void)
 {
     let name = 'Key' + key + reloadKey
     Game.CreateCustomKeyBind(key, "+" + name);
-    up && Game.AddCommand("+" + name, up, "", 0 << 32);
-    down && Game.AddCommand("-" + name, down, "", 0 << 32);
+    presses && Game.AddCommand("+" + name, presses, "", 1 << 32);
+    bounces && Game.AddCommand("-" + name, bounces, "", 1 << 32);
 }
 
 type 按键列表 = F区键 | 数字键 | 字母键 | 功能键 | 方向键 | 数字区 | 鼠标 | 手柄键
