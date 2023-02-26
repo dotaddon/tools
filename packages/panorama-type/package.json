@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/panorama-type",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "TypeScript definitions for Dota 2 Panorama API",
   "keywords": [
     "dota",
