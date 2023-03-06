@@ -12,14 +12,9 @@ class TsTimerTool {
         print("[注册]管道计时器初始化");
     }
 
-    /** 使当前的异步函数等待 毫秒 */
-    async sleep(ms: number, holdOnPause: boolean = true) {
-        let timeout = math.max(ms, 1 / 30) / 1000 + this.time()
-        return new Promise((resolve) => {
-            this.insert({
-                resolve, timeout, holdOnPause
-            })
-        })
+    /** 时间戳 */
+    time() {
+        return Time() //GameRules.GetGameTime()
     }
 
     /** 插入计时任务 */
@@ -49,11 +44,6 @@ class TsTimerTool {
 
     /** 未实现 */
     remove(item: TimeTask) {
-    }
-
-    /** 时间戳 */
-    private time() {
-        return Time() //GameRules.GetGameTime()
     }
 
     /**同帧业务批处理 */
@@ -89,13 +79,26 @@ class TsTimerTool {
 
 const Timer = new TsTimerTool()
 
+/** 使当前的异步函数
+ * @param ms 等待 毫秒
+ * @param holdOnPause 是否等待游戏暂停 default:true
+ */
+export function sleep(ms: number, holdOnPause: boolean = true) {
+    let timeout = math.max(ms, 1 / 30) / 1000 + Timer.time()
+    return new Promise((resolve) => {
+        Timer.insert({
+            resolve, timeout, holdOnPause
+        })
+    })
+}
+
 /** 等待执行
  * @param think 定时器
  * @param timeout 等待 毫秒
  * @param args 定时器入参
  */
 export function setTimeout<B extends void, T extends (...args: any[]) => B>(this: void, think: T, timeout: number = 100, ...args: Parameters<T>) {
-    Timer.sleep(timeout)
+    sleep(timeout)
         .then(think.bind(null, ...args))
 }
 
@@ -104,14 +107,13 @@ export function setTimeout<B extends void, T extends (...args: any[]) => B>(this
  * @param think 定时器 返回是否继续  false会结束该定时器
  * @param interval 执行间隔 毫秒
  * @param args 定时器入参
- * @returns 
  */
 export function setInterval<B extends boolean | null, T extends (...args: any[]) => B>(this: void, think: T, interval: number = 100, ...args: Parameters<T>) {
     let bContinue = true
     async function callback() {
         if (!bContinue)
             return;
-        await Timer.sleep(interval)
+        await sleep(interval)
         callback()
         bContinue = think(...args)
     }
@@ -125,7 +127,7 @@ export function setInterval<B extends boolean | null, T extends (...args: any[])
  */
 export function setThink<B extends number | null, T extends (...args: any[]) => B>(this:void, think: T, delay: number = 100, ...args: Parameters<T>) {
     async function callback(timeout:number) {
-        await Timer.sleep(timeout)
+        await sleep(timeout)
         let delay = think(...args)
         if (!delay || delay < 0)
             return;
