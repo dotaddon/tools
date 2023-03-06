@@ -1,58 +1,135 @@
-declare global {
-    type TimerNameStr = string & {
-        readonly __tag__: 'TimerNameStr';
-    };
+declare interface TimeTask {
+    resolve: (v?: any) => void
+    timeout: number
+    holdOnPause: boolean
 }
-
 
 class TsTimerTool {
-    queue: Record<TimerNameStr, boolean> = {}
-    constructor(){
+    private queue: Array<TimeTask> = []
+    constructor() {
+        SpawnEntityFromTableSynchronous("info_target", { targetname: "vlua_tools_thinker" })
+            .SetThink("tick", this, "timers", 0)
+        print("[注册]管道计时器初始化");
     }
 
-    private name():TimerNameStr {
-        return DoUniqueString("timer") as TimerNameStr
+    /** 使当前的异步函数等待 毫秒 */
+    async sleep(ms: number, holdOnPause: boolean = true) {
+        let timeout = math.max(ms, 1 / 30) / 1000 + this.time()
+        return new Promise((resolve) => {
+            this.insert({
+                resolve, timeout, holdOnPause
+            })
+        })
     }
-    
-    /**
-     * 设置循环计时器，返回用于删除的关键词
-     * @param callback 每次执行的回调函数，返回下次执行的间隔秒数
-     * @param delay 首期执行的延迟启动秒数
-     * @param rest 可选，回调需要的参数
-     */
-    public start(callback:(...args:any)=>number|void, delay: number = 0): TimerNameStr {
-        let timerName = this.name();
-        let _think = () =>{
-            if (GameRules.IsGamePaused()) return 0.1;
-            if (this.queue[timerName]) return callback();
-            return null;
+
+    /** 插入计时任务 */
+    insert(item: TimeTask) {
+        let left = 0
+        let right = this.queue.length
+        let center = 0
+        while (right > 0) {
+            if (left == right)
+                break;
+            if (math.floor(30 * (this.queue[right].timeout - this.queue[left].timeout)) == 0)
+                break;
+
+            center = math.floor((right - left) / 2) + left
+
+            let centerTimeout = this.queue[center].timeout
+            if (centerTimeout == item.timeout) {
+                break;
+            } else if (centerTimeout < item.timeout) {
+                left = center
+            } else {
+                right = center
+            }
         }
-
-        this.queue[timerName] = true;
-        // @ts-ignore
-        GameRules.GetGameModeEntity().SetContextThink(timerName, _think, delay);
-        return timerName;
+        this.queue.splice(center, 0, item)
     }
 
-    /**
-     * 删除循环计时器
-     * @param timerName 设置时使用的容器名
-     */
-    public over(timerName: TimerNameStr):void {
-        this.queue[timerName] = null;
+    /** 未实现 */
+    remove(item: TimeTask) {
     }
-    
-    /**
-     * 设置一次性循环计时器，返回用于删除的关键词
-     * @param callback 每次执行的回调函数，返回下次执行的间隔秒数
-     * @param delay 首期执行的延迟启动秒数
-     */
-    public once(callback:(...args:any)=>number|void, delay: number = 0): void {
-        let timerName = this.name();
-        let _think = () => GameRules.IsGamePaused() ? 0.1 :callback();
-        // @ts-ignore
-        GameRules.GetGameModeEntity().SetContextThink(timerName, _think, delay);
+
+    /** 时间戳 */
+    private time() {
+        return Time() //GameRules.GetGameTime()
+    }
+
+    /**同帧业务批处理 */
+    private async batchProcessInFrame() {
+        let time = this.time()
+        let pause = GameRules.IsGamePaused()
+        let next: Array<TimeTask> = []
+        while (this.queue.length > 0) {
+            let task = this.queue.shift()
+            if (task.timeout > time) {
+                next.push(task)
+                break;
+            }
+
+            if (task.holdOnPause && pause)
+                next.push(task)
+            else
+                try {
+                    task.resolve()
+                } catch (error) {
+                    debug.traceback(error)
+                }
+        }
+        next.map(item => this.insert(item))
+    }
+
+    /** 计时器回调本体 */
+    private tick() {
+        this.batchProcessInFrame()
+        return 0
     }
 }
 
-export const Timer = new TsTimerTool()
+const Timer = new TsTimerTool()
+
+/** 等待执行
+ * @param think 定时器
+ * @param timeout 等待 毫秒
+ * @param args 定时器入参
+ */
+export function setTimeout<B extends void, T extends (...args: any[]) => B>(this: void, think: T, timeout: number = 100, ...args: Parameters<T>) {
+    Timer.sleep(timeout)
+        .then(think.bind(null, ...args))
+}
+
+
+/** 设置一个定时器
+ * @param think 定时器 返回是否继续  false会结束该定时器
+ * @param interval 执行间隔 毫秒
+ * @param args 定时器入参
+ * @returns 
+ */
+export function setInterval<B extends boolean | null, T extends (...args: any[]) => B>(this: void, think: T, interval: number = 100, ...args: Parameters<T>) {
+    let bContinue = true
+    async function callback() {
+        if (!bContinue)
+            return;
+        await Timer.sleep(interval)
+        callback()
+        bContinue = think(...args)
+    }
+    callback()
+}
+
+/** 设置一个逻辑器
+ * @param think 定时器 返回下一次执行时间 负数或空值会结束该定时器
+ * @param delay 首次等待 毫秒
+ * @param args 定时器入参
+ */
+export function setThink<B extends number | null, T extends (...args: any[]) => B>(this:void, think: T, delay: number = 100, ...args: Parameters<T>) {
+    async function callback(timeout:number) {
+        await Timer.sleep(timeout)
+        let delay = think(...args)
+        if (!delay || delay < 0)
+            return;
+        callback(delay)
+    }
+    callback(delay)
+}
