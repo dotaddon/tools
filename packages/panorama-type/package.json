@@ -16,10 +16,8 @@
     "index.d.ts",
     "types/**/*.d.ts"
   ],
-  "dependencies": {
-    "@moddota/panorama-types": "^1.21.0"
-  },
   "devDependencies": {
+    "@moddota/panorama-types": "^1.22.0",
     "@mobilc/panorama-polyfill": "workspace:*"
   },
   "publishConfig": {
