@@ -1,17 +1,22 @@
-/** 创建一个http请求 */
+/** 创建一个http请求 
+ *  asyncHttp('http://localhost:8888/')
+    .postBody('application/json', {a:123})
+    .send()
+    .then(res=>print(res.body))
+ * 
+ */
 export function asyncHttp(url:string) {
     return new THttpAsnycPipe(url)
 }
 
 class THttpAsnycPipe {
+    constructor(private _url: string) {
+    }
     private _method: 'GET' | 'POST' = 'POST'
     /** 设置请求方法 默认使用post */
     method(a: typeof this._method) {
         this._method = a
         return this
-    }
-
-    constructor(private _url: string) {
     }
     private _headers: Record<string, string> = {}
     /** 设置请求的标头值。 */
@@ -54,6 +59,7 @@ class THttpAsnycPipe {
             this._bodyValue = json.encode(body)
         else
             this._bodyValue = body
+        return this
     }
     /** 发送请求
      * @param check 用于检查请求体的信息，可忽略
