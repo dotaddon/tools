@@ -4,15 +4,16 @@ class Axios {
 
     }
 
-    async Subscribe<T extends string | object>(
+    Subscribe<T extends string | object>(
         event: axiosEvents.InferKey<T, axiosEventPUI2Server>,
         cb: (event: NetworkedData<axiosEvents.InferType<T, axiosEventPUI2Server, 'send'> & { PlayerID: PlayerID }>) => axiosEvents.InferType<T, axiosEventPUI2Server, 'back'>
     ) {
-        CustomGameEventManager.RegisterListener(`p2s_${event}` as any, (user, data) => {
+        let id = CustomGameEventManager.RegisterListener(`p2s_${event}` as any, (user, data) => {
             print(event, user, data, data.name)
             let result = { ...cb(data), __tick__: data.__tick__ }
             CustomGameEventManager.Send_ServerToPlayer(PlayerResource.GetPlayer(data.PlayerID), `s2p_${event}` as any, result)
         })
+        return ()=>CustomGameEventManager.UnregisterListener(id)
     }
 
     // /** 发送一个请求到 lua.server */
