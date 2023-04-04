@@ -5,7 +5,6 @@
         "types": [ "@mobilc/panorama-type" ],
         "jsx": "react-jsx",
         "jsxImportSource": "react",
-        "resolveJsonModule": true,
         "downlevelIteration": true,
         "importHelpers": true,
         "newLine": "LF",
