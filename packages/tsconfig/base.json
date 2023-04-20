@@ -3,10 +3,9 @@
         "target": "es2022",
         "lib": [ "es2022" ],
         "moduleResolution": "node",
-        "strict": true,
+        "strict": false,
         "resolveJsonModule": true,
         "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true
-        
     }
 }

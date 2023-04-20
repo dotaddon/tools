@@ -3,7 +3,6 @@
     "extends": "./base.json",
     "compilerOptions": {
         "types": ["@moddota/dota-lua-types"],
-        "suppressImplicitAnyIndexErrors": true,
         "strictNullChecks": false,
         "strictPropertyInitialization": false
     },
