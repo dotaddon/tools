@@ -1,0 +1,28 @@
+{
+  "name": "@mobilc/dota-router",
+  "version": "0.0.0",
+  "description": "React for Valve's Panorama UI (for Dota 2 Custom Games).",
+  "keywords": [
+    "dota",
+    "panorama",
+    "react",
+    "jsx"
+  ],
+  "repository": "https://github.com/takegine/testdodo/issues",
+  "license": "MIT",
+  "authors": "西索酱",
+  "types": "types.d.ts",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1 || ^17.0.0 || ^18.0.0",
+    "zustand": "4.1.4"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

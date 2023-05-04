@@ -1,0 +1,14 @@
+{
+    "entry": [
+        "src/index.tsx"
+    ],
+    "minify": false,
+    "splitting": false,
+    "clean": true,
+    "dts": true,
+    "external": [
+        "React",
+        "@mobilc/panorama-react-dom",
+        "zustand"
+    ]
+}
