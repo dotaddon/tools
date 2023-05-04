@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/dota-router",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React for Valve's Panorama UI (for Dota 2 Custom Games).",
   "keywords": [
     "dota",
