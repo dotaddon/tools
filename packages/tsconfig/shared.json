@@ -2,6 +2,6 @@
     "desc": "这个目录是用于通讯事件的类型",
     "extends": "./base.json",
     "compilerOptions": {
-        "types": ["@moddota/shared-type"]
+        "types": ["@mobilc/shared-type"]
     }
 }
