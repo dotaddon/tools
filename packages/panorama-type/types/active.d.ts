@@ -210,7 +210,7 @@ interface panoramaEventDeclarations {
 }
 
 
-// 自己总结出来的 2022年7月更新
+// 自己总结出来的 2023年5月更新
 interface panoramaEventDeclarations {
     /** 玩家属性详情弹出面板 显示 */
     DOTAHUDHideDamageArmorTooltip(): void
@@ -222,7 +222,17 @@ interface panoramaEventDeclarations {
     DOTAHUDHideGoldTooltip(): void
     /** 点击buff按钮 */
     DOTAHUDBuffClicked(): void
-    PostGameProgressConfirmAbusiveCoachRatingFinished( arg0: boolean, arg1: string ): void
+    PostGameProgressConfirmAbusiveCoachRatingFinished(arg0: boolean, arg1: string): void
+    /** 返回主界面 */
+    DOTAHUDShowDashboard(): void
+    /** 显示设置弹窗 */
+    DOTAShowSettingsPopup(): void
+    /** 启动玩家本地浏览器访问目标地址 */
+    ExternalBrowserGoToURL(url: string): void
+    /** 展示一个自定义的tip */
+    UIShowCustomLayoutParametersTooltip(xmlFile: `${string}.xml`, ParamsPassToXml: string): void
+    /** 隐藏自定义的tip */
+    UIHideCustomLayoutTooltip(): void
 }
 
 // 小红象 发的 2023/2/10
