@@ -1,33 +1,41 @@
-import { PanelAttributes, createPortal } from "@mobilc/panorama-react-dom";
+import { createPortal } from "@mobilc/panorama-react-dom";
 import { ReactNode, useEffect, useMemo, useState } from "react";
 import create from "zustand";
 
-const menuRoute = create<{ current: any }>((set, get) => ({
+const menuRoute = create<{
+    current: any,
+    change(target: any): () => void
+}>((set, get) => ({
     current: null,
+    change(target) {
+        return () => {
+            let { current } = get()
+            if (current != target) {
+                set({ current: target })
+            }
+            else {
+                set({ current: undefined })
+            }
+        }
+    },
 }))
 
-/** 导航栏 */
-export function NavLink<T extends string | number | symbol>({ to, children }: { to: T, children?: ReactNode[] }) {
-    return <Panel onactivate={() => menuRoute.setState({ current: to })} >
-        {
-            children
-        }
-    </Panel>
-}
-
-/** 跳转目标页签 */
-export function Route<T extends string | number | symbol>({ path, style, visible = false, children, ...p }: { path: T } & PanelAttributes) {
-    const [show, setShow] = useState(visible)
+/** 导航栏
+ * @param path 索引路径 
+ * @param element 弹出窗口
+ * @returns 
+ */
+export default function NavLink<T extends string | number | symbol>({ path, element }: { path: T, element: ReactNode }) {
+    const [show, setShow] = useState(false)
     useEffect(() => menuRoute.subscribe(state => {
         setShow(state.current == path)
     }), [path])
 
-    const windows = useMemo(() =>
-        <Panel {...p} style={{ ...style, align: 'center center' }} >
-            {children}
-        </Panel>
-        , [children]);
+    const portal = useMemo(() => createPortal(element, $.GetContextPanel()), [element])
 
-    if (!show) return null;
-    return createPortal(windows, $.GetContextPanel());
+    return <Panel onactivate={menuRoute.getState().change(path)} style={{ width: "100%", height: "100%" }}>
+        {
+            show && portal
+        }
+    </Panel>
 }
