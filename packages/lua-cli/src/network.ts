@@ -1,26 +1,37 @@
-declare interface PlayerNetTableDeclarations {}
+declare global {
+    interface PlayerNetTableDeclarations {}
+}
 export function playerNetSet<
     T extends PlayerNetTableDeclarations,
     K extends keyof T
-    >(teamid:number, keyName: K, value: T[K]): boolean {
+    >(unique:number, keyName: K, value: T[K]): boolean {
     // @ts-ignore
-    return CustomNetTables.SetTableValue(`player_${teamid}`,keyName,value)
+    return CustomNetTables.SetTableValue(`player_${unique}`,keyName,value)
 }
 export function playerNetGet<
     T extends PlayerNetTableDeclarations,
     K extends keyof T
-    >(teamid:number, keyName: K): NetworkedData<T[K]> {
+    >(unique:number, keyName: K): NetworkedData<T[K]> {
     // @ts-ignore
-    return CustomNetTables.GetTableValue(`player_${teamid}`,keyName)
+    return CustomNetTables.GetTableValue(`player_${unique}`,keyName)
 }
-export class tsOperaterBase<Single extends {playerid:PlayerID} & PlayerNetTableDeclarations> {
+/** 玩家数据结构化管理 */
+export class tsOperatorBase<Single extends {playerid:PlayerID} & PlayerNetTableDeclarations> {
     constructor(
-        private prList:Single[] = []
+        private prList = new Map<PlayerID,Single>()
     ){}
 
-    /** 获取一个玩家信息 */
-    id(id:PlayerID):Single {
-        return this.prList[id]
+    /** 获取一个玩家的信息 */
+    get(id:PlayerID):Single {
+        return this.prList.get(id)
+    }
+    /** 更新一个玩家的信息 */
+    set(id: PlayerID, data: Partial<Single>){
+        this.prList[id] = Object.assign(this.prList[id], data)
+    }
+    /** 是否存在某个玩家数据 */
+    has(id: PlayerID){
+        return this.prList.has(id)
     }
 
     /** 获取玩家所选英雄 */
@@ -28,7 +39,7 @@ export class tsOperaterBase<Single extends {playerid:PlayerID} & PlayerNetTableD
         return PlayerResource.GetSelectedHeroEntity(id)
     }
 
-    /** 修改通讯数据 */
+    /** 修改通讯数据 将玩家信息发送到 netTable */
     net<T extends PlayerID | Single>(
         key:(T extends PlayerID ? PlayerID:Single) | Single, 
         title:keyof PlayerNetTableDeclarations
@@ -39,7 +50,7 @@ export class tsOperaterBase<Single extends {playerid:PlayerID} & PlayerNetTableD
             case 'number':
                 if(key==-1) return;
                 id = key as PlayerID
-                pr = this.id(id)
+                pr = this.get(id)
                 break;
             case 'table':
                 pr = key as Single
@@ -52,11 +63,7 @@ export class tsOperaterBase<Single extends {playerid:PlayerID} & PlayerNetTableD
         playerNetSet(id, title, pr[title])
     }
 
-    each(callback:(this:void, ele: Single,index:PlayerID)=>void){
-        // for (let i in this.prList){
-        //     //@ts-ignore
-        //     if(PlayerResource.IsValidPlayerID(i-1)) callback(this.id(i),i)
-        // }
+    each(callback:(this:void, ele:Single, index:PlayerID)=>void){
         this.prList.forEach(
             ele=>PlayerResource.IsValidPlayerID(ele.playerid)&&callback(ele,ele.playerid)
         )
