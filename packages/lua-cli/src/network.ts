@@ -4,14 +4,14 @@ declare global {
 export function playerNetSet<
     T extends PlayerNetTableDeclarations,
     K extends keyof T
-    >(unique:number, keyName: K, value: T[K]): boolean {
+    >(unique:PlayerID, keyName: K, value: T[K]): boolean {
     // @ts-ignore
     return CustomNetTables.SetTableValue(`player_${unique}`,keyName,value)
 }
 export function playerNetGet<
     T extends PlayerNetTableDeclarations,
     K extends keyof T
-    >(unique:number, keyName: K): NetworkedData<T[K]> {
+    >(unique: PlayerID, keyName: K): NetworkedData<T[K]> {
     // @ts-ignore
     return CustomNetTables.GetTableValue(`player_${unique}`,keyName)
 }
