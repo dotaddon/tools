@@ -16,10 +16,13 @@ export function playerNetGet<
     return CustomNetTables.GetTableValue(`player_${unique}`,keyName)
 }
 /** 玩家数据结构化管理 */
-export class tsOperatorBase<Single extends {playerid:PlayerID} & PlayerNetTableDeclarations> {
+export class tsOperatorBase<Single extends { playerid: PlayerID } & PlayerNetTableDeclarations> {
+    private prList: Map<PlayerID, Single>
     constructor(
-        private prList = new Map<PlayerID,Single>()
-    ){}
+        prList: Single[]
+    ){
+        this.prList = new Map(prList.map(e=>[e.playerid,e]))
+    }
 
     /** 获取一个玩家的信息 */
     get(id:PlayerID):Single {
