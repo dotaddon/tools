@@ -1,9 +1,9 @@
 
-declare interface axiosEvent {
+declare interface axiosEventPUI2Server {
     test: {
-        p2s:{
+        send:{
             
         },
-        s2p:{}
+        back:{}
     }
 }

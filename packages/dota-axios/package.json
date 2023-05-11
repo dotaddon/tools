@@ -11,10 +11,8 @@
   "repository": "https://github.com/takegine/testdodo/issues",
   "license": "MIT",
   "authors": "西索酱",
-  "types": "types.d.ts",
   "files": [
-    "dist/**",
-    "types.d.ts"
+    "dist/**"
   ],
   "scripts": {
     "build": "run-p build:*",

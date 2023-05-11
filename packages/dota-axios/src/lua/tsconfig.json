@@ -1,6 +1,5 @@
 {
     "extends": "@mobilc/tsconfig/lua.json",
-    "include": [ ".", "../../types.d.ts" ],
     "compilerOptions": {
         "outDir": "../../dist/lua",
         "declaration": true

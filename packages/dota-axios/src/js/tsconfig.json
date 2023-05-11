@@ -1,4 +1,3 @@
 {
-  "extends": "@mobilc/tsconfig/panorama.json",
-  "include": [".", "../../types.d.ts"]
+  "extends": "@mobilc/tsconfig/panorama.json"
 }
