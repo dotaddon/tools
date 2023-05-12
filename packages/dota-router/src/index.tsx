@@ -35,7 +35,7 @@ export default function NavLink<T extends string | number | symbol>({ path, elem
 
     return <Panel onactivate={menuRoute.getState().change(path)} style={{ width: "100%", height: "100%" }}>
         {
-            show && portal
+            show ? portal : null
         }
     </Panel>
 }
