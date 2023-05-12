@@ -1,6 +1,6 @@
 import { createPortal } from "@mobilc/panorama-react-dom";
 import { ReactNode, useEffect, useMemo, useState } from "react";
-import create from "zustand";
+import { create } from "zustand";
 
 const menuRoute = create<{
     current: any,
