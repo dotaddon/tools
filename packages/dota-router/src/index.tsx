@@ -25,7 +25,7 @@ const menuRoute = create<{
  * @param element 弹出窗口
  * @returns 
  */
-export default function NavLink<T extends string | number | symbol>({ path, element }: { path: T, element: ReactNode }) {
+export function NavLink<T extends string | number | symbol>({ path, element }: { path: T, element: ReactNode }) {
     const [show, setShow] = useState(false)
     useEffect(() => menuRoute.subscribe(state => {
         setShow(state.current == path)
