@@ -30,10 +30,10 @@ declare type DefaultFont =
 
 interface VCSSStyleDeclaration2 {
     /** 水平居中 */
-    verticalAlign: VCSSVerticalAlign | null;
+    verticalAlign: VCSSVerticalAlign;
 
     /** 垂直居中 */
-    horizontalAlign: VCSSHorizontalAlign | null;
+    horizontalAlign: VCSSHorizontalAlign;
 
     align: `${VCSSHorizontalAlign} ${VCSSVerticalAlign}`
 
@@ -47,12 +47,12 @@ interface VCSSStyleDeclaration2 {
      * overflow: squish squish; // 在水平和垂直方向挤压内容
      * overflow: squish scroll; // 在 Y 方向滚动内容
      */
-    overflow: VCSSOverFlow | `${VCSSOverFlow} ${VCSSOverFlow}` | null;
+    overflow: VCSSOverFlow | `${VCSSOverFlow} ${VCSSOverFlow}`;
 
     /**
      * 子成员自动排列
      */
-    flowChildren: VCSSDirection | `${VCSSDirection}-wrap` | null;
+    flowChildren: VCSSDirection | `${VCSSDirection}-wrap`;
 
     /** 板子的宽度 */
     width: 'fit-children' | VCSSPixelsString | VCSSPercentString | `height-percentage(${VCSSPercentString})` | `fill-parent-flow(${number})`
@@ -61,6 +61,9 @@ interface VCSSStyleDeclaration2 {
 
     /** 字体文件 */
     fontFamily: DefaultFont | string
+
+    /** 忽略父级flow样式 */
+    ignoreParentFlow: boolean
 }
 
 type vcssPick = 
