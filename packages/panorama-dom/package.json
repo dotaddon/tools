@@ -27,7 +27,12 @@
     "prepublishOnly": "pnpm build"
   },
   "dependencies": {
-    "@mobilc/panorama-polyfill": "workspace:^"
+    "@mobilc/panorama-polyfill": "workspace:^",
+    "react-reconciler": "^0.25.1"
+  },
+  "devDependencies": {
+    "@types/react-reconciler": "^0.18.0"
+
   },
   "peerDependencies": {
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0"

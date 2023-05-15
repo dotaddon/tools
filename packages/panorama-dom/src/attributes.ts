@@ -169,13 +169,13 @@ definePanelPropertyInformation('Panel', {
     update(panel, newValue: any = {}, oldValue: any = {}) {
       for (const styleName in newValue) {
         if (newValue[styleName] !== oldValue[styleName]) {
-          panel.style[styleName as keyof VCSSStyleDeclaration] = newValue[styleName];
+          panel.style[styleName as any] = newValue[styleName];
         }
       }
 
       for (const styleName in oldValue) {
         if (!(styleName in newValue)) {
-          panel.style[styleName as keyof VCSSStyleDeclaration] = null;
+          panel.style[styleName as any] = null;
         }
       }
     },

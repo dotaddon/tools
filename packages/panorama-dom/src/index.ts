@@ -20,7 +20,6 @@ export function render(element: ReactNodeList, container: Panel, callback?: () =
 
     panel._rootContainer ??= reconciler.createContainer(panel, false, false);
 
-    // @ts-expect-error callback type should be nullable
     reconciler.updateContainer(element, panel._rootContainer, null, callback);
 }
 
