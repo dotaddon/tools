@@ -249,10 +249,15 @@ interface panoramaEventDeclarations {
 
 // 拖拽事件
 interface panoramaEventDeclarations {
-    DragStart(settings: DragSettings): boolean
-    DragEnd(dragged: Panel): boolean
-    DragDrop(dragged: Panel): boolean
-    DragEnter(dragged: Panel): boolean
-    DragLeave(dragged: Panel): boolean
+    /** 开始 */
+    DragStart(hitPanel: Panel, settings: DragSettings): boolean
+    /** 进入面板 */
+    DragEnter(hitPanel: Panel, displayPanel: Panel): boolean
+    /** 离开面板 */
+    DragLeave(hitPanel: Panel, displayPanel: Panel): boolean
+    /** 释放鼠标 */
+    DragDrop(hitPanel: Panel, displayPanel: Panel): boolean
+    /** 结束 */
+    DragEnd(hitPanel: Panel, displayPanel: Panel): boolean
 }
 
