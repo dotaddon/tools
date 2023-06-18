@@ -43,7 +43,10 @@ export function setInterval<TArgs extends any[]>(
   (function run() {
     promiseForNext(timeout, intervalId)
       .then(() => callback(...args))
-      .then(run)
+      .then(() => {
+        if (intervals.has(intervalId))
+          run()
+      });
   })()
 
   return intervalId;
