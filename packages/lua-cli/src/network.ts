@@ -30,7 +30,10 @@ export class tsOperatorBase<Single extends { playerid: PlayerID } & PlayerNetTab
     }
     /** 更新一个玩家的信息 */
     set(id: PlayerID, data: Partial<Single>){
-        this.prList[id] = Object.assign(this.prList[id], data)
+        let info = this.get(id)
+        for (const key in data) {
+            info[key] = data[key]
+        }
     }
     /** 是否存在某个玩家数据 */
     has(id: PlayerID){
