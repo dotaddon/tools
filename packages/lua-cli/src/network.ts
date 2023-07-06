@@ -34,6 +34,7 @@ export class tsOperatorBase<Single extends { playerid: PlayerID } & PlayerNetTab
         for (const key in data) {
             info[key] = data[key]
         }
+        return this
     }
     /** 是否存在某个玩家数据 */
     has(id: PlayerID){
@@ -73,5 +74,6 @@ export class tsOperatorBase<Single extends { playerid: PlayerID } & PlayerNetTab
         this.prList.forEach(
             ele=>PlayerResource.IsValidPlayerID(ele.playerid)&&callback(ele,ele.playerid)
         )
+        return this
     }
 }
