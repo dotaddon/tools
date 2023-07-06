@@ -381,9 +381,13 @@ export interface PanelAttributesUtil extends PNC<Record<string, any>> {
         selected: boolean
     }
 
+    DOTAAbilityList: {}
+    DOTAAbilityDetails: PanelAttributesUtil['DOTAAbilityImage']
+
     CustomLayoutPanel: {
         layout: string
     }
+
     GenericPanel: {
         type: string
         [key: string]: any

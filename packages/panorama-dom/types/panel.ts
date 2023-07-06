@@ -55,6 +55,8 @@ export type PanelType =
     | 'TabContents'
 
     | 'CustomLayoutPanel'
+    | 'DOTAAbilityList'
+    | 'DOTAAbilityDetails'
     | 'GenericPanel'
 
 

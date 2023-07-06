@@ -11,6 +11,8 @@ declare interface CustomUIConfig {
 declare interface PanoramaPanelNameMap {
     TabButton: Panel,
     TabContents: Panel,
+    DOTAAbilityDetails: AbilityImage;
+    DOTAAbilityList: Panel;
 }
 
 declare interface HeroImage extends ImagePanel {

@@ -248,13 +248,14 @@ const imageAttributes: PanelPropertyInformation<'Image'> = {
 
 definePanelPropertyInformation('Image', imageAttributes);
 
-definePanelPropertyInformation('DOTAAbilityImage', {
+let abilityImageAttributes: PanelPropertyInformation<'DOTAAbilityImage'> = {
   ...imageAttributes,
   abilityname: { type: PropertyType.SET, name: 'abilityname', initial: true },
   contextEntityIndex: { type: PropertyType.SET, name: 'contextEntityIndex' },
   showtooltip: { type: PropertyType.INITIAL_ONLY, initial: true },
   abilityid: { type: PropertyType.INITIAL_ONLY, initial: true },
-});
+}
+definePanelPropertyInformation('DOTAAbilityImage', abilityImageAttributes);
 
 definePanelPropertyInformation('DOTAItemImage', {
   ...imageAttributes,
@@ -603,6 +604,7 @@ definePanelPropertyInformation('TabContents', {
   tabid: { type: PropertyType.INITIAL_ONLY, initial: true },
   selected: { type: PropertyType.SET, name: 'checked' },
 });
+definePanelPropertyInformation('DOTAAbilityDetails', abilityImageAttributes);
 
 definePanelPropertyInformation('CustomLayoutPanel', {
   layout: { type: PropertyType.INITIAL_ONLY, initial: true },

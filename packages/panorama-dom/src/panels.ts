@@ -60,6 +60,8 @@ declare global {
     var TabContents: panoramaDiv<'TabContents'>
 
     var CustomLayoutPanel: panoramaDiv<'CustomLayoutPanel'>
+    var DOTAAbilityList: panoramaDiv<'DOTAAbilityList'>
+    var DOTAAbilityDetails: panoramaDiv<'DOTAAbilityDetails'>
     /**
      * This element allows to render any unsupported Panorama panel type.
      * All unknown attributes are assumed to be XML properties.
@@ -133,8 +135,11 @@ for (const panelName of [
 
     'TabButton',
     'TabContents',
+    'DOTAAbilityList',
+    'DOTAAbilityDetails',
 
     'CustomLayoutPanel',
+
     'GenericPanel',
 ]) {
     if (!this[panelName])
