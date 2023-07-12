@@ -76,3 +76,4 @@ type vcssPick =
   | 'focus'
   | 'descendantfocus'
   | 'Selected'
+  | 'parentdisabled'
