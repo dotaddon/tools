@@ -1,12 +1,5 @@
-import recycle from './recycle'
-import reloadable from "./reload";
-
-
-export {
-    recycle,
-    reloadable,
-}
-
+export * from './recycle'
+export * from './reload';
 export * from './adapter'
 export * from './custom_game_event'
 export * from './timer'
