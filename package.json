@@ -11,10 +11,7 @@
   },
   "devDependencies": {
     "@ark120202/eslint-config": "^2.5.0",
-    "@mobilc/tsconfig": "workspace:*",
     "@mobilc/panorama-react-dom": "workspace:*",
-    "@mobilc/panorama-type": "workspace:*",
-    "@mobilc/shared-type": "workspace:*",
     "@moddota/dota-lua-types": "^4.24.0",
     "@moddota/panorama-types": "^1.24.0",
     "@rollup/plugin-commonjs": "^15.1.0",

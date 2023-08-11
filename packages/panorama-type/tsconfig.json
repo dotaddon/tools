@@ -1,9 +1,0 @@
-{
-  "extends": "@mobilc/tsconfig/base.json",
-  "files": ["index.d.ts"],
-  "compilerOptions": {
-    "types": [
-      "@moddota/panorama-types"
-    ],
-  }
-}
