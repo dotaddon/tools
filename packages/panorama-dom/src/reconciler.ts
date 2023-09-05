@@ -54,12 +54,32 @@ function removeChild(parent: InternalPanel, child: InternalPanel) {
   }
 }
 
+function createInstance(type: PanelType, newProps: Record<string, any>, rootContainerInstance: InternalPanel, hostContext: object, internalInstanceHandle: ReactReconciler.Fiber) {
+  const { initialProps, otherProps } = splitInitialProps(type, newProps);
+
+  if (type === 'GenericPanel') type = newProps.type;
+
+  // Create it on the context panel instead of rootContainerInstance to
+  // preserve style context for elements rendered outside of the main tree
+  const panel = $.CreatePanel(type, $.GetContextPanel(), newProps.id || '', initialProps != undefined ? initialProps : null)
+
+  if (panelBaseNames.has(type)) {
+    fixPanelBase(panel);
+  }
+
+  for (const propName in otherProps) {
+    updateProperty(type, panel, propName, undefined, otherProps[propName]);
+  }
+
+  return panel;
+}
+
 const hostConfig: ReactReconciler.HostConfig<
   PanelType, // Type
   Record<string, any>, // Props
   InternalPanel, // Container
   InternalPanel, // Instance
-  never, // TextInstance
+  InternalPanel, // TextInstance
   never, // HydratableInstance
   InternalPanel, // PublicInstance
   object, // HostContext
@@ -92,26 +112,9 @@ const hostConfig: ReactReconciler.HostConfig<
   supportsHydration: false,
 
   shouldSetTextContent: () => false,
-  createInstance(type, newProps) {
-    const { initialProps, otherProps } = splitInitialProps(type, newProps);
-
-    if (type === 'GenericPanel') type = newProps.type;
-    // Create it on the context panel instead of rootContainerInstance to
-    // preserve style context for elements rendered outside of the main tree
-    const panel = $.CreatePanel(type, $.GetContextPanel(), newProps.id || '', initialProps != undefined ? initialProps : null)
-
-    if (panelBaseNames.has(type)) {
-      fixPanelBase(panel);
-    }
-
-    for (const propName in otherProps) {
-      updateProperty(type, panel, propName, undefined, otherProps[propName]);
-    }
-
-    return panel;
-  },
-  createTextInstance() {
-    throw new Error('React DOM不支持文本节点。请改用<Label/>元素。');
+  createInstance,
+  createTextInstance(text: string, ...args) {
+    return createInstance('Label', {text}, ...args);
   },
   appendInitialChild: appendChild,
   finalizeInitialChildren: () => false,
