@@ -7,24 +7,21 @@ importers:
       '@ark120202/eslint-config':
         specifier: ^2.5.0
         version: 2.5.0(eslint@7.32.0)(typescript@4.9.3)
+      '@mobilc/dota-lua-types':
+        specifier: ^7.34.1
+        version: 7.34.1(@typescript-to-lua/language-extensions@1.0.0)(typescript@4.9.3)
       '@mobilc/panorama-react-dom':
         specifier: workspace:*
         version: link:packages/panorama-dom
-      '@mobilc/panorama-type':
-        specifier: ^0.0.19
-        version: 0.0.19(@moddota/panorama-types@1.29.1)
+      '@mobilc/panorama-types':
+        specifier: ^7.34.1
+        version: 7.34.1(typescript@4.9.3)
       '@mobilc/shared-type':
-        specifier: ^0.0.1
-        version: 0.0.1
+        specifier: ^0.0.3
+        version: 0.0.3
       '@mobilc/tsconfig':
-        specifier: ^0.2.5
-        version: 0.2.5
-      '@moddota/dota-lua-types':
-        specifier: ^4.29.0
-        version: 4.29.0(@typescript-to-lua/language-extensions@1.0.0)(typescript@4.9.3)
-      '@moddota/panorama-types':
-        specifier: ^1.29.1
-        version: 1.29.1(typescript@4.9.3)
+        specifier: ^0.2.7
+        version: 0.2.7
       '@rollup/plugin-commonjs':
         specifier: ^15.1.0
         version: 15.1.0(rollup@2.79.1)
@@ -1215,24 +1212,8 @@ packages:
       write-file-atomic: 4.0.2
     dev: true
 
-  /@mobilc/panorama-type@0.0.19(@moddota/panorama-types@1.29.1):
-    resolution: {integrity: sha512-A2XciUWuEAenchaxmIHOIoVySJBDZKVJSfomx9W4xgWzMNk7ksxRgpxV+wzERkWDg+fgcJv1cxycBsKwAdeEUw==}
-    peerDependencies:
-      '@moddota/panorama-types': ^1.22.0
-    dependencies:
-      '@moddota/panorama-types': 1.29.1(typescript@4.9.3)
-    dev: true
-
-  /@mobilc/shared-type@0.0.1:
-    resolution: {integrity: sha512-n6l3jNykfIoPZ1hdcGWw31ZG3SLJZTdB0gvWGoURskq7XQAKag6BhoXEFTWQOE+0uQn3/P4PyWWMDPSrjWuJ5w==}
-    dev: true
-
-  /@mobilc/tsconfig@0.2.5:
-    resolution: {integrity: sha512-BDEFXGngr6H6L/nqNO5KTzECg+YqGp7061Y5S0a2OdZGxpUxCAW7dKRznn38Ax+f0ocyTtcppOZAG0O5OLTtew==}
-    dev: true
-
-  /@moddota/dota-lua-types@4.29.0(@typescript-to-lua/language-extensions@1.0.0)(typescript@4.9.3):
-    resolution: {integrity: sha512-HyaNVZ4Pv5gfDFBAVkahdJqnZSpUf8db5i3GnWDP5cX/vnYkT0/svjK7ypUKuP1ShuUgpTKh0ZJXNYKoeY+CaQ==}
+  /@mobilc/dota-lua-types@7.34.1(@typescript-to-lua/language-extensions@1.0.0)(typescript@4.9.3):
+    resolution: {integrity: sha512-QdMbac1twLlccPvyDyvgMy4IAKuGY05dvpY8HGrLBDDJKiWa0yOLY20gxb8jbt3YX53P+k50YFYf90Ep1qy8tw==}
     peerDependencies:
       '@typescript-to-lua/language-extensions': ^1.0.0
       typescript: ^4.0.0 || ^5.0.0
@@ -1242,13 +1223,21 @@ packages:
       typescript: 4.9.3
     dev: true
 
-  /@moddota/panorama-types@1.29.1(typescript@4.9.3):
-    resolution: {integrity: sha512-go3FkccUm3YkJ8fon2Ng4c7ntaA2Js0tTpWeMexDXHkU7t4Q0qSS95rDAUX17wBXlNU1iz9Ba3LSPoyjyH2O7Q==}
+  /@mobilc/panorama-types@7.34.1(typescript@4.9.3):
+    resolution: {integrity: sha512-dfvDLnwTHt9vYK56jpvUX/KiAhVLZItfQ5EkS5RTEOpGObMCwgYcqSQMwLytQDDrhommduS3xGqSEVPyBXijjw==}
     peerDependencies:
       typescript: ^4.0.0 || ^5.0.0
     dependencies:
       tslib: 2.4.1
       typescript: 4.9.3
+    dev: true
+
+  /@mobilc/shared-type@0.0.3:
+    resolution: {integrity: sha512-lAHgPz8BNR6Pq5Ij+gHVxIuznOqU1A2WthHG9eRc9UmuHZ/CvqJI1NBcJKpP4NDcL0o+VvyNezYCtui+s43d6g==}
+    dev: true
+
+  /@mobilc/tsconfig@0.2.7:
+    resolution: {integrity: sha512-L7LVbdkUhHGOwEjkd0+FpI9/lEuyOp7McNz52ClDrUMkGofQM7jgBaZSv2s3+uMltEclk2oJ6qEkugsh2avP8g==}
     dev: true
 
   /@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1:
