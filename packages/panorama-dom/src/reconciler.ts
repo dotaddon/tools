@@ -96,11 +96,9 @@ const hostConfig: ReactReconciler.HostConfig<
     const { initialProps, otherProps } = splitInitialProps(type, newProps);
 
     if (type === 'GenericPanel') type = newProps.type;
-    const panel = initialProps
-      ? // Create it on the context panel instead of rootContainerInstance to
-      // preserve style context for elements rendered outside of the main tree
-      $.CreatePanelWithProperties(type, $.GetContextPanel(), newProps.id || '', initialProps)
-      : $.CreatePanel(type, $.GetContextPanel(), newProps.id || '');
+    // Create it on the context panel instead of rootContainerInstance to
+    // preserve style context for elements rendered outside of the main tree
+    const panel = $.CreatePanel(type, $.GetContextPanel(), newProps.id || '', initialProps != undefined ? initialProps : null)
 
     if (panelBaseNames.has(type)) {
       fixPanelBase(panel);
