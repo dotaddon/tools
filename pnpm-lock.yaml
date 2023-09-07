@@ -10,18 +10,21 @@ importers:
       '@mobilc/dota-lua-types':
         specifier: ^7.34.1
         version: 7.34.1(@typescript-to-lua/language-extensions@1.0.0)(typescript@4.9.3)
+      '@mobilc/panorama-polyfill':
+        specifier: 'workspace:'
+        version: link:packages/panorama-polyfill
       '@mobilc/panorama-react-dom':
         specifier: workspace:*
         version: link:packages/panorama-dom
       '@mobilc/panorama-types':
-        specifier: ^7.34.1
-        version: 7.34.1(typescript@4.9.3)
+        specifier: ^7.34.2
+        version: 7.34.2(typescript@4.9.3)
       '@mobilc/shared-type':
         specifier: ^0.0.3
         version: 0.0.3
       '@mobilc/tsconfig':
-        specifier: ^0.2.7
-        version: 0.2.7
+        specifier: ^0.2.8
+        version: 0.2.8
       '@rollup/plugin-commonjs':
         specifier: ^15.1.0
         version: 15.1.0(rollup@2.79.1)
@@ -1223,8 +1226,8 @@ packages:
       typescript: 4.9.3
     dev: true
 
-  /@mobilc/panorama-types@7.34.1(typescript@4.9.3):
-    resolution: {integrity: sha512-dfvDLnwTHt9vYK56jpvUX/KiAhVLZItfQ5EkS5RTEOpGObMCwgYcqSQMwLytQDDrhommduS3xGqSEVPyBXijjw==}
+  /@mobilc/panorama-types@7.34.2(typescript@4.9.3):
+    resolution: {integrity: sha512-okmgkmA607HWvM8ZAsOGRy0bz8mVT2EF+ELIlpqzzj0oF/Vw9AiydwbtnK6FSWkv9WZ9fvF16/eNBJxHpIM7Zw==}
     peerDependencies:
       typescript: ^4.0.0 || ^5.0.0
     dependencies:
@@ -1236,8 +1239,8 @@ packages:
     resolution: {integrity: sha512-lAHgPz8BNR6Pq5Ij+gHVxIuznOqU1A2WthHG9eRc9UmuHZ/CvqJI1NBcJKpP4NDcL0o+VvyNezYCtui+s43d6g==}
     dev: true
 
-  /@mobilc/tsconfig@0.2.7:
-    resolution: {integrity: sha512-L7LVbdkUhHGOwEjkd0+FpI9/lEuyOp7McNz52ClDrUMkGofQM7jgBaZSv2s3+uMltEclk2oJ6qEkugsh2avP8g==}
+  /@mobilc/tsconfig@0.2.8:
+    resolution: {integrity: sha512-q8NEsalEB2gTX7i7K6fHfWTUgEh7vA9XB4fGRgv8tePdDVL7kDpRV3Ui8LP56mB1lAzPqEV/+01fHN0tpqAAFA==}
     dev: true
 
   /@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1:

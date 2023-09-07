@@ -1,7 +1,11 @@
 {
   "extends": "@mobilc/tsconfig/panorama.json",
   "compilerOptions": {
-    "types": [ "@moddota/panorama-types" ],
+    "types": [
+      "@mobilc/panorama-types/types/api",
+      "@mobilc/panorama-types/types/stack-trace-api",
+      "@mobilc/panorama-types/types/panels",
+  ],
     "rootDir": "src",
     "outDir": "dist",
     "module": "esnext",

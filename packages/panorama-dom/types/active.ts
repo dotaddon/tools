@@ -47,6 +47,6 @@ export type panoramaDivActive<T extends PanelType = 'Panel'> = {
     [k in panoramaDivActivates['Panel'] | panoramaDivActivates[T]]: 
         EventHandler<DivByPanelType<T>, void[]>
 } & {
-    [k in `on-ui-${keyof panoramaEventDeclarations}`]: 
-        EventHandler<DivByPanelType<T>, Parameters<panoramaEventDeclarations[k extends `on-ui-${infer R}` ? R : never]>>
+    [k in `on-ui-${keyof panelEventDeclarations}`]: 
+    EventHandler<DivByPanelType<T>, Parameters<panelEventDeclarations[k extends `on-ui-${infer R}` ? R : never]>>
 }

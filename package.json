@@ -12,10 +12,11 @@
   "devDependencies": {
     "@ark120202/eslint-config": "^2.5.0",
     "@mobilc/dota-lua-types": "^7.34.1",
+    "@mobilc/panorama-types": "^7.34.2",
     "@mobilc/panorama-react-dom": "workspace:*",
-    "@mobilc/panorama-types": "^7.34.1",
+    "@mobilc/panorama-polyfill": "workspace:",
     "@mobilc/shared-type": "^0.0.3",
-    "@mobilc/tsconfig": "^0.2.7",
+    "@mobilc/tsconfig": "^0.2.8",
     "@rollup/plugin-commonjs": "^15.1.0",
     "@rollup/plugin-node-resolve": "^9.0.0",
     "@rollup/plugin-replace": "^2.4.2",

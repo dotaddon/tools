@@ -15,11 +15,7 @@ export type PanelAttributesExpand = {
 
 type MovieAutoPlay = 'off' | 'onload' | 'onfocus'
 
-type hisoCombination<T, S> = {
-    [P in keyof S]?: P extends keyof T ? T[P] : S[P]
-};
-
-export type PanelStyles = hisoCombination<VCSSStyleDeclaration2, VCSSStyleDeclaration>
+export type PanelStyles = Partial<VCSSStyleDeclaration>
 
 export type ReactDomDivProps<T extends PanelBase = Panel> = ClassAttributes<T> & {
     children?: ReactNode;
