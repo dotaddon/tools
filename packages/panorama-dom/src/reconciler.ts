@@ -61,7 +61,7 @@ function createInstance(type: PanelType, newProps: Record<string, any>, rootCont
 
   // Create it on the context panel instead of rootContainerInstance to
   // preserve style context for elements rendered outside of the main tree
-  const panel = $.CreatePanel(type, $.GetContextPanel(), newProps.id || '', initialProps != undefined ? initialProps : null)
+  const panel = $.CreatePanel(type, $.GetContextPanel(), newProps.id || '', initialProps) as InternalPanel
 
   if (panelBaseNames.has(type)) {
     fixPanelBase(panel);

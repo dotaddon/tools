@@ -666,7 +666,6 @@ export function getPropertyInfo( type: PanelType, propName: string ): PropertyIn
 }
 
 export function splitInitialProps(type: PanelType, props: Record<string, any>) {
-  let hasInitialProps = false;
   const initialProps: Record<string, any> = {};
   const otherProps: Record<string, any> = {};
 
@@ -681,14 +680,13 @@ export function splitInitialProps(type: PanelType, props: Record<string, any>) {
     if (propertyInformation && propertyInformation.initial) {
       const initialName =
         typeof propertyInformation.initial === 'string' ? propertyInformation.initial : propName;
-      hasInitialProps = true;
       initialProps[initialName] = value;
     } else if (propName !== 'id') {
       otherProps[propName] = value;
     }
   }
 
-  return { initialProps: hasInitialProps ? initialProps : undefined, otherProps };
+  return { initialProps, otherProps };
 }
 
 export function updateProperty(
