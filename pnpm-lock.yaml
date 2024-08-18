@@ -11,24 +11,18 @@ importers:
       '@ark120202/eslint-config':
         specifier: ^2.5.0
         version: 2.5.0(eslint@7.32.0)(typescript@5.4.3)
-      '@mobilc/dota-lua-types':
-        specifier: ^7.35.1
-        version: 7.35.1(@typescript-to-lua/language-extensions@1.0.0)(typescript@5.4.3)
+      '@mobilc/dota-types':
+        specifier: ^7.36.1
+        version: 7.36.1
       '@mobilc/panorama-polyfill':
         specifier: 'workspace:'
         version: link:packages/panorama-polyfill
       '@mobilc/panorama-react-dom':
         specifier: workspace:*
         version: link:packages/panorama-dom
-      '@mobilc/panorama-types':
-        specifier: ^7.35.0
-        version: 7.35.0(typescript@5.4.3)
-      '@mobilc/shared-type':
-        specifier: ^0.0.6
-        version: 0.0.6
       '@mobilc/tsconfig':
-        specifier: ^0.2.8
-        version: 0.2.8
+        specifier: ^0.3.0
+        version: 0.3.0
       '@rollup/plugin-commonjs':
         specifier: ^15.1.0
         version: 15.1.0(rollup@2.79.1)
@@ -1219,32 +1213,15 @@ packages:
       write-file-atomic: 4.0.2
     dev: true
 
-  /@mobilc/dota-lua-types@7.35.1(@typescript-to-lua/language-extensions@1.0.0)(typescript@5.4.3):
-    resolution: {integrity: sha512-Oaf+DUHxFg04POp08FlG8xZVDoEbLzVY2i1CMEoWRmejMAp+ExTUNK08Yfkb3a3x7zpjO8BU4drCLufC6n96dQ==}
-    peerDependencies:
-      '@typescript-to-lua/language-extensions': ^1.0.0
-      typescript: ^4.0.0 || ^5.0.0
+  /@mobilc/dota-types@7.36.1:
+    resolution: {integrity: sha512-RAcRr3H1gcBgucO3V27a18YpbQj21MYv28TDjoLiwvY+WP5nPmghlY/qjRaTd8i6D25gcUzptuw/0Ki4BHrI8Q==}
     dependencies:
-      '@typescript-to-lua/language-extensions': 1.0.0
       lua-types: 2.13.1
-      typescript: 5.4.3
-    dev: true
-
-  /@mobilc/panorama-types@7.35.0(typescript@5.4.3):
-    resolution: {integrity: sha512-xJsnXeNVxVzeyqrjpSZKTFBk/BzLVFc2R/kIitfLJn1ti9g1O5ytKqVgo/uKasDrz01dNhkZthdRRjiIYR4q3A==}
-    peerDependencies:
-      typescript: ^4.0.0 || ^5.0.0
-    dependencies:
       tslib: 2.4.1
-      typescript: 5.4.3
     dev: true
 
-  /@mobilc/shared-type@0.0.6:
-    resolution: {integrity: sha512-6WykDibGYzhMHlykHke+jc4wm5K6Rx8NiA47I4xxC3FGIrq7edxS2fGMbLTprDZfTk4/WHvN9WDcHodc7zp7cw==}
-    dev: true
-
-  /@mobilc/tsconfig@0.2.8:
-    resolution: {integrity: sha512-q8NEsalEB2gTX7i7K6fHfWTUgEh7vA9XB4fGRgv8tePdDVL7kDpRV3Ui8LP56mB1lAzPqEV/+01fHN0tpqAAFA==}
+  /@mobilc/tsconfig@0.3.0:
+    resolution: {integrity: sha512-mXEGw57Hj82P5pi7y4nKyKKsEuHwobphbMiuAEccwmAiEkMY3hqeEJlrEZHLRNmryTyKhiQWHv3bGuZqfHmucg==}
     dev: true
 
   /@nicolo-ribaudo/eslint-scope-5-internals@5.1.1-v1:
@@ -2027,6 +2004,7 @@ packages:
   /ansi-styles@3.2.1:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dependencies:
       color-convert: 1.9.3
     dev: true
@@ -2308,6 +2286,7 @@ packages:
   /chalk@2.4.2:
     resolution: {integrity: sha512-Mti+f9lpJNcwF4tWV8/OrTTtF1gZi+f8FqlyAdouralcFWFQWF2+NgCHShjkCb+IFBLq9buZwE1xckQU4peSuQ==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dependencies:
       ansi-styles: 3.2.1
       escape-string-regexp: 1.0.5
@@ -2432,6 +2411,7 @@ packages:
 
   /color-convert@1.9.3:
     resolution: {integrity: sha512-QfAUtd+vFdAtFQcC8CCyYt1fYWxSqAiK2cSD6zDB8N3cpsEBAvRxp9zOGg6G/SHHJYAT88/az/IuDGALsNVbGg==}
+    requiresBuild: true
     dependencies:
       color-name: 1.1.3
     dev: true
@@ -2445,6 +2425,7 @@ packages:
 
   /color-name@1.1.3:
     resolution: {integrity: sha512-72fSenhMw2HZMTVHeCA9KCmpEIbzWiQsjN+BHcBbS9vr1mtt+vJjPdksIBNUmKAW8TFUDPJK5SUU3QhE9NEXDw==}
+    requiresBuild: true
     dev: true
 
   /color-name@1.1.4:
@@ -3705,6 +3686,7 @@ packages:
   /has-flag@3.0.0:
     resolution: {integrity: sha512-sKJf1+ceQBr4SMkvQnBDNDtf4TXpVhVGateu0t918bl30FnbE2m4vNLX+VWe/dpjlb+HugGYzW7uQXH98HPEYw==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dev: true
 
   /has-flag@4.0.0:
@@ -6019,6 +6001,7 @@ packages:
   /supports-color@5.5.0:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
+    requiresBuild: true
     dependencies:
       has-flag: 3.0.0
     dev: true

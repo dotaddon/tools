@@ -2,9 +2,9 @@
   "extends": "@mobilc/tsconfig/panorama.json",
   "compilerOptions": {
     "types": [
-      "@mobilc/panorama-types/types/api",
-      "@mobilc/panorama-types/types/stack-trace-api",
-      "@mobilc/panorama-types/types/panels",
+      "@mobilc/dota-types/panorama/types/api",
+      "@mobilc/dota-types/panorama/types/stack-trace-api",
+      "@mobilc/dota-types/panorama/types/panels",
   ],
     "rootDir": "src",
     "outDir": "dist",
