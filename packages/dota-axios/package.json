@@ -1,6 +1,6 @@
 {
   "name": "@mobilc/dota-axios",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "React for Valve's Panorama UI (for Dota 2 Custom Games).",
   "keywords": [
     "dota",
