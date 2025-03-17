@@ -621,7 +621,7 @@ const panelEventPropertyInfo: PropertyInformation<'Panel', any> = {
     // Unlike UI event handlers, it's not required to use an object here,
     // because SetPanelEvent overrides previous listener,
     // but we're still using it here as a potential performance optimization
-    panel._eventHandlers ??= {};
+    panel._eventHandlers ??= {} as any;
 
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (panel._eventHandlers[propName] === undefined) {

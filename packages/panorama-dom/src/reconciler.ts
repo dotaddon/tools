@@ -43,15 +43,43 @@ function insertBefore(parent: InternalPanel, child: InternalPanel, beforeChild: 
 }
 
 function removeChild(parent: InternalPanel, child: InternalPanel) {
+  // 清理事件处理器
+  if (child._eventHandlers) {
+    for (const eventName in child._eventHandlers) {
+      child.ClearPanelEvent(eventName as PanelEvent);
+    }
+    delete child._eventHandlers;
+  }
+
+  // 递归清理子面板的事件处理器
+  for (let i = 0; i < child.GetChildCount(); i++) {
+    const childPanel = child.GetChild(i) as InternalPanel;
+    if (childPanel._eventHandlers) {
+      for (const eventName in childPanel._eventHandlers) {
+        childPanel.ClearPanelEvent(eventName as PanelEvent);
+      }
+      delete childPanel._eventHandlers;
+    }
+  }
+
   if (parent.paneltype === 'DropDown') {
     (parent as DropDown).RemoveOption(child.id);
   } else if ((child.paneltype === 'DOTAScenePanel' || child.paneltype === 'DOTAParticleScenePanel') && !child.BHasClass('SceneLoaded')) {
     child.SetParent(temporaryScenePanelHost);
   } else {
     child.SetParent(temporaryPanelHost);
-    temporaryPanelHost.RemoveAndDeleteChildren();
-    // TODO: child.DeleteAsync(0)?
+    // 立即删除临时面板中的子元素以释放内存
+    $.Schedule(0, () => {
+      if (temporaryPanelHost.IsValid()) {
+        temporaryPanelHost.RemoveAndDeleteChildren();
+      }
+    });
   }
+
+  // 清理其他资源
+  if (child._rotateParams) delete child._rotateParams;
+  if (child._econItemDef) delete child._econItemDef;
+  if (child._econItemStyle) delete child._econItemStyle;
 }
 
 function createInstance(type: PanelType, newProps: Record<string, any>, rootContainerInstance: InternalPanel, hostContext: object, internalInstanceHandle: ReactReconciler.Fiber) {
