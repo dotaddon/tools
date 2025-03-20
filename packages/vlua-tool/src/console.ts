@@ -52,8 +52,13 @@ export class console {
 
     /** 输出调试信息到控制台，功能与log相同 */
     public static debug = console.log;
-    /** 输出信息到控制台，功能与log相同 */
-    public static info = console.log;
+    /**
+     * 输出信息到控制台General
+     * @param args 要输出的参数列表，将被格式化后输出
+     */
+    public static info(...args: any[]) {
+        Msg(this.format(...args));
+    }
 
     /**
      * 启动一个计时器
@@ -62,12 +67,12 @@ export class console {
     public static time(label = 'default') {
         label = `${label}`;
 
-        if (console.times.has(label)) {
-            console.warn(`Timer '${label}' already exists`);
+        if (this.times.has(label)) {
+            this.warn(`Timer '${label}' already exists`);
             return;
         }
 
-        console.times.set(label, Time());
+        this.times.set(label, Time());
     }
 
     /**
@@ -77,14 +82,14 @@ export class console {
     public static timeEnd(label = 'default') {
         label = `${label}`;
 
-        const startTime = console.times.get(label);
+        const startTime = this.times.get(label);
         if (startTime == null) {
-            console.warn(`Timer '${label} does not exist'`);
+            this.warn(`Timer '${label} does not exist'`);
             return;
         }
 
-        console.times.delete(label);
-        console.write(`${label}: ${Time() - startTime}s`);
+        this.times.delete(label);
+        this.write(`${label}: ${Time() - startTime}s`);
     }
 
     /**
@@ -94,7 +99,7 @@ export class console {
      */
     public static trace(message: any = '', ...args: any[]) {
         const stack = debug.traceback('', 3);
-        console.write(`Trace: ${this.format(message, ...args)}\n${stack}`);
+        this.write(`Trace: ${this.format(message, ...args)}\n${stack}`);
     }
 
     /**
