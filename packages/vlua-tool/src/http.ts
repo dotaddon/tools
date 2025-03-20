@@ -6,10 +6,10 @@
  * 
  */
 export function asyncHttp(url:string) {
-    return new THttpAsnycPipe(url)
+    return new THttpAsyncPipe(url)
 }
 
-class THttpAsnycPipe {
+class THttpAsyncPipe {
     constructor(private _url: string) {
     }
     private _method: 'GET' | 'POST' = 'POST'
