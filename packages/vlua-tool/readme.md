@@ -75,11 +75,28 @@ setThink((count: number) => {
 
 ```typescript
 class MyEventManager extends BaseCustomGameEventManager {
+    // 监听事件名为"player_ready"的事件
     player_ready(userId: EntityIndex, event: CGEventData<"player_ready">) {
         print(`Player ${event.PlayerID} is ready`)
     }
+
+    constructor() {
+        super()
+        // 自动注册所有带下划线的方法作为事件监听器
+        this.register(this)
+    }
 }
 ```
+
+#### listen<T>(eventName: T, callback?: Function, context?: any): void
+注册事件监听器。
+
+- `eventName`: 事件名称
+- `callback`: 可选的回调函数
+- `context`: 可选的上下文对象
+
+#### register(context: any): void
+自动注册对象中所有带下划线的方法作为事件监听器。
 
 ### Network 网络数据
 
@@ -98,9 +115,12 @@ interface PlayerData {
     score: number
 }
 
-const players = new tsOperatorBase<PlayerData>([
-    { playerid: 0, score: 100 }
-])
+class PlayerManager extends tsOperatorBase<PlayerData> {
+    constructor() {
+        super()
+        // 初始化玩家数据
+    }
+}
 ```
 
 ### HTTP 请求
@@ -122,6 +142,65 @@ await asyncHttp('http://api.example.com')
 
 ```typescript
 const unit = await createUnit('npc_dota_hero_axe', Vector(0, 0, 0), DOTATeam_t.DOTA_TEAM_GOODGUYS)
+```
+
+### Console 控制台
+
+#### log(...args: any[]): void
+基础日志输出函数。
+
+```typescript
+console.log("Hello", { data: 123 }) // 输出普通日志
+```
+
+#### warn(...args: any[]): void
+警告日志输出函数。
+
+```typescript
+console.warn("Warning message") // 输出警告日志
+```
+
+#### error(...args: any[]): void
+错误日志输出函数。
+
+```typescript
+console.error("Error occurred", new Error("Details")) // 输出错误日志
+```
+
+#### time(label?: string): void
+开始计时器。
+
+#### timeEnd(label?: string): void
+结束计时器并输出耗时。
+
+```typescript
+console.time("operation")
+// ... 执行一些操作
+console.timeEnd("operation") // 输出操作耗时
+```
+
+#### trace(...args: any[]): void
+输出当前的调用栈信息。
+
+```typescript
+console.trace("Trace point") // 输出调用栈
+```
+
+#### table(tabularData: any, properties?: string[]): void
+以表格形式展示数据。
+
+```typescript
+console.table([
+    { id: 1, name: "item1" },
+    { id: 2, name: "item2" }
+]) // 表格化展示数据
+```
+
+#### assert(condition: boolean, ...args: any[]): void
+条件断言，当条件为false时输出信息。
+
+```typescript
+console.assert(value > 0, "Value must be positive") // 断言检查
 ```
 
 ### Adapter 适配器
