@@ -1,4 +1,5 @@
 declare interface TimeTask {
+    id: number
     resolve: (v?: any) => void
     timeout: number
     holdOnPause: boolean
@@ -6,6 +7,7 @@ declare interface TimeTask {
 
 class TsTimerTool {
     private queue: Array<TimeTask> = []
+    private nextId: number = 1
     constructor() {
         SpawnEntityFromTableSynchronous("info_target", { targetname: "vlua_tools_thinker" })
             .SetThink("tick", this, "timers", 0)
@@ -18,7 +20,11 @@ class TsTimerTool {
     }
 
     /** 插入计时任务 */
-    insert(item: TimeTask) {
+    insert(taskInfo: Omit<TimeTask, "id">) {
+        let item:TimeTask = {
+            ...taskInfo,
+            id: this.nextId++
+        }
         let left = 0
         let right = this.queue.length
         let center = 0
@@ -42,8 +48,9 @@ class TsTimerTool {
         this.queue.splice(center, 0, item)
     }
 
-    /** 未实现 */
-    remove(item: TimeTask) {
+    /** 移除计时任务 */
+    remove(id: number) {
+        this.queue = this.queue.filter(task => task.id !== id)
     }
 
     /**同帧业务批处理 */
@@ -78,6 +85,7 @@ class TsTimerTool {
 }
 
 const Timer = new TsTimerTool()
+_G.__TsTimerTool = Timer
 
 /** 使当前的异步函数
  * @param ms 等待 毫秒
@@ -93,45 +101,93 @@ export function sleep(ms: number, holdOnPause: boolean = true) {
 }
 
 /** 等待执行
- * @param think 定时器
+ * @param callback 回调函数
  * @param timeout 等待 毫秒
- * @param args 定时器入参
+ * @param args 回调函数入参
  */
-export function setTimeout<B extends void, T extends (...args: any[]) => B>(this: void, think: T, timeout: number = 100, ...args: Parameters<T>) {
-    sleep(timeout)
-        .then(think.bind(null, ...args))
+export function setTimeout<TArgs extends any[]>(
+    callback: (...args: TArgs) => void,
+    timeout: number = 0,
+    ...args: TArgs
+): number {
+    const task: TimeTask = {
+        id: 0,
+        timeout: math.max(timeout, 1 / 30) / 1000 + Timer.time(),
+        holdOnPause: true,
+        resolve: () => callback(...args)
+    }
+    Timer.insert(task)
+    return task.id
+}
+
+/** 清除等待执行的计时器
+ * @param id 计时器ID
+ */
+export function clearTimeout(id: number) {
+    Timer.remove(id)
 }
 
 
 /** 设置一个定时器
- * @param think 定时器 返回是否继续  false会结束该定时器
+ * @param callback 回调函数
  * @param interval 执行间隔 毫秒
- * @param args 定时器入参
+ * @param args 回调函数入参
  */
-export function setInterval<B extends boolean | null, T extends (...args: any[]) => B>(this: void, think: T, interval: number = 100, ...args: Parameters<T>) {
-    let bContinue = true
-    async function callback() {
-        if (!bContinue)
-            return;
-        await sleep(interval)
-        callback()
-        bContinue = think(...args)
+export function setInterval<TArgs extends any[]>(
+    callback: (...args: TArgs) => void,
+    interval: number = 0,
+    ...args: TArgs
+): number {
+    const task: TimeTask = {
+        id: 0,
+        timeout: math.max(interval, 1 / 30) / 1000 + Timer.time(),
+        holdOnPause: true,
+        resolve: () => {
+            callback(...args)
+            task.timeout = interval / 1000 + Timer.time()
+            Timer.insert(task)
+        }
     }
-    callback()
+    Timer.insert(task)
+    return task.id
+}
+
+/** 清除定时器
+ * @param id 定时器ID
+ */
+export function clearInterval(id: number) {
+    Timer.remove(id)
 }
 
 /** 设置一个逻辑器
- * @param think 定时器 返回下一次执行时间 负数或空值会结束该定时器
+ * @param callback 回调函数，返回下一次执行时间（毫秒），返回负数或空值会结束该定时器
  * @param delay 首次等待 毫秒
- * @param args 定时器入参
+ * @param args 回调函数入参
  */
-export function setThink<B extends number | null, T extends (...args: any[]) => B>(this:void, think: T, delay: number = 100, ...args: Parameters<T>) {
-    async function callback(timeout:number) {
-        await sleep(timeout)
-        let delay = think(...args)
-        if (!delay || delay < 0)
-            return;
-        callback(delay)
+export function setThink<TArgs extends any[]>(
+    callback: (...args: TArgs) => number | null,
+    delay: number = 0,
+    ...args: TArgs
+): number {
+    const task: TimeTask = {
+        id: 0,
+        timeout: math.max(delay, 1 / 30) / 1000 + Timer.time(),
+        holdOnPause: true,
+        resolve: () => {
+            const nextDelay = callback(...args)
+            if (nextDelay && nextDelay >= 0) {
+                task.timeout = nextDelay / 1000 + Timer.time()
+                Timer.insert(task)
+            }
+        }
     }
-    callback(delay)
+    Timer.insert(task)
+    return task.id
+}
+
+/** 清除逻辑器
+ * @param id 逻辑器ID
+ */
+export function clearThink(id: number) {
+    Timer.remove(id)
 }
