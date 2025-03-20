@@ -1,8 +1,14 @@
 declare interface TimeTask {
+    /** 任务ID */
     id: number
+    /** 回调函数 */
     resolve: (v?: any) => void
+    /** 超时时间 */
     timeout: number
+    /** 是否等待游戏暂停 */
     holdOnPause: boolean
+    /** 堆栈信息 */
+    trace:string
 }
 
 class TsTimerTool {
@@ -61,7 +67,7 @@ class TsTimerTool {
     }
 
     /**同帧业务批处理 */
-    private async batchProcessInFrame() {
+    private batchProcessInFrame() {
         let time = this.time()
         let pause = GameRules.IsGamePaused()
         let next: Array<TimeTask> = []
@@ -77,8 +83,8 @@ class TsTimerTool {
             else
                 try {
                     task.resolve()
-                } catch (error) {
-                    debug.traceback(error)
+                } catch (err) {
+                    print(`[定时器] 发生错误\n${err}\n${task.trace}\n`)
                 }
         }
         next.map(item => this.insert(item))
@@ -96,12 +102,13 @@ class TsTimerTool {
  * @param ms 等待 毫秒
  * @param holdOnPause 是否等待游戏暂停 default:true
  */
-export function sleep(ms: number, holdOnPause: boolean = true) {
+export async function sleep(ms: number, holdOnPause: boolean = true) {
     const Timer = TsTimerTool.getInstance()
     let timeout = math.max(ms, 1 / 30) / 1000 + Timer.time()
     return new Promise((resolve) => {
         Timer.insert({
-            resolve, timeout, holdOnPause
+            resolve, timeout, holdOnPause,
+            trace:debug.traceback('',3),
         })
     })
 }
@@ -118,6 +125,7 @@ export function setTimeout<TArgs extends any[]>(
 ): number {
     const Timer = TsTimerTool.getInstance()
     const task: TimeTask = {
+        trace:debug.traceback('',3),
         id: 0,
         timeout: math.max(timeout, 1 / 30) / 1000 + Timer.time(),
         holdOnPause: true,
@@ -148,13 +156,15 @@ export function setInterval<TArgs extends any[]>(
 ): number {
 
     const Timer = TsTimerTool.getInstance()
+    const timeout = math.max(interval, 1 / 30) / 1000
     const task: TimeTask = {
+        trace:debug.traceback('',3),
         id: 0,
-        timeout: math.max(interval, 1 / 30) / 1000 + Timer.time(),
+        timeout: timeout + Timer.time(),
         holdOnPause: true,
         resolve: () => {
             callback(...args)
-            task.timeout = interval / 1000 + Timer.time()
+            task.timeout = timeout + Timer.time()
             Timer.insert(task)
         }
     }
@@ -182,6 +192,7 @@ export function setThink<TArgs extends any[]>(
 ): number {
     const Timer = TsTimerTool.getInstance()
     const task: TimeTask = {
+        trace:debug.traceback('',3),
         id: 0,
         timeout: math.max(delay, 1 / 30) / 1000 + Timer.time(),
         holdOnPause: true,
