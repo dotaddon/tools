@@ -14,6 +14,13 @@ class TsTimerTool {
         print("[注册]管道计时器初始化");
     }
 
+    public static getInstance(): TsTimerTool {
+        if (!_G.__TsTimerInstance)
+            _G.__TsTimerInstance = new TsTimerTool();
+
+        return _G.__TsTimerInstance
+    }
+
     /** 时间戳 */
     time() {
         return Time() //GameRules.GetGameTime()
@@ -21,7 +28,7 @@ class TsTimerTool {
 
     /** 插入计时任务 */
     insert(taskInfo: Omit<TimeTask, "id">) {
-        let item:TimeTask = {
+        let item: TimeTask = {
             ...taskInfo,
             id: this.nextId++
         }
@@ -84,14 +91,13 @@ class TsTimerTool {
     }
 }
 
-const Timer = new TsTimerTool()
-_G.__TsTimerTool = Timer
 
 /** 使当前的异步函数
  * @param ms 等待 毫秒
  * @param holdOnPause 是否等待游戏暂停 default:true
  */
 export function sleep(ms: number, holdOnPause: boolean = true) {
+    const Timer = TsTimerTool.getInstance()
     let timeout = math.max(ms, 1 / 30) / 1000 + Timer.time()
     return new Promise((resolve) => {
         Timer.insert({
@@ -110,6 +116,7 @@ export function setTimeout<TArgs extends any[]>(
     timeout: number = 0,
     ...args: TArgs
 ): number {
+    const Timer = TsTimerTool.getInstance()
     const task: TimeTask = {
         id: 0,
         timeout: math.max(timeout, 1 / 30) / 1000 + Timer.time(),
@@ -124,6 +131,7 @@ export function setTimeout<TArgs extends any[]>(
  * @param id 计时器ID
  */
 export function clearTimeout(id: number) {
+    const Timer = TsTimerTool.getInstance()
     Timer.remove(id)
 }
 
@@ -138,6 +146,8 @@ export function setInterval<TArgs extends any[]>(
     interval: number = 0,
     ...args: TArgs
 ): number {
+
+    const Timer = TsTimerTool.getInstance()
     const task: TimeTask = {
         id: 0,
         timeout: math.max(interval, 1 / 30) / 1000 + Timer.time(),
@@ -156,6 +166,7 @@ export function setInterval<TArgs extends any[]>(
  * @param id 定时器ID
  */
 export function clearInterval(id: number) {
+    const Timer = TsTimerTool.getInstance()
     Timer.remove(id)
 }
 
@@ -169,6 +180,7 @@ export function setThink<TArgs extends any[]>(
     delay: number = 0,
     ...args: TArgs
 ): number {
+    const Timer = TsTimerTool.getInstance()
     const task: TimeTask = {
         id: 0,
         timeout: math.max(delay, 1 / 30) / 1000 + Timer.time(),
@@ -189,5 +201,6 @@ export function setThink<TArgs extends any[]>(
  * @param id 逻辑器ID
  */
 export function clearThink(id: number) {
+    const Timer = TsTimerTool.getInstance()
     Timer.remove(id)
 }
