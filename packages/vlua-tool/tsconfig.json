@@ -3,6 +3,7 @@
     "include": [ "." ],
     "compilerOptions": {
         "outDir": "dist",
+        "rootDir": "src",  // 指定源代码的根目录
         "declaration": true
     },
     "tstl": {
