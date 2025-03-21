@@ -23,6 +23,7 @@
     "react": "^16.13.1 || ^17.0.0 || ^18.0.0"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
   }
 }

@@ -8,7 +8,7 @@
         },
         {
             "label": "发布",
-            "command": "npm config set registry https://registry.npmjs.org/;lerna publish;npm config set registry https://mirrors.cloud.tencent.com/npm/",
+            "command": "lerna publish",
         },
     ]
 }
