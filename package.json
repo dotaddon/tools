@@ -31,11 +31,11 @@
     "prettier": "^2.8.0",
     "react": "^18.2.0",
     "rollup": "^2.79.1",
-    "rollup-plugin-dts": "1.4.13",
+    "rollup-plugin-dts": "6.2.0",
     "rollup-plugin-prettier": "2.1.0",
     "tslib": "^2.4.1",
-    "typescript": "^5.4.2",
-    "typescript-to-lua": "^1.25.1",
+    "typescript": "^5.8.2",
+    "typescript-to-lua": "1.31.0",
     "zustand": "4.3.8"
   },
   "volta": {
