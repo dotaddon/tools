@@ -129,6 +129,14 @@ export class console {
      * 以表格形式显示数据
      */
     public static table(t: LuaTable | object | Array<any>) {
+        if (!t || type(t) != 'table'){
+            this.write(null)
+            return
+        }
+        if (type(t) != 'table'){
+            this.write(tostring(t))
+            return
+        }
         // 获取所有一级和二级键
         const headers = new Set<string>();
         const rows: Record<string, any>[] = [];
